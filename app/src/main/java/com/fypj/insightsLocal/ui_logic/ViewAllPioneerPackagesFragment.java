@@ -38,7 +38,7 @@ public class ViewAllPioneerPackagesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_all_pioneer_packages, container, false);
         TextView tvSection = (TextView) rootView.findViewById(R.id.section_label);
         tvSection.setText("View Pioneer Packages");
         getActivity().getActionBar().setTitle("View Pioneer Packages");

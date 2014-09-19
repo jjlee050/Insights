@@ -2,12 +2,18 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
@@ -38,10 +44,47 @@ public class ViewAllLatestEventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
-        TextView tvSection = (TextView) rootView.findViewById(R.id.section_label);
-        tvSection.setText("View Latest Events");
-        getActivity().getActionBar().setTitle("View Events");
+        View rootView = inflater.inflate(R.layout.fragment_view_all_latest_events, container, false);
+        getActivity().getActionBar().setTitle("Latest Events");
+        ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
+        String[] values= new String[] { "asd","asd","dsa","sss","vamso","lll","mkn","asdasd","123"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        lvLatestEvents.setAdapter(adapter);
+
+        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+
+        swipeView.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.CYAN);
+        swipeView.setEnabled(false);
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeView.setRefreshing(true);
+                ( new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeView.setRefreshing(false);
+
+                    }
+                }, 3000);
+            }
+        });
+
+        lvLatestEvents.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0)
+                    swipeView.setEnabled(true);
+                else
+                    swipeView.setEnabled(false);
+            }
+        });
+
         return rootView;
     }
 
