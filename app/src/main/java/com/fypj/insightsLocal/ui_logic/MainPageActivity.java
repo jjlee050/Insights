@@ -1,6 +1,7 @@
 package com.fypj.insightsLocal.ui_logic;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -28,7 +29,16 @@ public class MainPageActivity extends ActionBarActivity
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
-    private CharSequence mTitle;
+    private String mTitle;
+
+
+    public String getMTitle() {
+        return mTitle;
+    }
+
+    public void setMTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +47,6 @@ public class MainPageActivity extends ActionBarActivity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -49,9 +58,26 @@ public class MainPageActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        switch(position){
+            case 0:
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, homeFragment.newInstance(this,position + 1))
+                        .commit();
+                break;
+            case 1:
+                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
+                        .commit();
+                break;
+            case 2:
+                ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(this,position + 1))
+                        .commit();
+                break;
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -72,7 +98,6 @@ public class MainPageActivity extends ActionBarActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
     }
 
 
@@ -99,43 +124,6 @@ public class MainPageActivity extends ActionBarActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, 1);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainPageActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
     }
 
 }
