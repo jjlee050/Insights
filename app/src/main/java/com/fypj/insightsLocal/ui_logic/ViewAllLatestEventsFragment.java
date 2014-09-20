@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,11 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.model.Event;
+import com.fypj.insightsLocal.util.LatestEventsListAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by jess on 19-Sep-14.
@@ -38,29 +44,28 @@ public class ViewAllLatestEventsFragment extends Fragment {
         return fragment;
     }
 
-    public ViewAllLatestEventsFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_all_latest_events, container, false);
         getActivity().getActionBar().setTitle("Latest Events");
-        ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
-        String[] values= new String[] { "asd","asd","dsa","sss","vamso","lll","mkn","asdasd","123"};
+        final ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
+        latestEventArrList.add(new Event(1,"Monthly Brisk Walk","Saturday, September 20, 2014 7:00 AM","Brisk Walk for elderly residents"));
+
+        LatestEventsListAdapter adapter = new LatestEventsListAdapter(this.getActivity(), android.R.id.text1, latestEventArrList);
         lvLatestEvents.setAdapter(adapter);
 
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 
-        swipeView.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.CYAN);
+        swipeView.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         swipeView.setEnabled(false);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeView.setRefreshing(true);
-                ( new Handler()).postDelayed(new Runnable() {
+                (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         swipeView.setRefreshing(false);
@@ -82,6 +87,18 @@ public class ViewAllLatestEventsFragment extends Fragment {
                     swipeView.setEnabled(true);
                 else
                     swipeView.setEnabled(false);
+            }
+        });
+
+        lvLatestEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(ViewAllLatestEventsFragment.this.getActivity(),ViewEventsActivity.class);
+                intent.putExtra("eventName",latestEventArrList.get(position).getEventName());
+                intent.putExtra("eventDateTime",latestEventArrList.get(position).getEventDateTime());
+                intent.putExtra("eventDesc",latestEventArrList.get(position).getEventDescription());
+
+                startActivity(intent);
             }
         });
 

@@ -12,8 +12,17 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui_logic.ViewEventsActivity"
+            android:label="@string/title_activity_view_events"
+            android:parentActivityName=".ui_logic.MainPageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui_logic.MainPageActivity" />
         </activity>
     </application>
 
