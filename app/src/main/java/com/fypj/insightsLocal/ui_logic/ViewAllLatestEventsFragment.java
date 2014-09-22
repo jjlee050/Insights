@@ -32,16 +32,14 @@ import java.util.ArrayList;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ViewAllLatestEventsFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
-    MainPageActivity activity;
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public ViewAllLatestEventsFragment newInstance(MainPageActivity activity,int sectionNumber) {
+    public ViewAllLatestEventsFragment newInstance(int sectionNumber) {
         ViewAllLatestEventsFragment fragment = new ViewAllLatestEventsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, 1);
-        this.activity = activity;
         fragment.setArguments(args);
         setHasOptionsMenu(true);
         return fragment;

@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -47,7 +49,7 @@ public class ViewEventLocationFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ViewEventLocationFragment newInstance(int sectionNumber) {
+    public ViewEventLocationFragment newInstance(int sectionNumber) {
         ViewEventLocationFragment fragment = new ViewEventLocationFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);

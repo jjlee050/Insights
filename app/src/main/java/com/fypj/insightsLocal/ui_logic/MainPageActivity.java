@@ -31,7 +31,7 @@ public class MainPageActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private String mTitle;
-    private int currentPosition = 0;
+    public static int currentPosition;
 
     public String getMTitle() {
         return mTitle;
@@ -46,6 +46,8 @@ public class MainPageActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        System.out.println(currentPosition);
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -53,6 +55,11 @@ public class MainPageActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+    }
+
+    public void goToFragment(int position){
+        onNavigationDrawerItemSelected(position);
     }
 
     @Override
@@ -79,7 +86,7 @@ public class MainPageActivity extends ActionBarActivity
             case 3:
                 ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(this,position + 1))
+                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
                         .commit();
                 break;
         }

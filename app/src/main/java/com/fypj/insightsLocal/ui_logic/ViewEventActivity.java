@@ -2,6 +2,8 @@ package com.fypj.insightsLocal.ui_logic;
 
 import java.util.Locale;
 
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -48,6 +50,8 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null){
@@ -80,6 +84,7 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
 
         actionBar.addTab(actionBar.newTab().setText("Details").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Location").setTabListener(this));
+
     }
 
 
@@ -92,11 +97,16 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+            // This ID represents the Home or Up button. In the case of this
+            // activity, the Up button is shown. Use NavUtils to allow users
+            // to navigate up one level in the application structure. For
+            // more details, see the Navigation pattern on Android Design:
+            //
+            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+            //
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
