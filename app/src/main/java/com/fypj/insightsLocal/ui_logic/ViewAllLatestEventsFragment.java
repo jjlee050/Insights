@@ -53,6 +53,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
 
         final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
         latestEventArrList.add(new Event(1,"Monthly Brisk Walk","Saturday, September 20, 2014 7:00 AM","Brisk Walk for elderly residents"));
+        latestEventArrList.add(new Event(2,"A Talk on An Insight to the Banjarese Community in the Cosmopolitan Society of Singapore","27 September 2014 3.00PM to 6.00PM","To get to know more about the Banjarese community in this bustling Singapore surrounding"));
 
         LatestEventsListAdapter adapter = new LatestEventsListAdapter(this.getActivity(), android.R.id.text1, latestEventArrList);
         lvLatestEvents.setAdapter(adapter);

@@ -86,10 +86,16 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "Home";
                 break;
             case 2:
-                mTitle = "Latest Events";
+                mTitle = "CHAS Clinic Locator";
                 break;
             case 3:
-                mTitle = "Pioneer Packages";
+                mTitle = "Check Eligibility";
+                break;
+            case 4:
+                mTitle = "Latest Events";
+                break;
+            case 5:
+                mTitle = "Settings";
                 break;
         }
     }

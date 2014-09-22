@@ -1,5 +1,7 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import com.fypj.insightsLocal.R;
 
 public class ViewEventsActivity extends ActionBarActivity {
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +25,14 @@ public class ViewEventsActivity extends ActionBarActivity {
         TextView tvEventDesc = (TextView) findViewById(R.id.tv_event_description);
 
         if(savedInstanceState != null){
-            tvEventName.setText(savedInstanceState.getString("eventName"));
-            tvEventDateTime.setText(savedInstanceState.getString("eventDateTime"));
-            tvEventDesc.setText(savedInstanceState.getString("eventDesc"));
+            String eventName = savedInstanceState.getString("eventName");
+            String eventDateTime = savedInstanceState.getString("eventDateTime");
+            String eventDesc = savedInstanceState.getString("eventDesc");
+
+            tvEventName.setText(eventName);
+            getActionBar().setTitle(eventName);
+            tvEventDateTime.setText(eventDateTime);
+            tvEventDesc.setText(eventDesc);
         }
 
     }
