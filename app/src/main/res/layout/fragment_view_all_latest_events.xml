@@ -19,6 +19,8 @@
         android:id="@+id/tv_latest_event_name"
         android:textSize="32dp"
         android:textColor="@color/white"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_alignBottom="@+id/imgBtn_latest_events"
         android:layout_alignRight="@+id/imgBtn_latest_events"
         android:layout_alignEnd="@+id/imgBtn_latest_events" />

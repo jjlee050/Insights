@@ -12,5 +12,9 @@
     <string name="read_aloud">Read_aloud</string>
     <string name="translate">Translate</string>
     <string name="action_search">Search</string>
+    <string name="title_activity_view_event">ViewEventActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>

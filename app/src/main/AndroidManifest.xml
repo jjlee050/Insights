@@ -17,12 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui_logic.ViewEventsActivity"
-            android:label="@string/title_activity_view_events"
-            android:parentActivityName=".ui_logic.MainPageActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui_logic.MainPageActivity" />
+            android:name=".ui_logic.ViewEventActivity"
+            android:label="@string/title_activity_view_event" >
         </activity>
     </application>
 

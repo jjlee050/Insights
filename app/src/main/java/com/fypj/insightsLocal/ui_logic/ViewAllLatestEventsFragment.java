@@ -103,11 +103,13 @@ public class ViewAllLatestEventsFragment extends Fragment {
         lvLatestEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(ViewAllLatestEventsFragment.this.getActivity(),ViewEventsActivity.class);
+                /*Intent intent = new Intent(ViewAllLatestEventsFragment.this.getActivity(),ViewEventsActivity.class);
                 intent.putExtra("eventName",latestEventArrList.get(position).getEventName());
                 intent.putExtra("eventDateTime",latestEventArrList.get(position).getEventDateTime());
                 intent.putExtra("eventDesc",latestEventArrList.get(position).getEventDescription());
 
+                startActivity(intent);*/
+                Intent intent = new Intent(ViewAllLatestEventsFragment.this.getActivity(), ViewEventActivity.class);
                 startActivity(intent);
             }
         });
