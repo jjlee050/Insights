@@ -66,11 +66,13 @@ public class MainPageActivity extends ActionBarActivity
                         .commit();
                 break;
             case 1:
-                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
+                NearestClinicFragment NearestClinicFragment = new NearestClinicFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
+                        .replace(R.id.container, NearestClinicFragment.newInstance(this,position + 1))
                         .commit();
                 break;
+
+
             case 3:
                 ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
                 fragmentManager.beginTransaction()
@@ -117,6 +119,10 @@ public class MainPageActivity extends ActionBarActivity
             switch(currentPosition){
                 case 0:
                     getMenuInflater().inflate(R.menu.main_page, menu);
+                    restoreActionBar();
+                    break;
+                case 1:
+                    getMenuInflater().inflate(R.menu.nearest_clinc, menu);
                     restoreActionBar();
                     break;
                 case 3:
