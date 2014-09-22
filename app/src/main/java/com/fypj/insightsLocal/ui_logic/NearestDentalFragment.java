@@ -1,19 +1,10 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,22 +12,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.util.ClinicAdapter;
-import com.fypj.insightsLocal.util.LatestEventsListAdapter;
-import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
 
-public class NearestClinicFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.Locale;
+
+public class NearestDentalFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
     MainPageActivity activity;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
@@ -44,12 +34,12 @@ public class NearestClinicFragment extends Fragment {
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
 
-    public NearestClinicFragment newInstance(MainPageActivity activity,int sectionNumber) {
-        NearestClinicFragment fragment = new NearestClinicFragment();
+    public NearestDentalFragment newInstance(MainPageActivity activity,int sectionNumber) {
+        NearestDentalFragment fragment = new NearestDentalFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, 1);
         this.activity = activity;
@@ -57,7 +47,7 @@ public class NearestClinicFragment extends Fragment {
         setHasOptionsMenu(true);
         return fragment;
     }
-    public NearestClinicFragment() {
+    public NearestDentalFragment() {
     }
 
 
@@ -84,15 +74,15 @@ public class NearestClinicFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_nearest_clinc, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_nearest_dental, container, false);
 
-        getActivity().getActionBar().setTitle("Nearest Clinic");
-        final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
+        getActivity().getActionBar().setTitle("Nearest Dental");
+        final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
 
         final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"338 Family Clinic","338 Ang Mo Kio Avenue 1, #01 - 1615,","Singapore - 560338"));
-        ClinicArrList.add(new Clinic(2,"Accord Medical Clinic ","157 Ang Mo Kio Avenue 4, #01 - 578, Mayflower Shopping & Food Centre, ","Singapore - 560157"));
-        ClinicArrList.add(new Clinic(3,"Ang Mo Kio Family Medicine Clinic Pte Ltd","4190 Ang Mo Kio Avenue 6, #03 - 01, Broadway Plaza,","Singapore - 569841"));
+        ClinicArrList.add(new Clinic(1,"A St*R Dental Surgery","330 Ang Mo Kio Avenue 1, #01 - 1805,","Singapore - 560330"));
+        ClinicArrList.add(new Clinic(2,"Ace Dental Centre ","338 Ang Mo Kio Avenue 1, #01 - 1669, ","Singapore - 560338"));
+        ClinicArrList.add(new Clinic(3,"Amk Central Dental Surgery","726 Ang Mo Kio Avenue 6, #01 - 4162,","Singapore - 560726"));
 
 
         ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
@@ -101,7 +91,7 @@ public class NearestClinicFragment extends Fragment {
     }
 
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

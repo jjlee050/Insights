@@ -1,10 +1,7 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -16,23 +13,16 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.model.Event;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-import com.fypj.insightsLocal.util.LatestEventsListAdapter;
-import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
 
-public class NearestClinicFragment extends Fragment {
-    private final String ARG_SECTION_NUMBER = "section_number";
-    MainPageActivity activity;
+
+public class ViewClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -48,25 +38,41 @@ public class NearestClinicFragment extends Fragment {
      */
     ViewPager mViewPager;
 
-    public NearestClinicFragment newInstance(MainPageActivity activity,int sectionNumber) {
-        NearestClinicFragment fragment = new NearestClinicFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, 1);
-        this.activity = activity;
-        fragment.setArguments(args);
-        setHasOptionsMenu(true);
-        return fragment;
-    }
-    public NearestClinicFragment() {
-    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view__clinic);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
 
 
+        actionBar.addTab(actionBar.newTab().setText("Details").setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setText("Location").setTabListener(this));
+
+    }
 
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.nearest_clinc, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.view__clinic, menu);
+        return true;
     }
 
     @Override
@@ -81,24 +87,21 @@ public class NearestClinicFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_nearest_clinc, container, false);
-
-        getActivity().getActionBar().setTitle("Nearest Clinic");
-        final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
-
-        final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"338 Family Clinic","338 Ang Mo Kio Avenue 1, #01 - 1615,","Singapore - 560338"));
-        ClinicArrList.add(new Clinic(2,"Accord Medical Clinic ","157 Ang Mo Kio Avenue 4, #01 - 578, Mayflower Shopping & Food Centre, ","Singapore - 560157"));
-        ClinicArrList.add(new Clinic(3,"Ang Mo Kio Family Medicine Clinic Pte Ltd","4190 Ang Mo Kio Avenue 6, #03 - 01, Broadway Plaza,","Singapore - 569841"));
-
-
-        ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
-        lvNearestClinic.setAdapter(adapter);
-        return rootView;
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mViewPager.setCurrentItem(tab.getPosition());
     }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -114,13 +117,23 @@ public class NearestClinicFragment extends Fragment {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Fragment fragment = null;
+            switch (position) {
+                case 0:
+                    fragment = new NearestClinicFragment();
+                    break;
+                case 1:
+                    fragment = new NearestDentalFragment();
+                    break;
+            }
+            return fragment;
+            //return NearestClinicFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -163,7 +176,12 @@ public class NearestClinicFragment extends Fragment {
         public PlaceholderFragment() {
         }
 
-
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_view__clinic, container, false);
+            return rootView;
+        }
 
 
     }

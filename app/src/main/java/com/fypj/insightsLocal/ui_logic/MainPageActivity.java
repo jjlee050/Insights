@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -66,10 +67,12 @@ public class MainPageActivity extends ActionBarActivity
                         .commit();
                 break;
             case 1:
-                NearestClinicFragment NearestClinicFragment = new NearestClinicFragment();
+                /*NearestClinicFragment NearestClinicFragment = new NearestClinicFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, NearestClinicFragment.newInstance(this,position + 1))
-                        .commit();
+                        .commit();*/
+                Intent i = new Intent(this,NearestClinicActivity.class);
+                startActivity(i);
                 break;
 
 

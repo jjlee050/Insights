@@ -18,5 +18,6 @@
     <string name="title_section3">Section 3</string>
     <string name="share">Share</string>
     <string name="title_activity_nearest_clinc">NearestClinic</string>
+    <string name="title_activity_view__clinic">View_Clinic</string>
 
 </resources>
