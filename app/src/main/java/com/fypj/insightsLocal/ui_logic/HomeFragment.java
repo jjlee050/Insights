@@ -50,8 +50,8 @@ public class HomeFragment extends Fragment {
         ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
 
         ArrayList<HomeSection> homeSectionArrList = new ArrayList<HomeSection>();
-        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","Try","L"));
-        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Dental Clinic","Try2","L"));
+        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","Admiralty Family Clinic Pte Ltd","678A Woodlands Avenue 6, #01 - 14, \nSingapore - 731678"));
+        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Dental Clinic","Vista Dental Surgery (ADM) Pte Ltd","678A Woodlands Avenue 6, #01 - 43, \nSingapore - 731678"));
         homeSectionArrList.add(new HomeSection("Upcoming Events","A Talk on An Insight to the Banjarese Community in the Cosmopolitan Society of Singapore","Siglap South CC"));
 
         HomeListAdapter adapter = new HomeListAdapter(HomeFragment.this.getActivity(),android.R.id.text1,homeSectionArrList);
