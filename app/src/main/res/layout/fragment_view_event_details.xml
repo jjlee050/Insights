@@ -47,13 +47,12 @@
     <View
         android:id="@+id/horizontal_line"
         android:layout_width="fill_parent"
-        android:layout_height="1dip"
+        android:layout_height="0.1dip"
         android:background="@android:color/darker_gray"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/tv_event_goh"
-        android:layout_alignLeft="@+id/tv_event_goh"
-        android:layout_alignStart="@+id/tv_event_goh"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/tv_event_goh"/>
 
     <TextView
         android:id="@+id/tv_event_desc"
@@ -61,20 +60,18 @@
         android:layout_height="wrap_content"
         android:text="Brisk Walk for elderly residents"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_below="@+id/horizontal_line"
-        android:layout_alignLeft="@+id/horizontal_line"
-        android:layout_alignStart="@+id/horizontal_line" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/horizontal_line" />
 
     <View
         android:id="@+id/horizontal_line2"
         android:layout_width="fill_parent"
-        android:layout_height="1dip"
+        android:layout_height="0.1dip"
         android:background="@android:color/darker_gray"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/tv_event_desc"
-        android:layout_alignLeft="@+id/tv_event_desc"
-        android:layout_alignStart="@+id/tv_event_desc"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/tv_event_desc"/>
 
     <TextView
         android:id="@+id/tv_event_organiser"
@@ -82,9 +79,8 @@
         android:layout_height="wrap_content"
         android:text="Organized by: BMRC"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_below="@+id/horizontal_line2"
-        android:layout_alignLeft="@+id/horizontal_line2"
-        android:layout_alignStart="@+id/horizontal_line2" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/horizontal_line2" />
 
     <TextView
         android:id="@+id/tv_event_contact"

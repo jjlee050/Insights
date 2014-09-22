@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
 import com.fypj.insightsLocal.ui_logic.ViewEventDetailsFragment;
+import com.fypj.insightsLocal.ui_logic.ViewEventLocationFragment;
 
 import java.util.Locale;
 
@@ -30,7 +31,7 @@ public class ViewEventPagerAdapter extends FragmentPagerAdapter {
                 fragment = new ViewEventDetailsFragment();
                 break;
             case 1:
-                fragment = new ViewEventDetailsFragment();
+                fragment = new ViewEventLocationFragment();
                 break;
         }
         return fragment;
