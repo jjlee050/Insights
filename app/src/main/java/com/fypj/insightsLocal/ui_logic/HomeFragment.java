@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,9 +49,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
+        final ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
 
-        ArrayList<HomeSection> homeSectionArrList = new ArrayList<HomeSection>();
+        final ArrayList<HomeSection> homeSectionArrList = new ArrayList<HomeSection>();
         homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","Admiralty Family Clinic Pte Ltd","678A Woodlands Avenue 6, #01 - 14, \nSingapore - 731678"));
         homeSectionArrList.add(new HomeSection("Nearest CHAS-able Dental Clinic","Vista Dental Surgery (ADM) Pte Ltd","678A Woodlands Avenue 6, #01 - 43, \nSingapore - 731678"));
         homeSectionArrList.add(new HomeSection("Upcoming Events","A Talk on An Insight to the Banjarese Community in the Cosmopolitan Society of Singapore","Siglap South CC"));
@@ -89,7 +91,21 @@ public class HomeFragment extends Fragment {
                     swipeView.setEnabled(false);
             }
         });
+        lvHomeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if(position == 2){
+                    view.setSelected(true);
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewEventActivity.class);
+                    intent.putExtra("eventID", position);
+                    intent.putExtra("eventName",homeSectionArrList.get(position).getName());
+                    intent.putExtra("eventDateTime",homeSectionArrList.get(position).getTitle());
+                    intent.putExtra("eventDesc",homeSectionArrList.get(position).getLocation());
 
+                    startActivity(intent);
+                }
+            }
+        });
         getActivity().getActionBar().setTitle("Home");
         return rootView;
     }
