@@ -1,10 +1,12 @@
 package com.fypj.insightsLocal.util;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
 import com.fypj.insightsLocal.ui_logic.ViewEventDetailsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewEventLocationFragment;
@@ -16,9 +18,10 @@ import java.util.Locale;
  * one of the sections/tabs/pages.
  */
 public class ViewEventPagerAdapter extends FragmentPagerAdapter {
-
-    public ViewEventPagerAdapter(FragmentManager fm) {
+    private Event event;
+    public ViewEventPagerAdapter(FragmentManager fm,Event event) {
         super(fm);
+        this.event = event;
     }
 
     @Override
@@ -29,6 +32,9 @@ public class ViewEventPagerAdapter extends FragmentPagerAdapter {
         switch(position){
             case 0:
                 fragment = new ViewEventDetailsFragment();
+                Bundle args = new Bundle();
+                args.putString("eventName",event.getEventName());
+                fragment.setArguments(args);
                 break;
             case 1:
                 fragment = new ViewEventLocationFragment();

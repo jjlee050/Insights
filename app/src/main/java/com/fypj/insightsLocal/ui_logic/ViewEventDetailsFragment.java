@@ -32,6 +32,7 @@ public class ViewEventDetailsFragment extends Fragment {
     }
 
     public ViewEventDetailsFragment() {
+
     }
 
     @Override

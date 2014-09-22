@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
 
 
@@ -38,7 +39,7 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-
+    private Event event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +49,19 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+        savedInstanceState = getIntent().getExtras();
+        if(savedInstanceState != null){
+            int eventID = savedInstanceState.getInt("eventID");
+            String eventName = savedInstanceState.getString("eventName");
+            String eventDateTime = savedInstanceState.getString("eventDateTime");
+            String eventDesc = savedInstanceState.getString("eventDesc");
+            event = new Event(eventID,eventName,eventDateTime,eventDesc);
+            actionBar.setTitle(eventName);
+        }
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ViewEventPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new ViewEventPagerAdapter(getSupportFragmentManager(),event);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
