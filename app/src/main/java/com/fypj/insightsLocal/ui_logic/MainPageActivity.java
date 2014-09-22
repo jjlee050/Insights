@@ -30,7 +30,7 @@ public class MainPageActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private String mTitle;
-
+    private int currentPosition = 0;
 
     public String getMTitle() {
         return mTitle;
@@ -71,13 +71,14 @@ public class MainPageActivity extends ActionBarActivity
                         .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
                         .commit();
                 break;
-            case 2:
+            case 3:
                 ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, viewAllLatestEventsFragment.newInstance(this,position + 1))
                         .commit();
                 break;
         }
+        currentPosition = position;
     }
 
     public void onSectionAttached(int number) {
@@ -113,8 +114,16 @@ public class MainPageActivity extends ActionBarActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main_page, menu);
-            restoreActionBar();
+            switch(currentPosition){
+                case 0:
+                    getMenuInflater().inflate(R.menu.main_page, menu);
+                    restoreActionBar();
+                    break;
+                case 3:
+                    getMenuInflater().inflate(R.menu.latest_events, menu);
+                    restoreActionBar();
+                    break;
+            }
             return true;
         }
         return super.onCreateOptionsMenu(menu);

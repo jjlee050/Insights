@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -41,7 +43,14 @@ public class ViewAllLatestEventsFragment extends Fragment {
         args.putInt(ARG_SECTION_NUMBER, 1);
         this.activity = activity;
         fragment.setArguments(args);
+        setHasOptionsMenu(true);
         return fragment;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.latest_events,menu);
     }
 
     @Override

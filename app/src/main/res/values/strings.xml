@@ -11,5 +11,6 @@
     <string name="title_activity_view_events">ViewEventsActivity</string>
     <string name="read_aloud">Read_aloud</string>
     <string name="translate">Translate</string>
+    <string name="action_search">Search</string>
 
 </resources>
