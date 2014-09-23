@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -20,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -86,7 +88,7 @@ public class NearestClinicFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nearest_clinc, container, false);
 
-        getActivity().getActionBar().setTitle("Nearest Clinic");
+        getActivity().getActionBar().setTitle("Nearest CHAS Clinic Locator");
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
 
         final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
@@ -97,6 +99,19 @@ public class NearestClinicFragment extends Fragment {
 
         ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
         lvNearestClinic.setAdapter(adapter);
+
+        lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(NearestClinicFragment.this.getActivity(),ViewClinicActivity.class);
+                intent.putExtra("ClinicID", position);
+                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
+                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getClinicAddress());
+                intent.putExtra("ClinicPostalCode",ClinicArrList.get(position).getClinicPostalCode());
+
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 

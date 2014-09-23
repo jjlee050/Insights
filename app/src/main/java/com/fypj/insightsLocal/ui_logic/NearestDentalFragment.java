@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
@@ -76,7 +78,7 @@ public class NearestDentalFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nearest_dental, container, false);
 
-        getActivity().getActionBar().setTitle("Nearest Dental");
+        getActivity().getActionBar().setTitle("Nearest CHAS Clinic Locator");
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
 
         final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
@@ -87,6 +89,20 @@ public class NearestDentalFragment extends Fragment {
 
         ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
         lvNearestClinic.setAdapter(adapter);
+
+        lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(NearestDentalFragment.this.getActivity(),ViewClinicActivity.class);
+                intent.putExtra("ClinicID", position);
+                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
+                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getClinicAddress());
+                intent.putExtra("ClinicPostalCode",ClinicArrList.get(position).getClinicPostalCode());
+
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 

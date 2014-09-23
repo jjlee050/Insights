@@ -19,5 +19,6 @@
     <string name="share">Share</string>
     <string name="title_activity_nearest_clinc">NearestClinic</string>
     <string name="title_activity_view__clinic">View_Clinic</string>
+    <string name="Appointment">Book Appointment</string>
 
 </resources>

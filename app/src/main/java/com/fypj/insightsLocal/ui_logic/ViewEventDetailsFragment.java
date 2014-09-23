@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 
@@ -17,6 +18,8 @@ public class ViewEventDetailsFragment extends Fragment {
      * The fragment argument representing the section number for this
      * fragment.
      */
+
+
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     /**
@@ -39,6 +42,10 @@ public class ViewEventDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_event_details, container, false);
+
+
         return rootView;
     }
+
+
 }
