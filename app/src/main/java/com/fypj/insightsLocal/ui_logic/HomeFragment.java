@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
         final ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
 
         final ArrayList<HomeSection> homeSectionArrList = new ArrayList<HomeSection>();
-        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","Admiralty Family Clinic Pte Ltd","Mon - Fri: 0800 - 1300; 1400 - 1700; 1800 - 2300\nSat & Sun:\t0800 - 1300"));
+        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","338 Family Clinic Pte Ltd","Mon, Tue & Thu:\t0830 - 1230; 1400 - 1630; 1900 - 2100\nWed:\t0830 - 1230; 1400 - 1630\nFri, Sat & Sun:\t0830 - 1230"));
         homeSectionArrList.add(new HomeSection("Nearest CHAS-able Dental Clinic","Vista Dental Surgery (ADM) Pte Ltd","678A Woodlands Avenue 6, #01 - 43, \nSingapore - 731678"));
         homeSectionArrList.add(new HomeSection("Upcoming Events","A Talk on An Insight to the Banjarese Community in the Cosmopolitan Society of Singapore",""));
 
@@ -94,6 +94,16 @@ public class HomeFragment extends Fragment {
         lvHomeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if(position == 0){
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
+                    intent.putExtra("choice",position);
+                    startActivity(intent);
+                }
+                if(position == 1){
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
+                    intent.putExtra("choice",position);
+                    startActivity(intent);
+                }
                 if(position == 2){
                     view.setSelected(true);
                     Intent intent = new Intent(HomeFragment.this.getActivity(),ViewEventActivity.class);

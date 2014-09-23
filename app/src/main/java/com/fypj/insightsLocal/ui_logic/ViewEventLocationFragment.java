@@ -30,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -86,7 +87,8 @@ public class ViewEventLocationFragment extends Fragment {
         map.getUiSettings().setZoomGesturesEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(false);
         map.getUiSettings().setRotateGesturesEnabled(false);
-        map.addMarker(new MarkerOptions().title("Ang Mo Kio Community Centre").position(latLng));
+        Marker marker = map.addMarker(new MarkerOptions().title("Ang Mo Kio Community Centre").position(latLng));
+        marker.showInfoWindow();
         return rootView;
     }
 }

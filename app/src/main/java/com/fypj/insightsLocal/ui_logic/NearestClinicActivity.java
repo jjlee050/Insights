@@ -39,7 +39,6 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
      */
     ViewPager mViewPager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +46,8 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        savedInstanceState = getIntent().getExtras();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -64,9 +65,13 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         });
 
 
-        actionBar.addTab(actionBar.newTab().setText("Medical").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Dental").setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.medic).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.dental).setTabListener(this));
 
+        if(savedInstanceState != null){
+            int position = savedInstanceState.getInt("choice");
+            actionBar.setSelectedNavigationItem(position);
+        }
     }
 
 
