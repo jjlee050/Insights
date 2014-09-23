@@ -85,6 +85,15 @@ public class MainPageActivity extends ActionBarActivity
                         .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
                         .commit();
                 break;
+
+            case 2:
+                /*NearestClinicFragment NearestClinicFragment = new NearestClinicFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, NearestClinicFragment.newInstance(this,position + 1))
+                        .commit();*/
+                Intent t = new Intent(this,CheckEligibilityActivity.class);
+                startActivity(t);
+                break;
         }
         currentPosition = position;
     }
@@ -133,6 +142,10 @@ public class MainPageActivity extends ActionBarActivity
                     break;
                 case 3:
                     getMenuInflater().inflate(R.menu.latest_events, menu);
+                    restoreActionBar();
+                    break;
+                case 4:
+                    getMenuInflater().inflate(R.menu.check_eligibilty, menu);
                     restoreActionBar();
                     break;
             }
