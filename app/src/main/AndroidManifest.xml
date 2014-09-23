@@ -47,7 +47,11 @@
         </activity>
         <activity
             android:name=".ui_logic.NearestClinicActivity"
-            android:label="@string/title_activity_nearest_clinc" >
+            android:label="@string/title_activity_nearest_clinc"
+            android:parentActivityName=".ui_logic.MainPageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui_logic.MainPageActivity" />
         </activity>
         <activity
             android:name=".ui_logic.ViewClinicActivity"

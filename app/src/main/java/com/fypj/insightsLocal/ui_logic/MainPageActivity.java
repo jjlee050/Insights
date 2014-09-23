@@ -74,10 +74,6 @@ public class MainPageActivity extends ActionBarActivity
                         .commit();
                 break;
             case 1:
-                /*NearestClinicFragment NearestClinicFragment = new NearestClinicFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, NearestClinicFragment.newInstance(this,position + 1))
-                        .commit();*/
                 Intent i = new Intent(this,NearestClinicActivity.class);
                 startActivity(i);
                 break;

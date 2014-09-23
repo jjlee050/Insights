@@ -8,19 +8,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class NearestClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -65,8 +56,8 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         });
 
 
-        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.medic).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.dental).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_medic).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_tooth).setTabListener(this));
 
         if(savedInstanceState != null){
             int position = savedInstanceState.getInt("choice");
