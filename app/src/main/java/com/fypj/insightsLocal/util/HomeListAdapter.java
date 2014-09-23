@@ -44,7 +44,6 @@ public class HomeListAdapter extends ArrayAdapter<HomeSection> {
 
         TextView tvTitle = (TextView) rowView.findViewById(R.id.tv_title);
         TextView tvName = (TextView) rowView.findViewById(R.id.tv_name);
-        TextView tvLocation = (TextView) rowView.findViewById(R.id.tv_location);
         ImageView ivClinicImg = (ImageView) rowView.findViewById(R.id.iv_clinic_img);
 
         if(position != 2){
@@ -63,7 +62,6 @@ public class HomeListAdapter extends ArrayAdapter<HomeSection> {
         System.out.println("Position: " + position);
         tvTitle.setText(sectionArrList.get(position).getTitle());
         tvName.setText(sectionArrList.get(position).getName());
-        tvLocation.setText(sectionArrList.get(position).getLocation());
 
 
 

@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
@@ -70,7 +71,6 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
@@ -80,10 +80,8 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
                 actionBar.setSelectedNavigationItem(position);
             }
         });
-
-
-        actionBar.addTab(actionBar.newTab().setText("Details").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Location").setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_place).setTabListener(this));
 
     }
 
