@@ -6,12 +6,12 @@ package com.fypj.insightsLocal.model;
 public class HomeSection {
     private String title;
     private String name;
-    private String location;
+    private String contactNo;
 
-    public HomeSection(String title, String name, String location) {
+    public HomeSection(String title, String name, String contactNo) {
         this.title = title;
         this.name = name;
-        this.location = location;
+        this.contactNo = contactNo;
     }
 
     public String getTitle() {
@@ -30,11 +30,11 @@ public class HomeSection {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getContactNo() {
+        return contactNo;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
     }
 }

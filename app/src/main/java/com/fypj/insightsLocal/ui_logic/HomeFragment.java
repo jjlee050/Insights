@@ -52,9 +52,9 @@ public class HomeFragment extends Fragment {
         final ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
 
         final ArrayList<HomeSection> homeSectionArrList = new ArrayList<HomeSection>();
-        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","Admiralty Family Clinic Pte Ltd","678A Woodlands Avenue 6, #01 - 14, \nSingapore - 731678"));
+        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","Admiralty Family Clinic Pte Ltd","Mon - Fri: 0800 - 1300; 1400 - 1700; 1800 - 2300\nSat & Sun:\t0800 - 1300"));
         homeSectionArrList.add(new HomeSection("Nearest CHAS-able Dental Clinic","Vista Dental Surgery (ADM) Pte Ltd","678A Woodlands Avenue 6, #01 - 43, \nSingapore - 731678"));
-        homeSectionArrList.add(new HomeSection("Upcoming Events","A Talk on An Insight to the Banjarese Community in the Cosmopolitan Society of Singapore","Siglap South CC"));
+        homeSectionArrList.add(new HomeSection("Upcoming Events","A Talk on An Insight to the Banjarese Community in the Cosmopolitan Society of Singapore",""));
 
         HomeListAdapter adapter = new HomeListAdapter(HomeFragment.this.getActivity(),android.R.id.text1,homeSectionArrList);
         lvHomeList.setAdapter(adapter);
@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("eventID", position);
                     intent.putExtra("eventName",homeSectionArrList.get(position).getName());
                     intent.putExtra("eventDateTime",homeSectionArrList.get(position).getTitle());
-                    intent.putExtra("eventDesc",homeSectionArrList.get(position).getLocation());
+                    intent.putExtra("eventDesc",homeSectionArrList.get(position).getContactNo());
 
                     startActivity(intent);
                 }
