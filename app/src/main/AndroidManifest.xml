@@ -61,6 +61,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.NearestClinicActivity" />
         </activity>
+
+        <activity
+            android:name=".ui_logic.CheckEligibilityActivity"
+            android:label="@string/title_activity_check_eligibilty">
+        </activity>
     </application>
 
 </manifest>

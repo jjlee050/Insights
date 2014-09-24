@@ -155,6 +155,10 @@ public class MainPageActivity extends ActionBarActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.check_eligibility){
+            Intent intent = new Intent(this,CheckEligibilityActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
