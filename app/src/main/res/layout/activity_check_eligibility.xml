@@ -3,84 +3,67 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-<LinearLayout
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Eligibility:"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="30dp"
-        />
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="450dp"
-        android:layout_height="125dp"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_gravity="center"
-        android:src="@drawable/bluecard"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You are eligible to apply for:"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:textSize="20dp"
+            />
 
+        <ImageView
+            android:id="@+id/iv_blue_card"
+            android:layout_width="450dp"
+            android:layout_height="125dp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center"
+            android:src="@drawable/bluecard"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="You can apply for this if your household income per person:"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="20dp"
-        />
-    <ImageView
-        android:id="@+id/iv_clinic_img"
-        android:layout_width="300dp"
-        android:layout_height="120dp"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_gravity="center"
-        android:src="@drawable/pioneercard"/>
+        <ImageView
+            android:id="@+id/iv_pioneer_card"
+            android:layout_width="450dp"
+            android:layout_height="125dp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center"
+            android:src="@drawable/pioneercard"/>
 
-    <View
-        android:id="@+id/horizontal_line"
-        android:layout_width="fill_parent"
-        android:layout_height="0.1dip"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/tv_clin1_goh"/>
+        <View
+            android:id="@+id/horizontal_line"
+            android:layout_width="fill_parent"
+            android:layout_height="0.1dip"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/tv_clin1_goh"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Benefits:"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="30dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benefits:"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Subsidies for common illness:\n(e.g cough and flu)"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="$18.50 per visit"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="70dp"
-        android:textSize="30dp"
-        />
-
-
-</LinearLayout>
-    </ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subsidies for common illness: $18.50 per visit\n(e.g cough and flu) "
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+            />
+    </LinearLayout>
+</ScrollView>

@@ -2,14 +2,17 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,7 +60,7 @@ public class ViewAllPioneerPackagesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_pioneer_packages, container, false);
         getActivity().getActionBar().setTitle("View Pioneer Packages");
 
-        ListView lvPackagesList = (ListView) rootView.findViewById(R.id.lv_packages_list);
+        final ListView lvPackagesList = (ListView) rootView.findViewById(R.id.lv_packages_list);
 
         final ArrayList<String> packagesArrList = new ArrayList<String>();
         packagesArrList.add("CHAS Blue");
@@ -66,6 +69,12 @@ public class ViewAllPioneerPackagesFragment extends Fragment {
 
         ViewAllPioneerPackagesListAdapter adapter = new ViewAllPioneerPackagesListAdapter(ViewAllPioneerPackagesFragment.this.getActivity(),android.R.id.text1,packagesArrList);
         lvPackagesList.setAdapter(adapter);
+        lvPackagesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                System.out.println(lvPackagesList.getItemAtPosition(position));
+            }
+        });
         return rootView;
     }
 
