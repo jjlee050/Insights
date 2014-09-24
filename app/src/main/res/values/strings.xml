@@ -25,5 +25,6 @@
     <string name="Submit">Submit</string>
     <string name="title_activity_booking_appt"> Book Appointment</string>
     <string name="title_activity_view_pioneer_package">View Pioneer Package </string>
+    <string name="title_activity_view_pioneer_packages">ViewPioneerPackagesActivity</string>
 
 </resources>
