@@ -77,22 +77,17 @@ public class MainPageActivity extends ActionBarActivity
                 Intent i = new Intent(this,NearestClinicActivity.class);
                 startActivity(i);
                 break;
-
-
+            case 2:
+                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
+                        .commit();
+                break;
             case 3:
                 ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
                         .commit();
-                break;
-
-            case 2:
-                /*NearestClinicFragment NearestClinicFragment = new NearestClinicFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, NearestClinicFragment.newInstance(this,position + 1))
-                        .commit();*/
-                Intent t = new Intent(this,CheckEligibilityActivity.class);
-                startActivity(t);
                 break;
         }
         currentPosition = position;
@@ -107,13 +102,10 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "CHAS Clinic Locator";
                 break;
             case 3:
-                mTitle = "Check Eligibility";
+                mTitle = "Pioneer Packages";
                 break;
             case 4:
                 mTitle = "Latest Events";
-                break;
-            case 5:
-                mTitle = "Settings";
                 break;
         }
     }
@@ -140,12 +132,12 @@ public class MainPageActivity extends ActionBarActivity
                     getMenuInflater().inflate(R.menu.nearest_clinc, menu);
                     restoreActionBar();
                     break;
-                case 3:
-                    getMenuInflater().inflate(R.menu.latest_events, menu);
+                case 2:
+                    getMenuInflater().inflate(R.menu.pioneer_packages, menu);
                     restoreActionBar();
                     break;
-                case 4:
-                    getMenuInflater().inflate(R.menu.check_eligibilty, menu);
+                case 3:
+                    getMenuInflater().inflate(R.menu.latest_events, menu);
                     restoreActionBar();
                     break;
             }

@@ -106,7 +106,7 @@ public class NavigationDrawerFragment extends Fragment {
                 new String[]{
                         "Home",
                         "CHAS Clinic Locator",
-                        "Check Eligibility",
+                        "Pioneer Packages",
                         "Latest Events"
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
