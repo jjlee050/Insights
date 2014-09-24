@@ -16,7 +16,7 @@
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/tv_img"
+        android:id="@+id/iv_img"
         android:layout_width="170dp"
         android:layout_height="125dp"
         android:paddingTop="@dimen/activity_vertical_margin"

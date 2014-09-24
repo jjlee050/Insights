@@ -6,19 +6,16 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.HomeSection;
-import com.fypj.insightsLocal.util.HomeListAdapter;
 import com.fypj.insightsLocal.util.ViewAllPioneerPackagesListAdapter;
 
 import java.util.ArrayList;
@@ -72,7 +69,8 @@ public class ViewAllPioneerPackagesFragment extends Fragment {
         lvPackagesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                System.out.println(lvPackagesList.getItemAtPosition(position));
+                Intent intent = new Intent(ViewAllPioneerPackagesFragment.this.getActivity(), ViewPioneerPackageActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;

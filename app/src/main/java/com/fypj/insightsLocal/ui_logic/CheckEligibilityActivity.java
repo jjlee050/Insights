@@ -9,10 +9,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+
+import java.util.ArrayList;
 
 public class CheckEligibilityActivity extends Activity {
 
@@ -20,7 +27,38 @@ public class CheckEligibilityActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_eligibility);
+        TableLayout tableLayoutSubsidies = (TableLayout) findViewById(R.id.tableLayout_subsidies);
 
+        ArrayList<String> leftArrList = new ArrayList<String>();
+        leftArrList.add("Common illnesses:\n(e.g. cough and cold)");
+        leftArrList.add("Simple Chronic conditions:\nunder CDMP");
+        leftArrList.add("Complex Chronic conditions:\nunder CDMP");
+        leftArrList.add("Selected dental services:");
+        leftArrList.add("Health screening under\nHPB’s ISP4:");
+
+        ArrayList<String> rightArrList = new ArrayList<String>();
+        rightArrList.add("$28.50 per visit");
+        rightArrList.add("$90 per visit,\ncapped at $360 per year");
+        rightArrList.add("$135 per visit,\ncapped at $540 per year");
+        rightArrList.add("$21 to $266.50\nper procedure\n(dependent on procedure)");
+        rightArrList.add("Screening tests: Free \nwith HPB’s invitation letter;\nand Doctor’s consultation");
+
+
+        for (int x = 0; x < leftArrList.size(); x++) {
+            TextView tvLeft = new TextView(this);
+            TextView tvRight = new TextView(this);
+            tvLeft.setText(leftArrList.get(x));
+            tvRight.setText(rightArrList.get(x));
+            TableRow tr = new TableRow(this);
+            tr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            tr.addView(tvLeft);
+            tr.addView(tvRight);
+            tvLeft.setPadding(10,10,10,10);
+            tvRight.setPadding(10,10,10,10);
+            tableLayoutSubsidies.addView(tr, ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
     }
 
 

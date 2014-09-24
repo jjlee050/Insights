@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.util.ClinicAdapter;
+import com.fypj.insightsLocal.util.SwipeGestureFilter;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -173,5 +179,4 @@ public class NearestDentalFragment extends Fragment {
 
 
     }
-
 }

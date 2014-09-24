@@ -65,6 +65,18 @@
             android:name=".ui_logic.BookingAppt"
             android:label="@string/title_activity_booking_appt" >
         </activity>
+        <activity
+            android:name=".ui_logic.CheckEligibilityActivity"
+            android:label="@string/title_activity_check_eligibilty" >
+        </activity>
+        <activity
+            android:name=".ui_logic.ViewPioneerPackageActivity"
+            android:label="@string/title_activity_view_pioneer_package"
+            android:parentActivityName=".ui_logic.MainPageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
+        </activity>
     </application>
 
 </manifest>
