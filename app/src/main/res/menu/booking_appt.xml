@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fypj.insightsLocal.ui_logic.BookingAppt" >
+
+    <item android:id="@+id/Submit"
+        android:title="@string/Submit"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+
+        />
+</menu>

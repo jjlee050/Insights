@@ -15,16 +15,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ImageView
+        android:id="@+id/tv_img"
+        android:layout_width="170dp"
+        android:layout_height="125dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/tv_Clinic_name"/>
+
     <TextView
         android:id="@+id/tv_Clinic_Address"
         android:textSize="14dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_img"/>
 
     <TextView
         android:id="@+id/tv_Clinic_PostalCode"
         android:textSize="14dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@+id/tv_img"/>
 
 </LinearLayout>

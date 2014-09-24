@@ -21,7 +21,10 @@
     <string name="title_activity_view__clinic">View_Clinic</string>
     <string name="Appointment">Book Appointment</string>
     <string name="title_activity_check_eligibilty">CheckEligibilty</string>
-    <string name="check_eligibility">Check Eligibility</string>
+    <string name ="check_eligibility">Check Eligibility</string>
+    <string name="Submit">Submit</string>
+    <string name="title_activity_booking_appt"> Book Appointment</string>
+
 
 
 </resources>

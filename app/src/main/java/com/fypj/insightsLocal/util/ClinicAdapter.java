@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
@@ -34,6 +35,28 @@ public class ClinicAdapter extends ArrayAdapter {
         TextView tvClinicName = (TextView) rowView.findViewById(R.id.tv_Clinic_name);
         TextView tvClinicAddress = (TextView) rowView.findViewById(R.id.tv_Clinic_Address);
         TextView tvClinicPostalCode = (TextView) rowView.findViewById(R.id.tv_Clinic_PostalCode);
+        ImageView ivImg = (ImageView) rowView.findViewById(R.id.iv_img);
+
+        if(position != 3){
+            ivImg.setVisibility(View.VISIBLE);
+            if(position == 0){
+                ivImg.setImageResource(R.drawable.medical_clinic);
+
+            }
+            else if(position == 1){
+                ivImg.setImageResource(R.drawable.familyclinic);
+
+            }
+            else if(position == 2){
+                ivImg.setImageResource(R.drawable.medical_clinic);
+
+            }
+
+        }
+        else{
+            ivImg.getLayoutParams().width = 35;
+        }
+
 
         System.out.println("Position: " + position);
 

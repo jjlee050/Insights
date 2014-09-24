@@ -61,6 +61,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.NearestClinicActivity" />
         </activity>
+        <activity
+            android:name=".ui_logic.BookingAppt"
+            android:label="@string/title_activity_booking_appt" >
+        </activity>
     </application>
 
 </manifest>
