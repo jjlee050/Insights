@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.fypj.insightsLocal.ui_logic.NearestClinicFragment$PlaceholderFragment">
 
     <TextView
@@ -12,5 +14,8 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lv_nearest_dental" />
+        android:id="@+id/lv_nearest_dental"
+        android:dividerHeight="@dimen/activity_vertical_margin"
+        android:divider="@android:color/transparent"
+        android:paddingTop="@dimen/activity_vertical_margin"/>
 </RelativeLayout>

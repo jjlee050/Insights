@@ -32,12 +32,17 @@
         android:layout_below="@+id/imgBtn_latest_events"
         android:layout_alignLeft="@+id/imgBtn_latest_events"
         android:layout_alignStart="@+id/imgBtn_latest_events"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:id="@+id/swipe">
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lv_latest_events" />
+            android:id="@+id/lv_latest_events"
+            android:dividerHeight="@dimen/activity_vertical_margin"
+            android:divider="@android:color/transparent"
+            android:paddingTop="@dimen/activity_vertical_margin"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
