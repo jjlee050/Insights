@@ -36,17 +36,14 @@ public class HomeListAdapter extends ArrayAdapter<String> {
         TextView tvTitle = (TextView) rowView.findViewById(R.id.tv_title);
         ImageView ivClinicImg = (ImageView) rowView.findViewById(R.id.iv_clinic_img);
 
-        if(position != 2){
-            ivClinicImg.setVisibility(View.VISIBLE);
-            if(position == 0){
-                ivClinicImg.setImageResource(R.drawable.pioneercard);
-            }
-            else if(position == 1){
-                ivClinicImg.setImageResource(R.drawable.dental_clinic);
-            }
+        if(position == 0){
+            ivClinicImg.setImageResource(R.drawable.pioneer_generations_pic);
         }
-        else{
-            ivClinicImg.getLayoutParams().width = 35;
+        else if(position == 1){
+            ivClinicImg.setImageResource(R.drawable.lifestyle_events);
+        }
+        else if(position == 2){
+            ivClinicImg.setImageResource(R.drawable.chas_clinics_locator);
         }
 
         System.out.println("Position: " + position);

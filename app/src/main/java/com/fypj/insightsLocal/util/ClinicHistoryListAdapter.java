@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.ClinicHistory;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -33,10 +34,12 @@ public class ClinicHistoryListAdapter extends ArrayAdapter<ClinicHistory> {
         TextView tvService = (TextView) rowView.findViewById(R.id.tv_service);
         TextView tvAmt = (TextView) rowView.findViewById(R.id.tv_amt);
 
+        DecimalFormat formatter = new DecimalFormat("$00.00");
+
         System.out.println("Position: " + position);
         tvClinicName.setText(clinicHistoryArrayList.get(position).getClinicName());
         tvService.setText(clinicHistoryArrayList.get(position).getService());
-        tvAmt.setText(String.valueOf(clinicHistoryArrayList.get(position).getAmount()));
+        tvAmt.setText(formatter.format(clinicHistoryArrayList.get(position).getAmount()));
 
         return rowView;
     }
