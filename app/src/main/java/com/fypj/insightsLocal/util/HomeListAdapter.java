@@ -11,18 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.HomeSection;
 
 import java.util.ArrayList;
 
 /**
  * Created by L33525 on 22/9/2014.
  */
-public class HomeListAdapter extends ArrayAdapter<HomeSection> {
+public class HomeListAdapter extends ArrayAdapter<String> {
     private Activity context;
-    private ArrayList<HomeSection> sectionArrList;
+    private ArrayList<String> sectionArrList;
 
-    public HomeListAdapter(Activity context, int textViewResourceId, ArrayList<HomeSection> sectionArrList) {
+    public HomeListAdapter(Activity context, int textViewResourceId, ArrayList<String> sectionArrList) {
         super(context, R.layout.list_latest_events, sectionArrList);
         this.context = (Activity) context;
         this.sectionArrList = sectionArrList;
@@ -35,20 +34,15 @@ public class HomeListAdapter extends ArrayAdapter<HomeSection> {
         View rowView = inflater.inflate(R.layout.list_home, null, true);
 
         TextView tvTitle = (TextView) rowView.findViewById(R.id.tv_title);
-        TextView tvName = (TextView) rowView.findViewById(R.id.tv_name);
-        TextView tvContactNo = (TextView) rowView.findViewById(R.id.tv_contact_no);
         ImageView ivClinicImg = (ImageView) rowView.findViewById(R.id.iv_clinic_img);
-        ImageView ivImg = (ImageView) rowView.findViewById(R.id.iv_img);
 
         if(position != 2){
             ivClinicImg.setVisibility(View.VISIBLE);
             if(position == 0){
-                ivClinicImg.setImageResource(R.drawable.medical_clinic);
-                ivImg.setImageResource(R.drawable.medic);
+                ivClinicImg.setImageResource(R.drawable.pioneercard);
             }
             else if(position == 1){
                 ivClinicImg.setImageResource(R.drawable.dental_clinic);
-                ivImg.setImageResource(R.drawable.dental);
             }
         }
         else{
@@ -56,9 +50,7 @@ public class HomeListAdapter extends ArrayAdapter<HomeSection> {
         }
 
         System.out.println("Position: " + position);
-        tvTitle.setText(sectionArrList.get(position).getTitle());
-        tvName.setText(sectionArrList.get(position).getName());
-        tvContactNo.setText(sectionArrList.get(position).getContactNo());
+        tvTitle.setText(sectionArrList.get(position));
 
 
         return rowView;

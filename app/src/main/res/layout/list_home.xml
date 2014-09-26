@@ -3,41 +3,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/white">
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:textSize="16dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="true"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin" />
-
-    <View
-        android:id="@+id/horizontal_line"
-        android:layout_width="fill_parent"
-        android:layout_height="0.1dip"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:layout_below="@+id/tv_title"/>
 
     <ImageView
         android:id="@+id/iv_clinic_img"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="125dp"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -45,20 +15,11 @@
         android:layout_below="@+id/horizontal_line"/>
 
     <TextView
-        android:id="@+id/tv_name"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
+        android:textSize="24dp"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/horizontal_line"
-        android:layout_toRightOf="@+id/iv_clinic_img"/>
+        android:layout_below="@+id/iv_clinic_img"
+        android:padding="@dimen/activity_horizontal_margin"/>
 
-    <TextView
-        android:id="@+id/tv_contact_no"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/tv_name"
-        android:layout_toRightOf="@+id/iv_clinic_img"/>
 </RelativeLayout>

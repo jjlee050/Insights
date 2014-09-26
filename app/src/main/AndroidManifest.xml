@@ -77,6 +77,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
         </activity>
+        <activity
+            android:name=".ui_logic.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".ui_logic.MainPageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
+        </activity>
     </application>
 
 </manifest>

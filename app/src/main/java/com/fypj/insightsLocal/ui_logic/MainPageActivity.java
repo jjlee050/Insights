@@ -74,9 +74,8 @@ public class MainPageActivity extends ActionBarActivity
                         .commit();
                 break;
             case 1:
-                Intent i = new Intent(this,NearestClinicActivity.class);
+                Intent i = new Intent(this,ProfileActivity.class);
                 startActivity(i);
-                break;
             case 2:
                 ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
                 fragmentManager.beginTransaction()
@@ -89,6 +88,10 @@ public class MainPageActivity extends ActionBarActivity
                         .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
                         .commit();
                 break;
+            case 4:
+                Intent intent = new Intent(this,NearestClinicActivity.class);
+                startActivity(intent);
+                break;
         }
         currentPosition = position;
     }
@@ -99,13 +102,16 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "Home";
                 break;
             case 2:
-                mTitle = "CHAS Clinic Locator";
+                mTitle = "My Profile";
                 break;
             case 3:
-                mTitle = "Pioneer Packages";
+                mTitle = "Pioneer Generation Packages";
                 break;
             case 4:
-                mTitle = "Latest Events";
+                mTitle = "Lifestyle Events";
+                break;
+            case 5:
+                mTitle = "CHAS Clinic";
                 break;
         }
     }
@@ -129,7 +135,7 @@ public class MainPageActivity extends ActionBarActivity
                     restoreActionBar();
                     break;
                 case 1:
-                    getMenuInflater().inflate(R.menu.nearest_clinc, menu);
+                    getMenuInflater().inflate(R.menu.profile, menu);
                     restoreActionBar();
                     break;
                 case 2:
@@ -138,6 +144,10 @@ public class MainPageActivity extends ActionBarActivity
                     break;
                 case 3:
                     getMenuInflater().inflate(R.menu.latest_events, menu);
+                    restoreActionBar();
+                    break;
+                case 4:
+                    getMenuInflater().inflate(R.menu.nearest_clinc, menu);
                     restoreActionBar();
                     break;
             }

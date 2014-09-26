@@ -55,7 +55,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_all_latest_events, container, false);
-        getActivity().getActionBar().setTitle("Latest Events");
+        getActivity().getActionBar().setTitle("Lifestyle Events");
         final ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
 
         final ArrayList<Event> latestEventArrList = new ArrayList<Event>();

@@ -14,10 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.HomeSection;
 import com.fypj.insightsLocal.util.HomeListAdapter;
 
 import java.util.ArrayList;
@@ -51,46 +49,13 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         final ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
 
-        final ArrayList<HomeSection> homeSectionArrList = new ArrayList<HomeSection>();
-        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Medical Clinic","338 Family Clinic Pte Ltd","Mon, Tue & Thu:\t0830 - 1230; 1400 - 1630; 1900 - 2100\nWed:\t0830 - 1230; 1400 - 1630\nFri, Sat & Sun:\t0830 - 1230"));
-        homeSectionArrList.add(new HomeSection("Nearest CHAS-able Dental Clinic","Vista Dental Surgery (ADM) Pte Ltd","678A Woodlands Avenue 6, #01 - 43, \nSingapore - 731678"));
-        homeSectionArrList.add(new HomeSection("Upcoming Events","A Talk on An Insight to the Banjarese Community in the Cosmopolitan Society of Singapore",""));
+        final ArrayList<String> homeSectionArrList = new ArrayList<String>();
+        homeSectionArrList.add("Pioneer Generation Packages");
+        homeSectionArrList.add("Lifestyle Events");
+        homeSectionArrList.add("Clinics");
 
         HomeListAdapter adapter = new HomeListAdapter(HomeFragment.this.getActivity(),android.R.id.text1,homeSectionArrList);
         lvHomeList.setAdapter(adapter);
-
-        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-
-        swipeView.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        swipeView.setEnabled(false);
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeView.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeView.setRefreshing(false);
-
-                    }
-                }, 3000);
-            }
-        });
-
-        lvHomeList.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeView.setEnabled(true);
-                else
-                    swipeView.setEnabled(false);
-            }
-        });
         lvHomeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -106,12 +71,7 @@ public class HomeFragment extends Fragment {
                 }
                 if(position == 2){
                     view.setSelected(true);
-                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewEventActivity.class);
-                    intent.putExtra("eventID", position);
-                    intent.putExtra("eventName",homeSectionArrList.get(position).getName());
-                    intent.putExtra("eventDateTime",homeSectionArrList.get(position).getTitle());
-                    intent.putExtra("eventDesc",homeSectionArrList.get(position).getContactNo());
-
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllLatestEventsFragment.class);
                     startActivity(intent);
                 }
             }

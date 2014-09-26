@@ -105,9 +105,10 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.id.text1,
                 new String[]{
                         "Home",
+                        "My Profile",
+                        "Pioneer Generation Packages",
+                        "Lifestyle Events",
                         "CHAS Clinic Locator",
-                        "Pioneer Packages",
-                        "Latest Events"
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
