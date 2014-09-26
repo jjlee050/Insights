@@ -62,6 +62,10 @@ public class MainPageActivity extends ActionBarActivity
         onNavigationDrawerItemSelected(position);
     }
 
+    public int getContainer(){
+        return R.id.container;
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments

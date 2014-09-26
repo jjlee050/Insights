@@ -60,18 +60,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 if(position == 0){
-                    Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewPioneerPackageActivity.class);
                     intent.putExtra("choice",position);
                     startActivity(intent);
                 }
                 if(position == 1){
-                    Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
-                    intent.putExtra("choice",position);
+                    Intent intent = new Intent(getActivity().getApplicationContext(),ViewAllLatestEventsFragment.class);
                     startActivity(intent);
                 }
                 if(position == 2){
-                    view.setSelected(true);
-                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllLatestEventsFragment.class);
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
+                    intent.putExtra("choice",0);
                     startActivity(intent);
                 }
             }
