@@ -53,20 +53,12 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        actionBar.setTitle("Monthly Brisk Walk");
 
-        savedInstanceState = getIntent().getExtras();
-        if(savedInstanceState != null){
-            int eventID = savedInstanceState.getInt("eventID");
-            String eventName = savedInstanceState.getString("eventName");
-            String eventDateTime = savedInstanceState.getString("eventDateTime");
-            String eventDesc = savedInstanceState.getString("eventDesc");
-            event = new Event(eventID,eventName,eventDateTime,eventDesc);
-            actionBar.setTitle(eventName);
-        }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ViewEventPagerAdapter(getSupportFragmentManager(),event);
+        mSectionsPagerAdapter = new ViewEventPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

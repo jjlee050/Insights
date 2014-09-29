@@ -10,8 +10,7 @@
         android:id="@+id/iv_starting_img"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:background="@drawable/insights_logo"
+        android:background="@drawable/main_page_logo"
         />
 
     <ListView

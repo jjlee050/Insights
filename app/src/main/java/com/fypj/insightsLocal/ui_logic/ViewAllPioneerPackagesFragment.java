@@ -60,9 +60,9 @@ public class ViewAllPioneerPackagesFragment extends Fragment {
         final ListView lvPackagesList = (ListView) rootView.findViewById(R.id.lv_packages_list);
 
         final ArrayList<String> packagesArrList = new ArrayList<String>();
+        packagesArrList.add("CHAS for Pioneer Generation");
         packagesArrList.add("CHAS Blue");
         packagesArrList.add("CHAS Orange");
-        packagesArrList.add("CHAS for Pioneer Generation");
 
         ViewAllPioneerPackagesListAdapter adapter = new ViewAllPioneerPackagesListAdapter(ViewAllPioneerPackagesFragment.this.getActivity(),android.R.id.text1,packagesArrList);
         lvPackagesList.setAdapter(adapter);

@@ -37,13 +37,13 @@ public class ViewAllPioneerPackagesListAdapter extends ArrayAdapter<String> {
         System.out.println("Position: " + position);
 
         if(position == 0){
-            ivPackagesImage.setImageResource(R.drawable.bluecard);
+            ivPackagesImage.setImageResource(R.drawable.pioneercard);
         }
         else if(position == 1){
             ivPackagesImage.setImageResource(R.drawable.orangecard);
         }
         else if(position == 2){
-            ivPackagesImage.setImageResource(R.drawable.pioneercard);
+            ivPackagesImage.setImageResource(R.drawable.bluecard);
         }
         tvPackagesName.setText(packagesArrList.get(position));
         return rowView;

@@ -12,13 +12,14 @@
 
         <ImageView
             android:id="@+id/iv_packages"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp" />
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
 
         <TextView
             android:id="@+id/tv_package_name"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_gravity="center"
+            android:textSize="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

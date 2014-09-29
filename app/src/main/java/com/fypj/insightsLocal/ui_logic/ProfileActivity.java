@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import java.util.Locale;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -55,7 +56,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        getActionBar().setTitle("John Smith");
+        getActionBar().setTitle("John Tan");
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -63,7 +64,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
             }
         });
         actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Clinic History").setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setText("Medical History").setTabListener(this));
     }
 
 
@@ -82,6 +83,10 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if( id == R.id.check_eligibility){
+            Intent intent = new Intent(ProfileActivity.this, CheckEligibilityActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -18,10 +18,8 @@ import java.util.Locale;
  * one of the sections/tabs/pages.
  */
 public class ViewEventPagerAdapter extends FragmentPagerAdapter {
-    private Event event;
-    public ViewEventPagerAdapter(FragmentManager fm,Event event) {
+    public ViewEventPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.event = event;
     }
 
     @Override
@@ -32,9 +30,9 @@ public class ViewEventPagerAdapter extends FragmentPagerAdapter {
         switch(position){
             case 0:
                 fragment = new ViewEventDetailsFragment();
-                Bundle args = new Bundle();
+                /*Bundle args = new Bundle();
                 args.putString("eventName",event.getEventName());
-                fragment.setArguments(args);
+                fragment.setArguments(args);*/
                 break;
             case 1:
                 fragment = new ViewEventLocationFragment();

@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:textSize="24dp"
         android:padding="@dimen/activity_horizontal_margin"/>
 
     <View
@@ -27,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_clinic_img"
+        android:textSize="20dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:padding="@dimen/activity_horizontal_margin"/>
 </LinearLayout>

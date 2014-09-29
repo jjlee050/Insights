@@ -36,7 +36,7 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
         tvTitle.setText(titleArrList.get(position));
         if(position == 0){
             tvInfo.setText(Html.fromHtml("" +
-                    "<p>Name: John Smith</p>" +
+                    "<p>Name: John Tan</p>" +
                     "<p>Age: 68</p>" +
                     "<p>Contact No: 9102 2201 </p>" +
                     "<p>Address: Blk 12 Sembawang Circle S(710289) </p>"));
