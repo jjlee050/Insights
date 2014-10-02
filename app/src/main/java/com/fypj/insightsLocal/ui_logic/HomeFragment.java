@@ -21,31 +21,29 @@ import com.fypj.insightsLocal.util.HomeListAdapter;
 import java.util.ArrayList;
 
 /**
- * Created by jess on 19-Sep-14.
+ * This is an fragment class to do the UI logic for displaying the home page screen.
+ * Created by Lee Zhuo Xun on 19-Sep-14.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class HomeFragment extends Fragment {
-    private final String ARG_SECTION_NUMBER = "section_number";
-    MainPageActivity activity;
+    private MainPageActivity activity;
+    private int position;
     /**
-     * Returns a new instance of this fragment for the given section
-     * number.
+     * Default constructor
      */
-    public Fragment newInstance(MainPageActivity activity,int sectionNumber) {
+    public HomeFragment() {}
+
+    public HomeFragment newInstance(MainPageActivity activity,int sectionNumber) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, 1);
+        args.putInt("section_number", 1);
         this.activity = activity;
         fragment.setArguments(args);
         return fragment;
     }
 
-    public HomeFragment() {
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         final ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
 
@@ -59,14 +57,12 @@ public class HomeFragment extends Fragment {
         lvHomeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                HomeFragment.this.position = position;
                 if(position == 0){
-                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewPioneerPackageActivity.class);
-                    intent.putExtra("choice",position);
-                    startActivity(intent);
+                    onAttach(getActivity());
                 }
                 if(position == 1){
-                    Intent intent = new Intent(getActivity().getApplicationContext(),ViewAllLatestEventsFragment.class);
-                    startActivity(intent);
+                    onAttach(getActivity());
                 }
                 if(position == 2){
                     Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
@@ -82,7 +78,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainPageActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
+        ((MainPageActivity) activity).onSectionAttached(position);
     }
 }

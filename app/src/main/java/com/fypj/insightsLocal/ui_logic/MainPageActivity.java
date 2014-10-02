@@ -14,11 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
 
-
+/**
+ * This is the activity class to show the screen with navigational drawer
+ */
 public class MainPageActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -33,10 +36,18 @@ public class MainPageActivity extends ActionBarActivity
     private String mTitle;
     public static int currentPosition;
 
+    /**
+     * This is the getter method for mTitle
+     * @return String
+     */
     public String getMTitle() {
         return mTitle;
     }
 
+    /**
+     * This is the setter method for mTitle
+     * @param mTitle
+     */
     public void setMTitle(String mTitle) {
         this.mTitle = mTitle;
     }
@@ -46,8 +57,6 @@ public class MainPageActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
-        System.out.println(currentPosition);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -56,14 +65,6 @@ public class MainPageActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-    }
-
-    public void goToFragment(int position){
-        onNavigationDrawerItemSelected(position);
-    }
-
-    public int getContainer(){
-        return R.id.container;
     }
 
     @Override
@@ -100,6 +101,10 @@ public class MainPageActivity extends ActionBarActivity
         currentPosition = position;
     }
 
+    /**
+     * This method is to do the intent part for the respective activity class
+     * @param number
+     */
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -118,14 +123,17 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "CHAS Clinic";
                 break;
         }
+        Toast.makeText(this,mTitle,Toast.LENGTH_LONG);
     }
 
+    /**
+     * This method is to reinitialize the action bar
+     */
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
