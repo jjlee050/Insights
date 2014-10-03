@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Build;
@@ -26,12 +27,12 @@ import java.util.ArrayList;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ViewAllPioneerPackagesFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
-    MainPageActivity activity;
+    Context activity;
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public ViewAllPioneerPackagesFragment newInstance(MainPageActivity activity,int sectionNumber) {
+    public ViewAllPioneerPackagesFragment newInstance(Context activity,int sectionNumber) {
         ViewAllPioneerPackagesFragment fragment = new ViewAllPioneerPackagesFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, 1);

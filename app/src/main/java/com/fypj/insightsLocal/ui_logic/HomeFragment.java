@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -26,14 +27,14 @@ import java.util.ArrayList;
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class HomeFragment extends Fragment {
-    private MainPageActivity activity;
+    private Context activity;
     private int position;
     /**
      * Default constructor
      */
     public HomeFragment() {}
 
-    public HomeFragment newInstance(MainPageActivity activity,int sectionNumber) {
+    public HomeFragment newInstance(Context activity,int sectionNumber) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putInt("section_number", 1);
@@ -57,11 +58,12 @@ public class HomeFragment extends Fragment {
         lvHomeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                HomeFragment.this.position = position;
                 if(position == 0){
+                    HomeFragment.this.position = 3;
                     onAttach(getActivity());
                 }
                 if(position == 1){
+                    HomeFragment.this.position = 4;
                     onAttach(getActivity());
                 }
                 if(position == 2){
@@ -78,6 +80,5 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainPageActivity) activity).onSectionAttached(position);
     }
 }

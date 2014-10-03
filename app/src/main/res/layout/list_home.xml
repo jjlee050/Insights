@@ -17,7 +17,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:textSize="24dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="45dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_clinic_img"/>
 
@@ -25,7 +25,7 @@
         android:id="@+id/iv_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:padding="@dimen/activity_horizontal_margin"
         android:background="@drawable/ic_action_next_item"
         android:layout_alignParentTop="true"

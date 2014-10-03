@@ -95,6 +95,7 @@ public class MainPageActivity extends ActionBarActivity
                 break;
             case 4:
                 Intent intent = new Intent(this,NearestClinicActivity.class);
+                intent.putExtra("choice",0);
                 startActivity(intent);
                 break;
         }
@@ -105,8 +106,9 @@ public class MainPageActivity extends ActionBarActivity
      * This method is to do the intent part for the respective activity class
      * @param number
      */
-    public void onSectionAttached(int number) {
-        switch (number) {
+    public void onSectionAttached(int position) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (position) {
             case 1:
                 mTitle = "Home";
                 break;
@@ -114,15 +116,22 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "My Profile";
                 break;
             case 3:
-                mTitle = "Pioneer Generation Packages";
+                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
+                        .commit();
                 break;
             case 4:
-                mTitle = "Lifestyle Events";
+                ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
+                        .commit();
                 break;
             case 5:
                 mTitle = "CHAS Clinic";
                 break;
         }
+        System.out.println("Title: " + mTitle);
         Toast.makeText(this,mTitle,Toast.LENGTH_LONG);
     }
 
