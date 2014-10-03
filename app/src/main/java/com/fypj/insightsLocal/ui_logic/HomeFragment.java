@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.util.HomeListAdapter;
+import com.fypj.insightsLocal.controller.*;
 
 import java.util.ArrayList;
 
@@ -47,6 +49,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         final ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
+
+        new TestAsyncTask().execute(new Pair<Context, String>(HomeFragment.this.getActivity(), "Manfred"));
 
         final ArrayList<String> homeSectionArrList = new ArrayList<String>();
         homeSectionArrList.add("Pioneer Generation Packages");

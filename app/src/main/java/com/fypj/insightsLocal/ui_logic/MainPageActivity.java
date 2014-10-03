@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import com.fypj.insightsLocal.controller.TestAsyncTask;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
 
@@ -57,6 +59,7 @@ public class MainPageActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        new TestAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
