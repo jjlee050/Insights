@@ -5,5 +5,5 @@ package com.fypj.insightsLocal.options;
  */
 public interface Settings {
     String LOCAL_API_URL = "http://10.0.3.2:8080/_ah/api/";
-    String REMOTE_API_URL = "https://insights-50.appspot.com/_ah/api";
+    String REMOTE_API_URL = "https://insights-50.appspot.com/_ah/api/";
 }
