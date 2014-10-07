@@ -5,7 +5,9 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>com.fypj.mymodule.api.MyEndpoint,com.fypj.mymodule.api.QuoteEndpoint</param-value>
+            <param-value>com.fypj.mymodule.api.controller.MyEndpoint,com.fypj.mymodule.api.controller.QuoteEndpoint,
+                com.fypj.mymodule.api.controller.EventEndpoint,com.fypj.mymodule.api.controller.ClinicEndpoint,
+                com.fypj.mymodule.api.controller.MedicalHistoryEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

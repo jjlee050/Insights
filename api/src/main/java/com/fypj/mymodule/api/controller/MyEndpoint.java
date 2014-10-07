@@ -4,8 +4,9 @@
    https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloEndpoints
 */
 
-package com.fypj.mymodule.api;
+package com.fypj.mymodule.api.controller;
 
+import com.fypj.mymodule.api.model.MyBean;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;

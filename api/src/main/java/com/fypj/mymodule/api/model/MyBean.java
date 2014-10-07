@@ -1,4 +1,4 @@
-package com.fypj.mymodule.api;
+package com.fypj.mymodule.api.model;
 
 /** The object model for the data we are sending through endpoints */
 public class MyBean {
