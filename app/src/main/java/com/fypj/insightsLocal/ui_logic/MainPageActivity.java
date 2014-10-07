@@ -59,7 +59,7 @@ public class MainPageActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
-        new TestAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+        //new TestAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 

@@ -1,12 +1,19 @@
-package com.fypj.mymodule.api;
+package com.fypj.mymodule.api.model;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
  * Created by irani_r on 8/25/2014.
  */
+@Entity
 public class Quote {
+    @Id
     Long id;
     String who;
-    String whom;
+    String what;
+
+    public Quote() {}
 
     public Long getId() {
         return id;
@@ -24,11 +31,11 @@ public class Quote {
         this.who = who;
     }
 
-    public String getWhom() {
-        return whom;
+    public String getWhat() {
+        return what;
     }
 
-    public void setWhom(String whom) {
-        this.whom = whom;
+    public void setWhat(String what) {
+        this.what = what;
     }
 }

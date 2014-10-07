@@ -50,8 +50,6 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         final ListView lvHomeList = (ListView) rootView.findViewById(R.id.lv_home_list);
 
-        new TestAsyncTask().execute(new Pair<Context, String>(HomeFragment.this.getActivity(), "Manfred"));
-
         final ArrayList<String> homeSectionArrList = new ArrayList<String>();
         homeSectionArrList.add("Pioneer Generation Packages");
         homeSectionArrList.add("Lifestyle Events");
