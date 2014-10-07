@@ -99,7 +99,14 @@ public class ViewAllLatestEventsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(ViewAllLatestEventsFragment.this.getActivity(),ViewEventActivity.class);
-
+                intent.putExtra("id",latestEventArrList.get(position).getEventID());
+                intent.putExtra("name",latestEventArrList.get(position).getName());
+                intent.putExtra("dateAndTime",latestEventArrList.get(position).getDateAndTime());
+                intent.putExtra("guestOfHonour",latestEventArrList.get(position).getGuestOfHonour());
+                intent.putExtra("desc",latestEventArrList.get(position).getDesc());
+                intent.putExtra("organizer",latestEventArrList.get(position).getOrganizer());
+                intent.putExtra("contactNo",latestEventArrList.get(position).getContactNo());
+                intent.putExtra("location",latestEventArrList.get(position).getLocation());
                 startActivity(intent);
             }
         });

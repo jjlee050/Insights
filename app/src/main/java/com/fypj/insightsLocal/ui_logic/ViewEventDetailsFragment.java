@@ -43,6 +43,21 @@ public class ViewEventDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_event_details, container, false);
+        Bundle bundle = getArguments();
+        TextView tvEventName = (TextView) rootView.findViewById(R.id.tv_event_name);
+        TextView tvEventDateAndTime = (TextView) rootView.findViewById(R.id.tv_event_date_time);
+        TextView tvEventGuestOfHonour = (TextView) rootView.findViewById(R.id.tv_event_goh);
+        TextView tvEventDesc = (TextView) rootView.findViewById(R.id.tv_event_desc);
+        TextView tvEventOrganizer = (TextView) rootView.findViewById(R.id.tv_event_organiser);
+        TextView tvEventContactNo = (TextView) rootView.findViewById(R.id.tv_event_contact);
+
+
+        tvEventName.setText(bundle.getString("name"));
+        tvEventDateAndTime.setText(bundle.getString("dateAndTime"));
+        tvEventGuestOfHonour.setText(bundle.getString("guestOfHonour"));
+        tvEventDesc.setText(bundle.getString("desc"));
+        tvEventOrganizer.setText(bundle.getString("organizer"));
+        tvEventContactNo.setText(bundle.getString("contactNo"));
         return rootView;
     }
 

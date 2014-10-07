@@ -44,13 +44,23 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
 
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null){
-            actionBar.setTitle("Monthly Brisk Walk");
+            Long id = savedInstanceState.getLong("id");
+            String name = savedInstanceState.getString("name");
+            String dateAndTime = savedInstanceState.getString("dateAndTime");
+            String guestOfHonour = savedInstanceState.getString("guestOfHonour");
+            String desc = savedInstanceState.getString("desc");
+            String organizer = savedInstanceState.getString("organizer");
+            String contactNo = savedInstanceState.getString("contactNo");
+            String location = savedInstanceState.getString("location");
+
+            actionBar.setTitle(name);
+            event = new Event(id,name,dateAndTime,guestOfHonour,desc,organizer,contactNo,location);
         }
 
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ViewEventPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new ViewEventPagerAdapter(getSupportFragmentManager(),event);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
