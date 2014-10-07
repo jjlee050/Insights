@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+import  com.fypj.insightsLocal.model.Event;
 
 /**
  * A placeholder fragment containing a simple view.

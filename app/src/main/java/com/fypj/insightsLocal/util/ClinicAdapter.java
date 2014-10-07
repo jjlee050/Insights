@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.model.Event;
+import  com.fypj.insightsLocal.model.Clinic;
 
 import java.util.ArrayList;
 
@@ -60,9 +59,9 @@ public class ClinicAdapter extends ArrayAdapter {
 
         System.out.println("Position: " + position);
 
-        tvClinicName.setText(ClinicArrList.get(position).getClinicName());
-        tvClinicAddress.setText(ClinicArrList.get(position).getClinicAddress());
-        tvClinicPostalCode.setText(ClinicArrList.get(position).getClinicPostalCode());
+        tvClinicName.setText(ClinicArrList.get(position).getName());
+        tvClinicAddress.setText(ClinicArrList.get(position).getAddress());
+        /*tvClinicPostalCode.setText(ClinicArrList.get(position).getClinicPostalCode());*/
         return rowView;
     }
 }

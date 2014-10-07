@@ -1,17 +1,11 @@
 package com.fypj.insightsLocal.util;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Event;
-import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
 import com.fypj.insightsLocal.ui_logic.ViewEventDetailsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewEventLocationFragment;
-
-import java.util.Locale;
 
 /**
  * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
