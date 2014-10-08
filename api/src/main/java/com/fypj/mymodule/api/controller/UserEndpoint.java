@@ -1,6 +1,7 @@
 package com.fypj.mymodule.api.controller;
 
-import com.fypj.mymodule.api.model.Quote;
+import com.fypj.mymodule.api.model.MedicalHistory;
+import com.fypj.mymodule.api.model.User;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -12,45 +13,46 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
 
-import static com.fypj.mymodule.api.util.OfyService.ofy;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Named;
 
-/** An endpoint class we are exposing **/
-@Api(name = "quoteEndpoint", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
-public class QuoteEndpoint {
+import static com.fypj.mymodule.api.util.OfyService.ofy;
 
+/**
+ * Created by L33525 on 8/10/2014.
+ */
+@Api(name = "insightsUser",description = "API to view all user",  version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
+public class UserEndpoint {
     // Make sure to add this endpoint to your web.xml file if this is a web application.
 
-    private static final Logger LOG = Logger.getLogger(QuoteEndpoint.class.getName());
+    private static final Logger LOG = Logger.getLogger(UserEndpoint.class.getName());
     // Make sure to add this endpoint to your web.xml file if this is a web application.
 
-    public QuoteEndpoint() {
+    public UserEndpoint() {
 
     }
 
     /**
-     * Return a collection of quotes
+     * Return a collection of User
      *
-     * @param count The number of quotes
-     * @return a list of Quotes
+     * @param count The number of User
+     * @return a list of User
      */
-    @ApiMethod(name = "listQuote")
-    public CollectionResponse<Quote> listQuote(@Nullable @Named("cursor") String cursorString,
-                                               @Nullable @Named("count") Integer count) {
+    @ApiMethod(name = "listUser")
+    public CollectionResponse<User> listUser(@Nullable @Named("cursor") String cursorString,
+                                                                   @Nullable @Named("count") Integer count) {
 
-        Query<Quote> query = ofy().load().type(Quote.class);
+        Query<User> query = ofy().load().type(User.class);
         if (count != null) query.limit(count);
         if (cursorString != null && cursorString != "") {
             query = query.startAt(Cursor.fromWebSafeString(cursorString));
         }
 
-        List<Quote> records = new ArrayList<Quote>();
-        QueryResultIterator<Quote> iterator = query.iterator();
+        List<User> records = new ArrayList<User>();
+        QueryResultIterator<User> iterator = query.iterator();
         int num = 0;
         while (iterator.hasNext()) {
             records.add(iterator.next());
@@ -67,60 +69,59 @@ public class QuoteEndpoint {
                 cursorString = cursor.toWebSafeString();
             }
         }
-        return CollectionResponse.<Quote>builder().setItems(records).setNextPageToken(cursorString).build();
+        return CollectionResponse.<User>builder().setItems(records).setNextPageToken(cursorString).build();
     }
 
     /**
-     * This inserts a new <code>Quote</code> object.
-     * @param quote The object to be added.
+     * This inserts a new <code>users</code> object.
+     * @param user The object to be added.
      * @return The object to be added.
      */
-    @ApiMethod(name = "insertQuote")
-    public Quote insertQuote(Quote quote) throws ConflictException {
+    @ApiMethod(name = "insertUser")
+    public User insertUser(User user) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
-        if (quote.getId() != null) {
-            if (findRecord(quote.getId()) != null) {
+        if (user.getNric() != null) {
+            if (findRecord(user.getNric()) != null) {
                 throw new ConflictException("Object already exists");
             }
         }
         //Since our @Id field is a Long, Objectify will generate a unique value for us
         //when we use put
-        ofy().save().entity(quote).now();
-        return quote;
+        ofy().save().entity(user).now();
+        return user;
     }
 
     /**
-     * This updates an existing <code>Quote</code> object.
-     * @param quote The object to be added.
+     * This updates an existing <code>users</code> object.
+     * @param user The object to be added.
      * @return The object to be updated.
      */
-    @ApiMethod(name = "updateQuote")
-    public Quote updateQuote(Quote quote)throws NotFoundException {
-        if (findRecord(quote.getId()) == null) {
+    @ApiMethod(name = "updateUser")
+    public User updateUser(User user)throws NotFoundException {
+        if (findRecord(user.getNric()) == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
-        ofy().save().entity(quote).now();
-        return quote;
+        ofy().save().entity(user).now();
+        return user;
     }
 
     /**
-     * This deletes an existing <code>Quote</code> object.
+     * This deletes an existing <code>users</code> object.
      * @param id The id of the object to be deleted.
      */
-    @ApiMethod(name = "removeQuote")
-    public void removeQuote(@Named("id") Long id) throws NotFoundException {
-        Quote record = findRecord(id);
+    @ApiMethod(name = "removeUser")
+    public void removeUser(@Named("id") String nric) throws NotFoundException {
+        User record = findRecord(nric);
         if(record == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
         ofy().delete().entity(record).now();
     }
 
-    //Private method to retrieve a <code>Quote</code> record
-    private Quote findRecord(Long id) {
-        return ofy().load().type(Quote.class).id(id).now();
-    //or return ofy().load().type(Quote.class).filter("id",id).first.now();
+    //Private method to retrieve a <code>users</code> record
+    private User findRecord(String nric) {
+        return ofy().load().type(User.class).id(nric).now();
+        //or return ofy().load().type(Quote.class).filter("id",id).first.now();
     }
-
 }

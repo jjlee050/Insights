@@ -1,7 +1,7 @@
 package com.fypj.mymodule.api.controller;
 
+import com.fypj.mymodule.api.model.Appointment;
 import com.fypj.mymodule.api.model.Clinic;
-import com.fypj.mymodule.api.model.MedicalHistory;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -22,38 +22,38 @@ import javax.inject.Named;
 import static com.fypj.mymodule.api.util.OfyService.ofy;
 
 /**
- * Created by L33525 on 7/10/2014.
+ * Created by L33525 on 8/10/2014.
  */
-@Api(name = "insightsMedicalHistory",description = "API to view all medical history", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
-public class MedicalHistoryEndpoint {
+@Api(name = "insightsAppointment",description = "API to view all appointment", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
+public class AppointmentEndpoint {
 
     // Make sure to add this endpoint to your web.xml file if this is a web application.
 
-    private static final Logger LOG = Logger.getLogger(MedicalHistoryEndpoint.class.getName());
+    private static final Logger LOG = Logger.getLogger(AppointmentEndpoint.class.getName());
     // Make sure to add this endpoint to your web.xml file if this is a web application.
 
-    public MedicalHistoryEndpoint() {
+    public AppointmentEndpoint() {
 
     }
 
     /**
-     * Return a collection of medical history
+     * Return a collection of Appointment
      *
-     * @param count The number of medical history
-     * @return a list of medical histories
+     * @param count The number of Appointment
+     * @return a list of Appointments
      */
-    @ApiMethod(name = "listMedicalHistories")
-    public CollectionResponse<MedicalHistory> listMedicalHistories(@Nullable @Named("cursor") String cursorString,
+    @ApiMethod(name = "listAppointment")
+    public CollectionResponse<Appointment> listAppointments(@Nullable @Named("cursor") String cursorString,
                                                   @Nullable @Named("count") Integer count) {
 
-        Query<MedicalHistory> query = ofy().load().type(MedicalHistory.class);
+        Query<Appointment> query = ofy().load().type(Appointment.class);
         if (count != null) query.limit(count);
         if (cursorString != null && cursorString != "") {
             query = query.startAt(Cursor.fromWebSafeString(cursorString));
         }
 
-        List<MedicalHistory> records = new ArrayList<MedicalHistory>();
-        QueryResultIterator<MedicalHistory> iterator = query.iterator();
+        List<Appointment> records = new ArrayList<Appointment>();
+        QueryResultIterator<Appointment> iterator = query.iterator();
         int num = 0;
         while (iterator.hasNext()) {
             records.add(iterator.next());
@@ -70,59 +70,59 @@ public class MedicalHistoryEndpoint {
                 cursorString = cursor.toWebSafeString();
             }
         }
-        return CollectionResponse.<MedicalHistory>builder().setItems(records).setNextPageToken(cursorString).build();
+        return CollectionResponse.<Appointment>builder().setItems(records).setNextPageToken(cursorString).build();
     }
 
     /**
-     * This inserts a new <code>medicalHistories</code> object.
-     * @param medicalHistory The object to be added.
+     * This inserts a new <code>Appointment</code> object.
+     * @param Appointment The object to be added.
      * @return The object to be added.
      */
-    @ApiMethod(name = "insertMedicalHistory")
-    public MedicalHistory insertMedicalHistory(MedicalHistory medicalHistory) throws ConflictException {
+    @ApiMethod(name = "insertAppointment")
+    public Appointment insertAppointment(Appointment appointment) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
-        if (medicalHistory.getMedicalHistoryID() != null) {
-            if (findRecord(medicalHistory.getMedicalHistoryID()) != null) {
+        if (appointment.getAppointmentID() != null) {
+            if (findRecord(appointment.getAppointmentID()) != null) {
                 throw new ConflictException("Object already exists");
             }
         }
         //Since our @Id field is a Long, Objectify will generate a unique value for us
         //when we use put
-        ofy().save().entity(medicalHistory).now();
-        return medicalHistory;
+        ofy().save().entity(appointment).now();
+        return appointment;
     }
 
     /**
-     * This updates an existing <code>medicalHistories</code> object.
-     * @param medicalHistory The object to be added.
+     * This updates an existing <code>Appointment</code> object.
+     * @param Appointment The object to be added.
      * @return The object to be updated.
      */
-    @ApiMethod(name = "updateMedicalHistory")
-    public MedicalHistory updateMedicalHistory(MedicalHistory medicalHistory)throws NotFoundException {
-        if (findRecord(medicalHistory.getMedicalHistoryID()) == null) {
+    @ApiMethod(name = "updateAppointment")
+    public Appointment updateAppointment(Appointment appointment)throws NotFoundException {
+        if (findRecord(appointment.getAppointmentID()) == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
-        ofy().save().entity(medicalHistory).now();
-        return medicalHistory;
+        ofy().save().entity(appointment).now();
+        return appointment;
     }
 
     /**
-     * This deletes an existing <code>medicalHistories</code> object.
+     * This deletes an existing <code>Appointment</code> object.
      * @param id The id of the object to be deleted.
      */
-    @ApiMethod(name = "removeMedicalHistory")
-    public void removeMedicalHistory(@Named("id") Long id) throws NotFoundException {
-        MedicalHistory record = findRecord(id);
+    @ApiMethod(name = "removeAppointment")
+    public void removeAppointment(@Named("id") Long id) throws NotFoundException {
+        Appointment record = findRecord(id);
         if(record == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
         ofy().delete().entity(record).now();
     }
 
-    //Private method to retrieve a <code>clinics</code> record
-    private MedicalHistory findRecord(Long id) {
-        return ofy().load().type(MedicalHistory.class).id(id).now();
+    //Private method to retrieve a <code>Appointment</code> record
+    private Appointment findRecord(Long id) {
+        return ofy().load().type(Appointment.class).id(id).now();
         //or return ofy().load().type(Quote.class).filter("id",id).first.now();
     }
 }

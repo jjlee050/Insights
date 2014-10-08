@@ -1,20 +1,25 @@
 package com.fypj.insightsLocal.ui_logic;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import  com.fypj.insightsLocal.model.Event;
+import com.fypj.insightsLocal.model.Event;
+import com.google.android.gms.plus.PlusShare;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ViewEventDetailsFragment extends Fragment {
+public class ViewEventDetailsFragment extends Fragment{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -22,7 +27,6 @@ public class ViewEventDetailsFragment extends Fragment {
 
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -37,6 +41,21 @@ public class ViewEventDetailsFragment extends Fragment {
 
     public ViewEventDetailsFragment() {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.share:
+                Intent shareIntent = new PlusShare.Builder(this.getActivity())
+                        .setType("text/plain")
+                        .setText("Welcome to the Google+ platform.")
+                        .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+                        .getIntent();
+                startActivityForResult(shareIntent, 0);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

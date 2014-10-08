@@ -84,7 +84,7 @@ public class ViewEventLocationFragment extends Fragment {
             latLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
         }
 
-        map.setMyLocationEnabled(true);
+        //map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
         map.getUiSettings().setScrollGesturesEnabled(false);
         map.getUiSettings().setZoomGesturesEnabled(false);

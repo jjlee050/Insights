@@ -19,12 +19,12 @@ public class MedicalHistory {
     private Date date;
     private Time time;
     private String service;
-    private int amt;
+    private float amt;
 
     public MedicalHistory() {
     }
 
-    public MedicalHistory(Long medicalHistoryID, Clinic clinic, Date date, Time time, String service, int amt) {
+    public MedicalHistory(Long medicalHistoryID, Clinic clinic, Date date, Time time, String service, float amt) {
         this.medicalHistoryID = medicalHistoryID;
         this.clinic = clinic;
         this.date = date;
@@ -73,11 +73,11 @@ public class MedicalHistory {
         this.service = service;
     }
 
-    public int getAmt() {
+    public float getAmt() {
         return amt;
     }
 
-    public void setAmt(int amt) {
+    public void setAmt(float amt) {
         this.amt = amt;
     }
 }

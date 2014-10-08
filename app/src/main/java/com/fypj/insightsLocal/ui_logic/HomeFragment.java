@@ -19,7 +19,6 @@ import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.util.HomeListAdapter;
-import com.fypj.insightsLocal.controller.*;
 
 import java.util.ArrayList;
 
