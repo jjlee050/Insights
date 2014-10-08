@@ -72,11 +72,20 @@ public class SubsidesFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_view_pioneer_package, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_pg_subsidies, container, false);
         TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
         TextView tvHeader = (TextView) rootView.findViewById(R.id.tv_header);
         View horizontalLine = rootView.findViewById(R.id.horizontal_line);
         TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
+        TextView tvContent1 = (TextView) rootView.findViewById(R.id.tv_content1);
+        TextView tvContent2 = (TextView) rootView.findViewById(R.id.tv_content2);
+        TextView tvContent3 = (TextView) rootView.findViewById(R.id.tv_content3);
+        TextView tvContent4 = (TextView) rootView.findViewById(R.id.tv_content4);
+        TextView tvContent5 = (TextView) rootView.findViewById(R.id.tv_content5);
+        TextView tvContent6 = (TextView) rootView.findViewById(R.id.tv_content6);
+        TextView tvContent7 = (TextView) rootView.findViewById(R.id.tv_content7);
+        TextView tvContent8 = (TextView) rootView.findViewById(R.id.tv_content8);
+        TextView tvContent9 = (TextView) rootView.findViewById(R.id.tv_content9);
         ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
 
         tvTitle.setText("Subsidies available for  Pioneer Generation Package");
@@ -95,23 +104,22 @@ public class SubsidesFragment extends Fragment {
                         "All Pioneers will pay less for MediShield Life premiums than today. "
                         );*/
 
-            tvContent.setText(
-                    "Common illnesses (e.g. cough and cold):\n\n$28.50\n\n" +
-                            "\n\n" +
-                    "Simple Chronic conditions" +
-                            "under CDMP:\n\n$90 per visit, capped at $360 per year\n\n" +
-                            "\n\n" +
-                    "Complex Chronic conditions" +
-                            "under CDMP:\n" +
-                            "\n$135 per visit, capped at $540 per year\n\n\n" +
-                            "\n" +
-                    "Selected dental services:\n" +
-                            "\n$21 to $266.50 per procedure (dependent on procedure)\n\n" +
-                            "\n\n" +
-                    "Health screening under " +
-                            "HPB’s ISP4:\n" +
-                            "\nScreening tests: Free with HPB's invitation letter; and Doctor's consultation: $28.50 per visit (up to 2 times per year)");
 
+        tvContent.setText(
+                "Common illnesses \n(e.g. cough and cold): ");
+        tvContent1.setText("$28.50");
+
+         tvContent2.setText("Simple Chronic \nconditions under CDMP: ");
+         tvContent3.setText("$90 per visit, capped at $360 per year");
+
+        tvContent4.setText("Complex Chronic \nconditions under CDMP: ");
+        tvContent5.setText("$135 per visit, capped at $540 per year");
+
+        tvContent6.setText("Selected dental services: ");
+        tvContent7.setText("$21 to $266.50 per procedure \n (dependent on procedure)");
+
+        tvContent8.setText("Screening tests:\nFree with HPB's invitation letter;\nand Doctor's consultation: ");
+        tvContent9.setText("$28.50 per visit \n (up to 2 times per year)");
             /*tvContent.setText("In order to apply CHAS for Pioneer Generation, Living Singapore Citizens who meet 2 criteria:\n" +
                     "\n\n" +
                     "Aged 16 and above in 1965 - this means:\n" +
@@ -130,6 +138,15 @@ public class SubsidesFragment extends Fragment {
         tvTitle.setVisibility(View.VISIBLE);
         tvHeader.setVisibility(View.GONE);
         tvContent.setVisibility(View.VISIBLE);
+        tvContent1.setVisibility(View.VISIBLE);
+        tvContent2.setVisibility(View.VISIBLE);
+        tvContent3.setVisibility(View.VISIBLE);
+        tvContent4.setVisibility(View.VISIBLE);
+        tvContent5.setVisibility(View.VISIBLE);
+        tvContent6.setVisibility(View.VISIBLE);
+        tvContent7.setVisibility(View.VISIBLE);
+        tvContent8.setVisibility(View.VISIBLE);
+        tvContent9.setVisibility(View.VISIBLE);
         ivImg.setVisibility(View.VISIBLE);
 
         return rootView;

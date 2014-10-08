@@ -95,6 +95,7 @@ public class BenefitsFragment extends Fragment {
                         "All Pioneers will pay less for MediShield Life premiums than today. "
                         );
 
+
             /*tvContent.setText(
                     "Common illnesses (e.g. cough and cold):\n\n$28.50\n\n" +
                             "\n\n" +

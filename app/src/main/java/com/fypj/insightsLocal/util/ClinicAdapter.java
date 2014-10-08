@@ -40,11 +40,11 @@ public class ClinicAdapter extends ArrayAdapter {
         if(position != 3){
             ivImg.setVisibility(View.VISIBLE);
             if(position == 0){
-                ivImg.setImageResource(R.drawable.medical_clinic);
+                ivImg.setImageResource(R.drawable.familyclinic);
 
             }
             else if(position == 1){
-                ivImg.setImageResource(R.drawable.familyclinic);
+                ivImg.setImageResource(R.drawable.medical_clinic);
 
             }
             else if(position == 2){
@@ -53,9 +53,9 @@ public class ClinicAdapter extends ArrayAdapter {
             }
 
         }
-        else{
+      /*  else{
             ivImg.getLayoutParams().width = 35;
-        }
+        }*/
 
 
         System.out.println("Position: " + position);
