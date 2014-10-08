@@ -59,6 +59,7 @@ public class ViewEventLocationFragment extends Fragment {
     }
 
     public ViewEventLocationFragment() {
+
     }
 
     @Override
