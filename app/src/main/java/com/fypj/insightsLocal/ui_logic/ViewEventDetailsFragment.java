@@ -69,7 +69,6 @@ public class ViewEventDetailsFragment extends Fragment{
         TextView tvEventOrganizer = (TextView) rootView.findViewById(R.id.tv_event_organiser);
         TextView tvEventContactNo = (TextView) rootView.findViewById(R.id.tv_event_contact);
 
-
         tvEventName.setText(bundle.getString("name"));
         tvEventDateAndTime.setText(bundle.getString("dateAndTime"));
         tvEventGuestOfHonour.setText(bundle.getString("guestOfHonour"));
