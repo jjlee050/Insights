@@ -1,10 +1,12 @@
 package com.fypj.insightsLocal.ui_logic;
 
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.controller.TranslateWord;
 import com.fypj.insightsLocal.model.Event;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
@@ -51,6 +54,16 @@ public class ViewEventDetailsFragment extends Fragment implements
      * Returns a new instance of this fragment for the given section
      * number.
      */
+
+    private TextToSpeech ttobj = null;
+    private TextView tvEventName;
+    private TextView tvEventDateAndTime;
+    private TextView tvEventGuestOfHonour;
+    private TextView tvEventDesc;
+    private TextView tvEventOrganizer;
+    private TextView tvEventContactNo;
+
+
     public ViewEventDetailsFragment newInstance(int sectionNumber) {
         ViewEventDetailsFragment fragment = new ViewEventDetailsFragment();
         Bundle args = new Bundle();
@@ -67,11 +80,28 @@ public class ViewEventDetailsFragment extends Fragment implements
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN)
+                .build();
+
     }
 
     public void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onPause(){
+        if(ttobj !=null){
+            ttobj.stop();
+            ttobj.shutdown();
+        }
+        super.onPause();
     }
 
     public void onStop() {
@@ -131,22 +161,51 @@ public class ViewEventDetailsFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.share:
-
-
-                mGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .addApi(Plus.API)
-                        .addScope(Plus.SCOPE_PLUS_LOGIN)
-                        .build();
-
                 Intent shareIntent = new PlusShare.Builder(this.getActivity()).setType("text/plain")
-                        .setText("Welcome to the Google+ platform.")
-                        .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+                        .setText(tvEventName.getText() +
+                                "\n" + tvEventDateAndTime.getText() +
+                                "\n" + tvEventGuestOfHonour.getText() +
+                                "\n" + tvEventDesc.getText() +
+                                "\n" + tvEventOrganizer.getText() +
+                                "\n" + tvEventContactNo.getText())
                         .getIntent();
 
                 startActivityForResult(shareIntent, 0);
                 return true;
+            case R.id.translate:
+                /*Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setPackage("com.google.android.apps.translate");
+
+                Uri uri = new Uri.Builder()
+                        .scheme("http")
+                        .authority("translate.google.com")
+                        .path("/m/translate")
+                        .appendQueryParameter("q", tvEventName.getText().toString())
+                        .appendQueryParameter("tl", "zh") // target language
+                        .appendQueryParameter("sl", "en") // source language
+                        .build();
+                //intent.setType("text/plain"); //not needed, but possible
+                intent.setData(uri);
+                startActivity(intent);*/
+                new TranslateWord().execute();
+                return true;
+            case R.id.read_aloud:
+
+                ttobj = new TextToSpeech(this.getActivity().getApplicationContext(),new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if(status != TextToSpeech.ERROR){
+                            //ttobj.setLanguage(Locale.)
+                            String textSpeech = tvEventName.getText() + "will be held on " + tvEventDateAndTime.getText()
+                                    + " by " + tvEventOrganizer.getText() + ". This event is about" + tvEventDesc.getText()
+                                    + ". The guest of honour for this event will be " + tvEventGuestOfHonour.getText() + ". Contact " + tvEventContactNo.getText() + "for more information.";
+                            ttobj.speak(textSpeech, TextToSpeech.QUEUE_FLUSH, null);
+                        }
+                    }
+                });
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -166,12 +225,12 @@ public class ViewEventDetailsFragment extends Fragment implements
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_event_details, container, false);
         Bundle bundle = getArguments();
-        TextView tvEventName = (TextView) rootView.findViewById(R.id.tv_event_name);
-        TextView tvEventDateAndTime = (TextView) rootView.findViewById(R.id.tv_event_date_time);
-        TextView tvEventGuestOfHonour = (TextView) rootView.findViewById(R.id.tv_event_goh);
-        TextView tvEventDesc = (TextView) rootView.findViewById(R.id.tv_event_desc);
-        TextView tvEventOrganizer = (TextView) rootView.findViewById(R.id.tv_event_organiser);
-        TextView tvEventContactNo = (TextView) rootView.findViewById(R.id.tv_event_contact);
+        tvEventName = (TextView) rootView.findViewById(R.id.tv_event_name);
+        tvEventDateAndTime = (TextView) rootView.findViewById(R.id.tv_event_date_time);
+        tvEventGuestOfHonour = (TextView) rootView.findViewById(R.id.tv_event_goh);
+        tvEventDesc = (TextView) rootView.findViewById(R.id.tv_event_desc);
+        tvEventOrganizer = (TextView) rootView.findViewById(R.id.tv_event_organiser);
+        tvEventContactNo = (TextView) rootView.findViewById(R.id.tv_event_contact);
 
         tvEventName.setText(bundle.getString("name"));
         tvEventDateAndTime.setText(bundle.getString("dateAndTime"));
