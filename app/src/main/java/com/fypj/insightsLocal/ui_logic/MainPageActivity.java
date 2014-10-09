@@ -111,16 +111,10 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "My Profile";
                 break;
             case 3:
-                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
-                        .commit();
+                mTitle = "Pioneer Generation Packages";
                 break;
             case 4:
-                ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
-                        .commit();
+                mTitle = "Lifestyle Events";
                 break;
             case 5:
                 mTitle = "CHAS Clinic";

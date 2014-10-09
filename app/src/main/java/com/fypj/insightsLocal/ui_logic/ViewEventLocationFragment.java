@@ -4,8 +4,12 @@ package com.fypj.insightsLocal.ui_logic;
  * Created by L33525 on 22/9/2014.
  */
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -25,6 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.model.Event;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -45,6 +51,8 @@ public class ViewEventLocationFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+
+    private Event event;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -67,32 +75,41 @@ public class ViewEventLocationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_event_location, container, false);
         Bundle bundle = getArguments();
-        String address = bundle.getString("location");
+        if(bundle != null) {
+            String address = bundle.getString("location");
+            event = new Event(bundle.getLong("id"),bundle.getString("name"),bundle.getString("dateAndTime"),bundle.getString("guestOfHonour"),bundle.getString("desc"),bundle.getString("organizer"),bundle.getString("contactNo"),address);
+        }
 
         // Get a handle to the Map Fragment
         GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
+        map.getUiSettings().setScrollGesturesEnabled(false);
+        map.getUiSettings().setZoomGesturesEnabled(false);
+        map.getUiSettings().setZoomControlsEnabled(false);
+        map.getUiSettings().setRotateGesturesEnabled(false);
 
         Geocoder geoCoder = new Geocoder(getActivity());
         List<Address> addressList = null;
         try {
-            addressList = geoCoder.getFromLocationName("795 Ang Mo Kio Avenue 1, 569976",1);
+            addressList = geoCoder.getFromLocationName("795 Ang Mo Kio Avenue 1, 569976", 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         LatLng latLng = null;
-        for(int i=0;i<addressList.size();i++){
-            latLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
+        if(addressList != null) {
+            for (int i = 0; i < addressList.size(); i++) {
+                latLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
+            }
+
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+            Marker marker = map.addMarker(new MarkerOptions().title("Ang Mo Kio Community Centre").position(latLng));
+            marker.showInfoWindow();
+        }
+        else{
+            latLng = new LatLng(1.22,103.48);
         }
 
-        //map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-        map.getUiSettings().setScrollGesturesEnabled(false);
-        map.getUiSettings().setZoomGesturesEnabled(false);
-        map.getUiSettings().setZoomControlsEnabled(false);
-        map.getUiSettings().setRotateGesturesEnabled(false);
-        Marker marker = map.addMarker(new MarkerOptions().title("Ang Mo Kio Community Centre").position(latLng));
-        marker.showInfoWindow();
+
         return rootView;
     }
 }

@@ -33,7 +33,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public ViewAllLatestEventsFragment newInstance(int sectionNumber) {
+    public Fragment newInstance(int sectionNumber) {
         ViewAllLatestEventsFragment fragment = new ViewAllLatestEventsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, 1);

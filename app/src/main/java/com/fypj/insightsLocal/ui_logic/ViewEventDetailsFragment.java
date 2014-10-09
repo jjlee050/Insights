@@ -1,9 +1,13 @@
 package com.fypj.insightsLocal.ui_logic;
 
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -19,8 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.controller.TranslateWord;
 import com.fypj.insightsLocal.model.Event;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusShare;
@@ -81,18 +85,11 @@ public class ViewEventDetailsFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Plus.API)
-                .addScope(Plus.SCOPE_PLUS_LOGIN)
-                .build();
 
     }
 
     public void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
     }
 
     @Override
@@ -106,9 +103,10 @@ public class ViewEventDetailsFragment extends Fragment implements
 
     public void onStop() {
         super.onStop();
-
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
+        if(mGoogleApiClient != null) {
+            if (mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.disconnect();
+            }
         }
     }
 
@@ -159,65 +157,106 @@ public class ViewEventDetailsFragment extends Fragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        final String textSpeech = tvEventName.getText() + " will be held on " + tvEventDateAndTime.getText()
+                + " by " + tvEventOrganizer.getText() + ". This event is about " + tvEventDesc.getText()
+                + ". The guest of honour for this event will be " + tvEventGuestOfHonour.getText() + ". Contact " + tvEventContactNo.getText() + "for more information.";
         switch (item.getItemId()) {
             case R.id.share:
-                Intent shareIntent = new PlusShare.Builder(this.getActivity()).setType("text/plain")
-                        .setText(tvEventName.getText() +
-                                "\n" + tvEventDateAndTime.getText() +
-                                "\n" + tvEventGuestOfHonour.getText() +
-                                "\n" + tvEventDesc.getText() +
-                                "\n" + tvEventOrganizer.getText() +
-                                "\n" + tvEventContactNo.getText())
-                        .getIntent();
+                if(CheckNetworkConnection.isNetworkConnectionAvailable(this.getActivity())) {
+                    mGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
+                            .addConnectionCallbacks(this)
+                            .addOnConnectionFailedListener(this)
+                            .addApi(Plus.API)
+                            .addScope(Plus.SCOPE_PLUS_LOGIN)
+                            .build();
+                    mGoogleApiClient.connect();
 
-                startActivityForResult(shareIntent, 0);
+                    Intent shareIntent = new PlusShare.Builder(this.getActivity()).setType("text/plain")
+                            .setText(textSpeech)
+                            .getIntent();
+
+                    startActivityForResult(shareIntent, 0);
+                }
+                else{
+                    CheckNetworkConnection.displayNoConnectionDialog(this.getActivity());
+                }
                 return true;
             case R.id.translate:
-                /*Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setPackage("com.google.android.apps.translate");
+                boolean translatePackageExists = isPackageExisted("com.google.android.apps.translate");
+                if(!translatePackageExists){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+                    builder.setTitle("Unable to translate without Google Translate.");
+                    builder.setMessage("Would you like to download Google Translate from Google Play Store?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                final String appPackageName = "com.google.android.apps.translate"; // getPackageName() from Context or Activity object
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                } catch (android.content.ActivityNotFoundException anfe) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
 
-                Uri uri = new Uri.Builder()
-                        .scheme("http")
-                        .authority("translate.google.com")
-                        .path("/m/translate")
-                        .appendQueryParameter("q", tvEventName.getText().toString())
-                        .appendQueryParameter("tl", "zh") // target language
-                        .appendQueryParameter("sl", "en") // source language
-                        .build();
-                //intent.setType("text/plain"); //not needed, but possible
-                intent.setData(uri);
-                startActivity(intent);*/
-                new TranslateWord().execute();
+                    // create alert dialog
+                    AlertDialog alertDialog = builder.create();
+
+                    // show it
+                    alertDialog.show();
+                }
+                else {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setPackage("com.google.android.apps.translate");
+
+                    Uri uri = new Uri.Builder()
+                            .scheme("http")
+                            .authority("translate.google.com")
+                            .path("/m/translate")
+                            .appendQueryParameter("q", textSpeech)
+                            .appendQueryParameter("tl", "ms") // target language
+                            .appendQueryParameter("sl", "en") // source language
+                            .build();
+                    //intent.setType("text/plain"); //not needed, but possible
+                    intent.setData(uri);
+
+                    startActivity(intent);
+                }
                 return true;
             case R.id.read_aloud:
-
                 ttobj = new TextToSpeech(this.getActivity().getApplicationContext(),new TextToSpeech.OnInitListener() {
                     @Override
                     public void onInit(int status) {
                         if(status != TextToSpeech.ERROR){
                             //ttobj.setLanguage(Locale.)
-                            String textSpeech = tvEventName.getText() + "will be held on " + tvEventDateAndTime.getText()
-                                    + " by " + tvEventOrganizer.getText() + ". This event is about" + tvEventDesc.getText()
-                                    + ". The guest of honour for this event will be " + tvEventGuestOfHonour.getText() + ". Contact " + tvEventContactNo.getText() + "for more information.";
                             ttobj.speak(textSpeech, TextToSpeech.QUEUE_FLUSH, null);
                         }
                     }
                 });
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
-        System.out.println("Request Code: " + requestCode);
-        if(requestCode == 0){
-            Toast.makeText(this.getActivity(),"Share successful",Toast.LENGTH_LONG);
+    public boolean isPackageExisted(String targetPackage){
+        PackageManager pm = this.getActivity().getPackageManager();
+        try {
+            PackageInfo info=pm.getPackageInfo(targetPackage,PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
+        return true;
     }
 
     @Override
@@ -240,6 +279,4 @@ public class ViewEventDetailsFragment extends Fragment implements
         tvEventContactNo.setText(bundle.getString("contactNo"));
         return rootView;
     }
-
-
 }
