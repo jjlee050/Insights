@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,7 +74,7 @@ public class EligibilityFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_view_pioneer_package, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_pg_eligibility, container, false);
         TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
         TextView tvHeader = (TextView) rootView.findViewById(R.id.tv_header);
         View horizontalLine = rootView.findViewById(R.id.horizontal_line);
@@ -80,22 +82,26 @@ public class EligibilityFragment extends Fragment {
         TextView tvContent1 = (TextView) rootView.findViewById(R.id.tv_content1);
         ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
 
+
+        tvContent1.setClickable(true);
+        tvContent1.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+
         tvTitle.setText("Eligibility for Pioneer Generation Package");
         tvHeader.setText("The package will help Pioneers with their healthcare costs for life. The benefits are as below: ");
 
 
-            tvContent.setText("In order to apply CHAS for Pioneer Generation, Living Singapore Citizens who meet 2 criteria:\n" +
-                    "\n\n" +
-                    "1.Aged 16 and above in 1965 - this means:\n" +
-                    " a.Born on or before 31 December 1949\n" +
-                    " b.Aged 65 and above in 2014\n\n" +
-                    "2. Obtained citizenship on or before 31 December 1986.\n\n\n");
-             tvContent1.setText("Those eligible for the Pioneer Generation Package would have received a notification letter in June 2014. Please keep your NRIC address updated.\n\n" +
-                    "For more information: visit http://www.cpf.gov.sg/pioneers/pgp_Faq.asp");
+            tvContent.setText(Html.fromHtml("In order to apply CHAS for Pioneer Generation, Living Singapore Citizens <b>who meet 2 criteria:</b> <br /><br />" +
 
-        /*tvContent.setText("The Government has introduced the Pioneer Generation Package to honour and thank our pioneers for their hard work and dedication. They have made Singapore what it is today.\n" +
-                "\n" +
-                "About 450,000 Singaporeans will benefit from the Pioneer Generation Package.");*/
+                    "1. Aged 16 and above in 1965 - this means:<br />" +
+                    " &nbsp; &nbsp;&nbsp;&nbsp;• Born on or before 31 December 1949<br />" +
+                    " &nbsp; &nbsp;&nbsp;&nbsp;• Aged 65 and above in 2014<br /><br />"+
+                    "2. Obtained citizenship on or before 31 December 1986."));
+           tvContent1.setText(Html.fromHtml("Those eligible for the Pioneer Generation Package would have received a notification letter in June 2014. Please keep your NRIC address updated.<br /><br />" +
+                    "<b>For more information:</b> Call the Pioneer Generation hotline at 1800-2222-888 or visit <a href=http://www.cpf.gov.sg/pioneers/pgp_Faq.asp> the website</a>." ));
+
+
         horizontalLine.setVisibility(View.GONE);
         tvTitle.setVisibility(View.VISIBLE);
         tvHeader.setVisibility(View.GONE);
