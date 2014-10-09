@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
                     intent.putExtra("choice",0);
                     startActivity(intent);
+                    HomeFragment.this.getActivity().finish();
                 }
             }
         });

@@ -108,6 +108,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
                 intent.putExtra("contactNo",latestEventArrList.get(position).getContactNo());
                 intent.putExtra("location",latestEventArrList.get(position).getLocation());
                 startActivity(intent);
+                ViewAllLatestEventsFragment.this.getActivity().finish();
             }
         });
 
