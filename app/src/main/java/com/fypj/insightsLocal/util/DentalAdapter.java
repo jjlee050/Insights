@@ -16,11 +16,11 @@ import java.util.ArrayList;
 /**
  * Created by L33524 on 22/9/2014.
  */
-public class ClinicAdapter extends ArrayAdapter {
+public class DentalAdapter extends ArrayAdapter {
     private Activity context;
     private ArrayList<Clinic> ClinicArrList;
 
-    public ClinicAdapter(Activity context, int textViewResourceId, ArrayList<Clinic> ClinicArrList) {
+    public DentalAdapter(Activity context, int textViewResourceId, ArrayList<Clinic> ClinicArrList) {
         super(context, R.layout.list_clinic, ClinicArrList);
         this.context = (Activity) context;
         this.ClinicArrList = ClinicArrList;
@@ -32,8 +32,7 @@ public class ClinicAdapter extends ArrayAdapter {
         View rowView = inflater.inflate(R.layout.list_clinic, null, true);
 
         TextView tvClinicName = (TextView) rowView.findViewById(R.id.tv_Clinic_name);
-        TextView tvClinicAddress = (TextView) rowView.findViewById(R.id.tv_Clinic_Address);
-        TextView tvClinicPostalCode = (TextView) rowView.findViewById(R.id.tv_Clinic_PostalCode);
+        TextView tvClinicOH = (TextView) rowView.findViewById(R.id.tv_Clinic_OH);
         ImageView ivImg = (ImageView) rowView.findViewById(R.id.iv_img);
 
         if(position != 3){
@@ -59,9 +58,8 @@ public class ClinicAdapter extends ArrayAdapter {
 
         System.out.println("Position: " + position);
 
-        tvClinicName.setText(ClinicArrList.get(position).getName());
-        tvClinicAddress.setText(ClinicArrList.get(position).getAddress());
-        /*tvClinicPostalCode.setText(ClinicArrList.get(position).getClinicPostalCode());*/
+        tvClinicName.setText(ClinicArrList.get(position).getClinicName());
+        tvClinicOH.setText(ClinicArrList.get(position).getClinicOH());
         return rowView;
     }
 }

@@ -2,12 +2,11 @@ package com.fypj.mymodule.api.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-
 /**
  * Created by L33525 on 7/10/2014.
  */
 @Entity
-public class Clinic {
+public class Clinic{
     @Id
     private Long clinicID;
     private String name;

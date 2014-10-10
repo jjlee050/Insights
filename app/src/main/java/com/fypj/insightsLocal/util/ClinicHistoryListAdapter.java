@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.ClinicHistory;
+import  com.fypj.insightsLocal.model.MedicalHistory;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ import java.util.ArrayList;
 /**
  * Created by L33525 on 26/9/2014.
  */
-public class ClinicHistoryListAdapter extends ArrayAdapter<ClinicHistory> {
+public class ClinicHistoryListAdapter extends ArrayAdapter<MedicalHistory> {
     private Activity context;
-    private ArrayList<ClinicHistory> clinicHistoryArrayList;
+    private ArrayList<MedicalHistory> clinicHistoryArrayList;
 
-    public ClinicHistoryListAdapter(Activity context, int textViewResourceId, ArrayList<ClinicHistory> clinicHistoryArrayList) {
+    public ClinicHistoryListAdapter(Activity context, int textViewResourceId, ArrayList<MedicalHistory> clinicHistoryArrayList) {
         super(context, R.layout.list_clinic_history, clinicHistoryArrayList);
         this.context = (Activity) context;
         this.clinicHistoryArrayList = clinicHistoryArrayList;
@@ -37,9 +37,9 @@ public class ClinicHistoryListAdapter extends ArrayAdapter<ClinicHistory> {
         DecimalFormat formatter = new DecimalFormat("$00.00");
 
         System.out.println("Position: " + position);
-        tvClinicName.setText(clinicHistoryArrayList.get(position).getClinicName());
+        tvClinicName.setText(clinicHistoryArrayList.get(position).getClinic().getName());
         tvService.setText(clinicHistoryArrayList.get(position).getService());
-        tvAmt.setText(formatter.format(clinicHistoryArrayList.get(position).getAmount()));
+        tvAmt.setText(formatter.format(clinicHistoryArrayList.get(position).getAmt()));
 
         return rowView;
     }

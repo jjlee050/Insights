@@ -3,18 +3,12 @@ package com.fypj.insightsLocal.ui_logic;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,14 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.util.ClinicAdapter;
-import com.fypj.insightsLocal.util.LatestEventsListAdapter;
-import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
+import  com.fypj.insightsLocal.model.Clinic;
 
 public class NearestClinicFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
@@ -92,9 +82,9 @@ public class NearestClinicFragment extends Fragment {
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
 
         final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"338 Family Clinic","338 Ang Mo Kio Avenue 1, #01 - 1615,","Singapore - 560338"));
-        ClinicArrList.add(new Clinic(2,"Accord Medical Clinic ","157 Ang Mo Kio Avenue 4, #01 - 578, Mayflower Shopping & Food Centre, ","Singapore - 560157"));
-        ClinicArrList.add(new Clinic(3,"Ang Mo Kio Family Medicine Clinic Pte Ltd","4190 Ang Mo Kio Avenue 6, #03 - 01, Broadway Plaza,","Singapore - 569841"));
+        ClinicArrList.add(new Clinic());
+        ClinicArrList.add(new Clinic());
+        ClinicArrList.add(new Clinic());
 
 
         ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
@@ -105,9 +95,8 @@ public class NearestClinicFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(NearestClinicFragment.this.getActivity(),ViewClinicActivity.class);
                 intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
-                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getClinicAddress());
-                intent.putExtra("ClinicPostalCode",ClinicArrList.get(position).getClinicPostalCode());
+                intent.putExtra("ClinicName",ClinicArrList.get(position).getName());
+                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getAddress());
 
                 startActivity(intent);
             }

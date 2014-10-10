@@ -3,7 +3,6 @@ package com.fypj.insightsLocal.ui_logic;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,9 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Event;
@@ -36,7 +33,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public ViewAllLatestEventsFragment newInstance(int sectionNumber) {
+    public Fragment newInstance(int sectionNumber) {
         ViewAllLatestEventsFragment fragment = new ViewAllLatestEventsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, 1);
@@ -59,8 +56,8 @@ public class ViewAllLatestEventsFragment extends Fragment {
         final ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
 
         final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
-        latestEventArrList.add(new Event(1,"Monthly Brisk Walk","Saturday, September 20, 2014 7:00 AM","Brisk Walk for elderly residents"));
-        latestEventArrList.add(new Event(2,"Walkathon","27 September 2014 3.00PM to 6.00PM","A long walk from Seragoon CC to Hougang CC."));
+        latestEventArrList.add(new Event(Long.parseLong("1"),"Monthly Brisk Walk","Saturday, September 20, 2014 7:00 AM",null,"Brisk Walk for elderly residents",null,null,null));
+        latestEventArrList.add(new Event(Long.parseLong("2"),"Walkathon","27 September 2014 3.00PM to 6.00PM",null,"A long walk from Seragoon CC to Hougang CC.",null,null,null));
 
         LatestEventsListAdapter adapter = new LatestEventsListAdapter(this.getActivity(), android.R.id.text1, latestEventArrList);
         lvLatestEvents.setAdapter(adapter);
@@ -101,8 +98,15 @@ public class ViewAllLatestEventsFragment extends Fragment {
         lvLatestEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
                 Intent intent = new Intent(ViewAllLatestEventsFragment.this.getActivity(),ViewEventActivity.class);
+                intent.putExtra("id",latestEventArrList.get(position).getEventID());
+                intent.putExtra("name",latestEventArrList.get(position).getName());
+                intent.putExtra("dateAndTime",latestEventArrList.get(position).getDateAndTime());
+                intent.putExtra("guestOfHonour",latestEventArrList.get(position).getGuestOfHonour());
+                intent.putExtra("desc",latestEventArrList.get(position).getDesc());
+                intent.putExtra("organizer",latestEventArrList.get(position).getOrganizer());
+                intent.putExtra("contactNo",latestEventArrList.get(position).getContactNo());
+                intent.putExtra("location",latestEventArrList.get(position).getLocation());
                 startActivity(intent);
             }
         });

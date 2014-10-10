@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.ClinicHistory;
 import com.fypj.insightsLocal.util.ClinicHistoryListAdapter;
-import com.fypj.insightsLocal.util.ProfileListAdapter;
 
 import java.util.ArrayList;
 
@@ -43,12 +41,12 @@ public class ViewClinicHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_clinic_history, container, false);
-        ListView lvClinicHistoryList = (ListView) rootView.findViewById(R.id.lv_clinic_history_list);
+        /*ListView lvClinicHistoryList = (ListView) rootView.findViewById(R.id.lv_clinic_history_list);
         ArrayList<ClinicHistory> clinicHistoryArrayList = new ArrayList<ClinicHistory>();
         clinicHistoryArrayList.add(new ClinicHistory("9/5/14 at 338 Family Clinic","Flu",24));
         clinicHistoryArrayList.add(new ClinicHistory("26/9/14 at 338 Family Clinic","Fever",28));
         ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(ViewClinicHistoryFragment.this.getActivity(),android.R.id.text1,clinicHistoryArrayList);
-        lvClinicHistoryList.setAdapter(adapter);
+        lvClinicHistoryList.setAdapter(adapter);*/
         return rootView;
     }
 }

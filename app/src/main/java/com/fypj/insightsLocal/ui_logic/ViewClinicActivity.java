@@ -1,7 +1,5 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.Locale;
-
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,17 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.model.Event;
 
 
 public class ViewClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -57,7 +49,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
             String ClinicName = savedInstanceState.getString("ClinicName");
             String ClinicAddress = savedInstanceState.getString("ClinicAddress");
             String ClinicPostalCode = savedInstanceState.getString("ClinicPostalCode");
-            clinic = new Clinic(ClinicID,ClinicName,ClinicAddress,ClinicPostalCode);
+            clinic = new Clinic();
             actionBar.setTitle(ClinicName);
         }
 

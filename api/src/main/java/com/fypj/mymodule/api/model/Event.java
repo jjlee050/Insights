@@ -12,7 +12,7 @@ public class Event {
     @Id
     private Long eventID;
     private String name;
-    private DateAndTime dateAndTime;
+    private String dateAndTime;
     private String guestOfHonour;
     private String desc;
     private String organizer;
@@ -23,7 +23,7 @@ public class Event {
 
     }
 
-    public Event(Long eventID, String name, DateAndTime dateAndTime, String guestOfHonour, String desc, String organizer, String contactNo, String location) {
+    public Event(Long eventID, String name, String dateAndTime, String guestOfHonour, String desc, String organizer, String contactNo, String location) {
         this.eventID = eventID;
         this.name = name;
         this.dateAndTime = dateAndTime;
@@ -50,11 +50,11 @@ public class Event {
         this.name = name;
     }
 
-    public DateAndTime getDateAndTime() {
+    public String getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(DateAndTime dateAndTime) {
+    public void setDateAndTime(String dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 

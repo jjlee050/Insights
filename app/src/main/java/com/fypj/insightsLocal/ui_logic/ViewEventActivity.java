@@ -1,28 +1,21 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.Locale;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Event;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
 
 
@@ -50,15 +43,29 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
+
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        actionBar.setTitle("Monthly Brisk Walk");
+        savedInstanceState = getIntent().getExtras();
+        if(savedInstanceState != null){
+            Long id = savedInstanceState.getLong("id");
+            String name = savedInstanceState.getString("name");
+            String dateAndTime = savedInstanceState.getString("dateAndTime");
+            String guestOfHonour = savedInstanceState.getString("guestOfHonour");
+            String desc = savedInstanceState.getString("desc");
+            String organizer = savedInstanceState.getString("organizer");
+            String contactNo = savedInstanceState.getString("contactNo");
+            String location = savedInstanceState.getString("location");
+
+            actionBar.setTitle(name);
+            event = new Event(id,name,dateAndTime,guestOfHonour,desc,organizer,contactNo,location);
+        }
 
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ViewEventPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new ViewEventPagerAdapter(ViewEventActivity.this,getSupportFragmentManager(),event);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -72,17 +79,10 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
                 actionBar.setSelectedNavigationItem(position);
             }
         });
+
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_place).setTabListener(this));
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.view_event, menu);
-        return true;
     }
 
     @Override
@@ -116,4 +116,5 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
+
 }

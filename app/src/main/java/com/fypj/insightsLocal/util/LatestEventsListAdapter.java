@@ -1,7 +1,6 @@
 package com.fypj.insightsLocal.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Event;
+import  com.fypj.insightsLocal.model.Event;
 
 import java.util.ArrayList;
 
@@ -37,9 +36,9 @@ public class LatestEventsListAdapter extends ArrayAdapter<Event> {
 
         System.out.println("Position: " + position);
 
-        tvEventName.setText(eventArrList.get(position).getEventName());
-        tvEventDateTime.setText(eventArrList.get(position).getEventDateTime());
-        tvEventDesc.setText(eventArrList.get(position).getEventDescription());
+        tvEventName.setText(eventArrList.get(position).getName());
+        tvEventDateTime.setText(eventArrList.get(position).getDateAndTime());
+        tvEventDesc.setText(eventArrList.get(position).getDesc());
         return rowView;
     }
 }

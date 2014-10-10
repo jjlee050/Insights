@@ -5,7 +5,6 @@ package com.fypj.mymodule.api.controller;
  */
 
 import com.fypj.mymodule.api.model.Event;
-import com.fypj.mymodule.api.model.Quote;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -26,7 +25,7 @@ import javax.inject.Named;
 import static com.fypj.mymodule.api.util.OfyService.ofy;
 
 /** An endpoint class we are exposing **/
-@Api(name = "insightsEvent", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
+@Api(name = "insightsEvent",description = "API to view all lifestyle events", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
 public class EventEndpoint {
 
     // Make sure to add this endpoint to your web.xml file if this is a web application.

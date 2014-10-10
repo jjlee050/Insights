@@ -1,50 +1,94 @@
 package com.fypj.insightsLocal.model;
 
 /**
- * Created by jess on 20-Sep-14.
+ * Created by L33525 on 7/10/2014.
  */
 public class Event {
-    private int eventID;
-    private String eventName;
-    private String eventDateTime;
-    private String eventDescription;
+    private Long eventID;
+    private String name;
+    private String dateAndTime;
+    private String guestOfHonour;
+    private String desc;
+    private String organizer;
+    private String contactNo;
+    private String location;
 
-    public Event(int eventID, String eventName, String eventDateTime, String eventDescription) {
-        this.eventID = eventID;
-        this.eventName = eventName;
-        this.eventDateTime = eventDateTime;
-        this.eventDescription = eventDescription;
+    public Event(){
+
     }
 
-    public int getEventID() {
+    public Event(Long eventID, String name, String dateAndTime, String guestOfHonour, String desc, String organizer, String contactNo, String location) {
+        this.eventID = eventID;
+        this.name = name;
+        this.dateAndTime = dateAndTime;
+        this.guestOfHonour = guestOfHonour;
+        this.desc = desc;
+        this.organizer = organizer;
+        this.contactNo = contactNo;
+        this.location = location;
+    }
+
+    public Long getEventID() {
         return eventID;
     }
 
-    public void setEventID(int eventID) {
+    public void setEventID(Long eventID) {
         this.eventID = eventID;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getName() {
+        return name;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEventDateTime() {
-        return eventDateTime;
+    public String getDateAndTime() {
+        return dateAndTime;
     }
 
-    public void setEventDateTime(String eventDateTime) {
-        this.eventDateTime = eventDateTime;
+    public void setDateAndTime(String dateAndTime) {
+        this.dateAndTime = dateAndTime;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public String getGuestOfHonour() {
+        return guestOfHonour;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
+    public void setGuestOfHonour(String guestOfHonour) {
+        this.guestOfHonour = guestOfHonour;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

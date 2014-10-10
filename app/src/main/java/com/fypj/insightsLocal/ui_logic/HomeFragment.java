@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -19,7 +20,6 @@ import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.util.HomeListAdapter;
-import com.fypj.insightsLocal.controller.*;
 
 import java.util.ArrayList;
 
@@ -60,13 +60,22 @@ public class HomeFragment extends Fragment {
         lvHomeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Activity activity = HomeFragment.this.getActivity();
+                FragmentManager fragmentManager = HomeFragment.this.getActivity().getSupportFragmentManager();
+
                 if(position == 0){
                     HomeFragment.this.position = 3;
-                    onAttach(getActivity());
+                    ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(activity,position + 1))
+                            .commit();
                 }
                 if(position == 1){
                     HomeFragment.this.position = 4;
-                    onAttach(getActivity());
+                    ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
+                            .commit();
                 }
                 if(position == 2){
                     Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);

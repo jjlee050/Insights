@@ -1,6 +1,5 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,19 +10,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.util.ClinicAdapter;
-import com.fypj.insightsLocal.util.SwipeGestureFilter;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -88,9 +82,9 @@ public class NearestDentalFragment extends Fragment {
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
 
         final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"A St*R Dental Surgery","330 Ang Mo Kio Avenue 1, #01 - 1805,","Singapore - 560330"));
-        ClinicArrList.add(new Clinic(2,"Ace Dental Centre ","338 Ang Mo Kio Avenue 1, #01 - 1669, ","Singapore - 560338"));
-        ClinicArrList.add(new Clinic(3,"Amk Central Dental Surgery","726 Ang Mo Kio Avenue 6, #01 - 4162,","Singapore - 560726"));
+        ClinicArrList.add(new Clinic());
+        ClinicArrList.add(new Clinic());
+        ClinicArrList.add(new Clinic());
 
 
         ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
@@ -101,10 +95,8 @@ public class NearestDentalFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(NearestDentalFragment.this.getActivity(),ViewClinicActivity.class);
                 intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
-                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getClinicAddress());
-                intent.putExtra("ClinicPostalCode",ClinicArrList.get(position).getClinicPostalCode());
-
+                intent.putExtra("ClinicName",ClinicArrList.get(position).getName());
+                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getAddress());
                 startActivity(intent);
             }
         });

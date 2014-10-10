@@ -1,8 +1,4 @@
-package com.fypj.mymodule.api.model;
-
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
+package com.fypj.insightsLocal.model;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -10,21 +6,18 @@ import java.sql.Time;
 /**
  * Created by L33525 on 7/10/2014.
  */
-@Entity
 public class MedicalHistory {
-    @Id
     private Long medicalHistoryID;
-    @Parent
     private Clinic clinic;
     private Date date;
     private Time time;
     private String service;
-    private float amt;
+    private int amt;
 
     public MedicalHistory() {
     }
 
-    public MedicalHistory(Long medicalHistoryID, Clinic clinic, Date date, Time time, String service, float amt) {
+    public MedicalHistory(Long medicalHistoryID, Clinic clinic, Date date, Time time, String service, int amt) {
         this.medicalHistoryID = medicalHistoryID;
         this.clinic = clinic;
         this.date = date;
@@ -73,11 +66,11 @@ public class MedicalHistory {
         this.service = service;
     }
 
-    public float getAmt() {
+    public int getAmt() {
         return amt;
     }
 
-    public void setAmt(float amt) {
+    public void setAmt(int amt) {
         this.amt = amt;
     }
 }

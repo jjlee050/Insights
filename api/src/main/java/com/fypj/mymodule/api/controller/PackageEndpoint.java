@@ -1,11 +1,7 @@
 package com.fypj.mymodule.api.controller;
 
-/**
- * Created by L33525 on 7/10/2014.
- */
-
-import com.fypj.mymodule.api.model.Clinic;
-import com.fypj.mymodule.api.model.Event;
+import com.fypj.mymodule.api.model.*;
+import com.fypj.mymodule.api.model.Package;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -26,38 +22,38 @@ import javax.inject.Named;
 import static com.fypj.mymodule.api.util.OfyService.ofy;
 
 /**
- * Created by L33525 on 7/10/2014.
+ * Created by L33525 on 8/10/2014.
  */
-@Api(name = "insightsClinics",description = "API to view all clinics in singapore", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
-public class ClinicEndpoint {
+@Api(name = "insightsPackages",description = "API to view all packages", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
+public class PackageEndpoint {
 
     // Make sure to add this endpoint to your web.xml file if this is a web application.
 
-    private static final Logger LOG = Logger.getLogger(ClinicEndpoint.class.getName());
+    private static final Logger LOG = Logger.getLogger(PackageEndpoint.class.getName());
     // Make sure to add this endpoint to your web.xml file if this is a web application.
 
-    public ClinicEndpoint() {
+    public PackageEndpoint() {
 
     }
 
     /**
-     * Return a collection of clinic
+     * Return a collection of Package
      *
-     * @param count The number of clinic
-     * @return a list of clinics
+     * @param count The number of Package
+     * @return a list of Packages
      */
-    @ApiMethod(name = "listClinics")
-    public CollectionResponse<Clinic> listClinics(@Nullable @Named("cursor") String cursorString,
-                                               @Nullable @Named("count") Integer count) {
+    @ApiMethod(name = "listPackages")
+    public CollectionResponse<Package> listPackages(@Nullable @Named("cursor") String cursorString,
+                                                                   @Nullable @Named("count") Integer count) {
 
-        Query<Clinic> query = ofy().load().type(Clinic.class);
+        Query<Package> query = ofy().load().type(Package.class);
         if (count != null) query.limit(count);
         if (cursorString != null && cursorString != "") {
             query = query.startAt(Cursor.fromWebSafeString(cursorString));
         }
 
-        List<Clinic> records = new ArrayList<Clinic>();
-        QueryResultIterator<Clinic> iterator = query.iterator();
+        List<Package> records = new ArrayList<Package>();
+        QueryResultIterator<Package> iterator = query.iterator();
         int num = 0;
         while (iterator.hasNext()) {
             records.add(iterator.next());
@@ -74,59 +70,59 @@ public class ClinicEndpoint {
                 cursorString = cursor.toWebSafeString();
             }
         }
-        return CollectionResponse.<Clinic>builder().setItems(records).setNextPageToken(cursorString).build();
+        return CollectionResponse.<Package>builder().setItems(records).setNextPageToken(cursorString).build();
     }
 
     /**
-     * This inserts a new <code>clinics</code> object.
-     * @param clinic The object to be added.
+     * This inserts a new <code>Package</code> object.
+     * @param package The object to be added.
      * @return The object to be added.
      */
-    @ApiMethod(name = "insertClinic")
-    public Clinic insertClinic(Clinic clinic) throws ConflictException {
+    @ApiMethod(name = "insertPackage")
+    public Package insertPackage(Package packages) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
-        if (clinic.getClinicID() != null) {
-            if (findRecord(clinic.getClinicID()) != null) {
+        if (packages.getPackageID() != null) {
+            if (findRecord(packages.getPackageID()) != null) {
                 throw new ConflictException("Object already exists");
             }
         }
         //Since our @Id field is a Long, Objectify will generate a unique value for us
         //when we use put
-        ofy().save().entity(clinic).now();
-        return clinic;
+        ofy().save().entity(packages).now();
+        return packages;
     }
 
     /**
-     * This updates an existing <code>clinics</code> object.
-     * @param clinic The object to be added.
+     * This updates an existing <code>Package</code> object.
+     * @param package The object to be added.
      * @return The object to be updated.
      */
-    @ApiMethod(name = "updateClinic")
-    public Clinic updateClinic(Clinic clinic)throws NotFoundException {
-        if (findRecord(clinic.getClinicID()) == null) {
+    @ApiMethod(name = "updatePackage")
+    public Package updatePackage(Package packages)throws NotFoundException {
+        if (findRecord(packages.getPackageID()) == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
-        ofy().save().entity(clinic).now();
-        return clinic;
+        ofy().save().entity(packages).now();
+        return packages;
     }
 
     /**
-     * This deletes an existing <code>clinics</code> object.
+     * This deletes an existing <code>Package</code> object.
      * @param id The id of the object to be deleted.
      */
-    @ApiMethod(name = "removeClinic")
-    public void removeClinic(@Named("id") Long id) throws NotFoundException {
-        Clinic record = findRecord(id);
+    @ApiMethod(name = "removePackage")
+    public void removePackage(@Named("id") Long id) throws NotFoundException {
+        Package record = findRecord(id);
         if(record == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
         ofy().delete().entity(record).now();
     }
 
-    //Private method to retrieve a <code>clinics</code> record
-    private Clinic findRecord(Long id) {
-        return ofy().load().type(Clinic.class).id(id).now();
+    //Private method to retrieve a <code>Package</code> record
+    private Package findRecord(Long id) {
+        return ofy().load().type(Package.class).id(id).now();
         //or return ofy().load().type(Quote.class).filter("id",id).first.now();
     }
 }
