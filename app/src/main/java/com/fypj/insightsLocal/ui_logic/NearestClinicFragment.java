@@ -82,9 +82,9 @@ public class NearestClinicFragment extends Fragment {
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
 
         final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic());
-        ClinicArrList.add(new Clinic());
-        ClinicArrList.add(new Clinic());
+        ClinicArrList.add(new Clinic(1,"338 Family Clinic","Mon - Thurs: \n8.30am - 12.30pm,\n2.00pm- 4.30pm,\n7.00pm - 9.00pm\nFri-Sun: 8.30am - 12.30pm\n(Closed on Public Holidays)"));
+        ClinicArrList.add(new Clinic(2, "Accord Medical Clinic", "Mon - Fri: 8.30am - 10.00pm \n\nSat, Sun & PH :\n9.00am - 12.30pm,\n7.00pm - 10.00pm"));
+        ClinicArrList.add(new Clinic(3, "Ang Mo Kio Family Medicine Clinic Pte Ltd", "Mon - Fri:\n8.30am - 3pm,\n6.00pm - 10.00pm\n\nSat: 9.00am - 10.00pm\nSun: 2.00pm - 9.00pm\n(Closed on Public Holidays)"));
 
 
         ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
@@ -95,8 +95,8 @@ public class NearestClinicFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(NearestClinicFragment.this.getActivity(),ViewClinicActivity.class);
                 intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getName());
-                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getAddress());
+                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
+                intent.putExtra("ClinicOH ",ClinicArrList.get(position).getClinicOH());
 
                 startActivity(intent);
             }

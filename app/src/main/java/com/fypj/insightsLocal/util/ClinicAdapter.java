@@ -32,8 +32,7 @@ public class ClinicAdapter extends ArrayAdapter {
         View rowView = inflater.inflate(R.layout.list_clinic, null, true);
 
         TextView tvClinicName = (TextView) rowView.findViewById(R.id.tv_Clinic_name);
-        TextView tvClinicAddress = (TextView) rowView.findViewById(R.id.tv_Clinic_Address);
-        TextView tvClinicPostalCode = (TextView) rowView.findViewById(R.id.tv_Clinic_PostalCode);
+        TextView tvClinicOH = (TextView) rowView.findViewById(R.id.tv_Clinic_OH);
         ImageView ivImg = (ImageView) rowView.findViewById(R.id.iv_img);
 
         if(position != 3){
@@ -47,7 +46,7 @@ public class ClinicAdapter extends ArrayAdapter {
 
             }
             else if(position == 2){
-                ivImg.setImageResource(R.drawable.medical_clinic);
+                ivImg.setImageResource(R.drawable.amkfamily);
 
             }
 
@@ -59,9 +58,8 @@ public class ClinicAdapter extends ArrayAdapter {
 
         System.out.println("Position: " + position);
 
-        tvClinicName.setText(ClinicArrList.get(position).getName());
-        tvClinicAddress.setText(ClinicArrList.get(position).getAddress());
-        /*tvClinicPostalCode.setText(ClinicArrList.get(position).getClinicPostalCode());*/
+        tvClinicName.setText(ClinicArrList.get(position).getClinicName());
+        tvClinicOH.setText(ClinicArrList.get(position).getClinicOH());
         return rowView;
     }
 }

@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -47,9 +48,8 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
         if(savedInstanceState != null){
             int ClinicID = savedInstanceState.getInt("ClinicID");
             String ClinicName = savedInstanceState.getString("ClinicName");
-            String ClinicAddress = savedInstanceState.getString("ClinicAddress");
-            String ClinicPostalCode = savedInstanceState.getString("ClinicPostalCode");
-            clinic = new Clinic();
+            String ClinicOH = savedInstanceState.getString("ClinicOH");
+            clinic = new Clinic(ClinicID,ClinicName,ClinicOH);
             actionBar.setTitle(ClinicName);
         }
 
@@ -90,6 +90,10 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if( id == R.id.Appointment){
+            Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
