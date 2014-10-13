@@ -22,67 +22,20 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.controller.EndpointsAsyncTask;
 import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
-import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
-import com.fypj.mymodule.api.insightsMedicalHistory.InsightsMedicalHistory;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jess on 19-Sep-14.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ViewAllLatestEventsFragment extends Fragment {
-
-
-    class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> implements Settings{
-        private InsightsEvent myApiService = null;
-        private Context context;
-
-        public EndpointsAsyncTask(Context context){
-            this.context = context;
-        }
-
-        @Override
-        protected String doInBackground(Pair<Context, String>... params) {
-            if(myApiService == null) {  // Only do this once
-                InsightsEvent.Builder builder = new InsightsEvent.Builder(AndroidHttp.newCompatibleTransport(),
-                        new AndroidJsonFactory(), null)
-                        // options for running against local devappserver
-                        // - 10.0.2.2 is localhost's IP address in Android emulator
-                        // - turn off compression when running against local devappserver
-                        .setRootUrl(REMOTE_API_URL)
-                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                            @Override
-                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                                abstractGoogleClientRequest.setDisableGZipContent(true);
-                            }
-                        });
-                // end options for devappserver
-
-                myApiService = builder.build();
-            }
-            try {
-                return myApiService.listEvents().getCursor();
-            } catch (IOException e) {
-                return e.getMessage();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-        }
-    }
-
-
     private final String ARG_SECTION_NUMBER = "section_num--ber";
     /**
      * Returns a new instance of this fragment for the given section
