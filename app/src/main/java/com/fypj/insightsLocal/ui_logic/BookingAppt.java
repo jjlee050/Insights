@@ -62,7 +62,7 @@ static int SUBMIT_DIALOG =1;
         else if ( id == R.id.Submit)
         {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
-            builder1.setMessage("Appointment sent");
+            builder1.setMessage("Booking of Appointment Successful ");
             builder1.setCancelable(true);
             builder1.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
