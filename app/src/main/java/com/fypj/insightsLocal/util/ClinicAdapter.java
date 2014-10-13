@@ -58,8 +58,8 @@ public class ClinicAdapter extends ArrayAdapter {
 
         System.out.println("Position: " + position);
 
-        tvClinicName.setText(ClinicArrList.get(position).getClinicName());
-        tvClinicOH.setText(ClinicArrList.get(position).getClinicOH());
+        tvClinicName.setText(ClinicArrList.get(position).getName());
+        tvClinicOH.setText(ClinicArrList.get(position).getOperatingHours());
         return rowView;
     }
 }

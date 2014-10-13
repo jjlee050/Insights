@@ -2,12 +2,15 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,11 +19,20 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Event;
+import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
+import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
+import com.fypj.mymodule.api.insightsMedicalHistory.InsightsMedicalHistory;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -28,7 +40,50 @@ import java.util.ArrayList;
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ViewAllLatestEventsFragment extends Fragment {
-    private final String ARG_SECTION_NUMBER = "section_number";
+
+
+    class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> implements Settings{
+        private InsightsEvent myApiService = null;
+        private Context context;
+
+        public EndpointsAsyncTask(Context context){
+            this.context = context;
+        }
+
+        @Override
+        protected String doInBackground(Pair<Context, String>... params) {
+            if(myApiService == null) {  // Only do this once
+                InsightsEvent.Builder builder = new InsightsEvent.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        // options for running against local devappserver
+                        // - 10.0.2.2 is localhost's IP address in Android emulator
+                        // - turn off compression when running against local devappserver
+                        .setRootUrl(REMOTE_API_URL)
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+                // end options for devappserver
+
+                myApiService = builder.build();
+            }
+            try {
+                return myApiService.listEvents().getCursor();
+            } catch (IOException e) {
+                return e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private final String ARG_SECTION_NUMBER = "section_num--ber";
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -54,7 +109,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_view_all_latest_events, container, false);
         getActivity().getActionBar().setTitle("Lifestyle Events");
         final ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
-
+        new EndpointsAsyncTask(ViewAllLatestEventsFragment.this.getActivity()).execute();
         final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
         latestEventArrList.add(new Event(Long.parseLong("1"),"Monthly Brisk Walk","Saturday, September 20, 2014 7:00 AM","NIL","Brisk Walk for elderly residents","Ang Mo Kio CC","62087913","Ang Mio Kio Community Centre"));
         latestEventArrList.add(new Event(Long.parseLong("2"),"Walkathon","27 September 2014 3.00PM to 6.00PM",null,"A long walk from Seragoon CC to Hougang CC.",null,null,null));
