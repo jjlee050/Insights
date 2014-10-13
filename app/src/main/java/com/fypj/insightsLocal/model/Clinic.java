@@ -1,42 +1,52 @@
 package com.fypj.insightsLocal.model;
 
-public class Clinic {
-    public String getClinicName() {
-        return ClinicName;
+public class Clinic{
+    private Long clinicID;
+    private String name;
+    private String address;
+    private String operatingHours;
+    private String contactNo;
+
+    public Clinic() {
     }
 
-    public void setClinicName(String clinicName) {
-        ClinicName = clinicName;
+    public Long getClinicID() {
+        return clinicID;
     }
 
-    private String ClinicName;
-
-
-
-    public int getClinicID() {
-        return ClinicID;
+    public void setClinicID(Long clinicID) {
+        this.clinicID = clinicID;
     }
 
-    public void setClinicID(int clinicID) {
-        ClinicID = clinicID;
+    public String getName() {
+        return name;
     }
 
-    private int ClinicID;
-
-    public String getClinicOH() {
-        return ClinicOH;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setClinicOH(String clinicOH) {
-        ClinicOH = clinicOH;
+    public String getAddress() {
+        return address;
     }
 
-    private String ClinicOH;
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public Clinic (int ClinicID , String ClinicName ,String ClinicOH)
-    {
-        this.ClinicID = ClinicID;
-        this.ClinicName = ClinicName;
-        this.ClinicOH = ClinicOH;
+    public String getOperatingHours() {
+        return operatingHours;
+    }
+
+    public void setOperatingHours(String operatingHours) {
+        this.operatingHours = operatingHours;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
     }
 }
