@@ -9,21 +9,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import  com.fypj.insightsLocal.model.Clinic;
+import com.fypj.insightsLocal.model.Dental;
 
 import java.util.ArrayList;
 
 /**
  * Created by L33524 on 22/9/2014.
  */
-public class ClinicAdapter extends ArrayAdapter {
+public class DentalAdapter extends ArrayAdapter {
     private Activity context;
-    private ArrayList<Clinic> ClinicArrList;
+    private ArrayList<Dental> DentalArrList;
 
-    public ClinicAdapter(Activity context, int textViewResourceId, ArrayList<Clinic> ClinicArrList) {
-        super(context, R.layout.list_clinic, ClinicArrList);
+    public DentalAdapter(Activity context, int textViewResourceId, ArrayList<Dental> DentalArrList) {
+        super(context, R.layout.list_clinic, DentalArrList);
         this.context = (Activity) context;
-        this.ClinicArrList = ClinicArrList;
+        this.DentalArrList = DentalArrList;
     }
 
     @Override
@@ -38,15 +38,15 @@ public class ClinicAdapter extends ArrayAdapter {
         if(position != 3){
             ivImg.setVisibility(View.VISIBLE);
             if(position == 0){
-                ivImg.setImageResource(R.drawable.familyclinic);
+                ivImg.setImageResource(R.drawable.teeth);
 
             }
             else if(position == 1){
-                ivImg.setImageResource(R.drawable.medical_clinic);
+                ivImg.setImageResource(R.drawable.teeth);
 
             }
             else if(position == 2){
-                ivImg.setImageResource(R.drawable.amkfamily);
+                ivImg.setImageResource(R.drawable.teeth);
 
             }
 
@@ -58,8 +58,8 @@ public class ClinicAdapter extends ArrayAdapter {
 
         System.out.println("Position: " + position);
 
-        tvClinicName.setText(ClinicArrList.get(position).getClinicName());
-        tvClinicOH.setText(ClinicArrList.get(position).getClinicOH());
+        tvClinicName.setText(DentalArrList.get(position).getClinicName());
+        tvClinicOH.setText(DentalArrList.get(position).getClinicOH());
         return rowView;
     }
 }

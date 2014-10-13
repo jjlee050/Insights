@@ -1,6 +1,9 @@
 package com.fypj.insightsLocal.model;
 
-public class Clinic {
+/**
+ * Created by L33524 on 10/10/2014.
+ */
+public class Dental {
     public String getClinicName() {
         return ClinicName;
     }
@@ -33,10 +36,11 @@ public class Clinic {
 
     private String ClinicOH;
 
-    public Clinic (int ClinicID , String ClinicName ,String ClinicOH)
+    public Dental (int ClinicID , String ClinicName ,String ClinicOH)
     {
         this.ClinicID = ClinicID;
         this.ClinicName = ClinicName;
         this.ClinicOH = ClinicOH;
     }
 }
+

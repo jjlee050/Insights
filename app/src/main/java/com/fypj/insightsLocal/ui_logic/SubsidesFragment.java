@@ -1,34 +1,31 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-import  com.fypj.insightsLocal.model.Clinic;
 
-public class NearestClinicFragment extends Fragment {
+import java.util.Locale;
+
+public class SubsidesFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
-    MainPageActivity activity;
+    ViewPioneerPackageActivity activity;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
@@ -36,20 +33,20 @@ public class NearestClinicFragment extends Fragment {
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
 
-    public NearestClinicFragment newInstance(MainPageActivity activity,int sectionNumber) {
-        NearestClinicFragment fragment = new NearestClinicFragment();
+    public SubsidesFragment newInstance(ViewPioneerPackageActivity activity,int sectionNumber) {
+        SubsidesFragment fragment = new SubsidesFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, 1);
+        args.putInt(ARG_SECTION_NUMBER, 2);
         this.activity = activity;
         fragment.setArguments(args);
         setHasOptionsMenu(true);
         return fragment;
     }
-    public NearestClinicFragment() {
+    public SubsidesFragment() {
     }
 
 
@@ -76,36 +73,62 @@ public class NearestClinicFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_nearest_clinc, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_pg_subsidies, container, false);
+        TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
+        TextView tvHeader = (TextView) rootView.findViewById(R.id.tv_header);
+        View horizontalLine = rootView.findViewById(R.id.horizontal_line);
+        TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
+        TextView tvContent1 = (TextView) rootView.findViewById(R.id.tv_content1);
+        TextView tvContent2 = (TextView) rootView.findViewById(R.id.tv_content2);
+        TextView tvContent3 = (TextView) rootView.findViewById(R.id.tv_content3);
+        TextView tvContent4 = (TextView) rootView.findViewById(R.id.tv_content4);
+        TextView tvContent5 = (TextView) rootView.findViewById(R.id.tv_content5);
+        TextView tvContent6 = (TextView) rootView.findViewById(R.id.tv_content6);
+        TextView tvContent7 = (TextView) rootView.findViewById(R.id.tv_content7);
+        TextView tvContent8 = (TextView) rootView.findViewById(R.id.tv_content8);
+        TextView tvContent9 = (TextView) rootView.findViewById(R.id.tv_content9);
+        ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
 
-        getActivity().getActionBar().setTitle("CHAS Clinics");
-        final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
-
-        final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"338 Family Clinic","Mon - Thurs: \n8.30am - 12.30pm,\n2.00pm- 4.30pm,\n7.00pm - 9.00pm\nFri-Sun: 8.30am - 12.30pm\n(Closed on Public Holidays)"));
-        ClinicArrList.add(new Clinic(2, "Accord Medical Clinic", "Mon - Fri: 8.30am - 10.00pm \n\nSat, Sun & PH :\n9.00am - 12.30pm,\n7.00pm - 10.00pm"));
-        ClinicArrList.add(new Clinic(3, "Ang Mo Kio Family Medicine Clinic Pte Ltd", "Mon - Fri:\n8.30am - 3pm,\n6.00pm - 10.00pm\n\nSat: 9.00am - 10.00pm\nSun: 2.00pm - 9.00pm\n(Closed on Public Holidays)"));
+        tvTitle.setText("Subsidies available for  Pioneer Generation Package");
+        tvHeader.setText("The package will help Pioneers with their healthcare costs for life. The benefits are as below: ");
 
 
-        ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
-        lvNearestClinic.setAdapter(adapter);
+        tvContent.setText(
+                "Common illnesses \n(e.g. cough and cold): ");
+        tvContent1.setText("$28.50");
 
-        lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(NearestClinicFragment.this.getActivity(),ViewClinicActivity.class);
-                intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
-                intent.putExtra("ClinicOH ",ClinicArrList.get(position).getClinicOH());
+         tvContent2.setText("Simple Chronic \nconditions under CDMP: ");
+         tvContent3.setText("$90 per visit, capped at $360 per year");
 
-                startActivity(intent);
-            }
-        });
+        tvContent4.setText("Complex Chronic \nconditions under CDMP: ");
+        tvContent5.setText("$135 per visit, capped at $540 per year");
+
+        tvContent6.setText("Selected dental services: ");
+        tvContent7.setText("$21 to $266.50 per procedure \n (dependent on procedure)");
+
+        tvContent8.setText("Screening tests:\nFree with HPB's invitation letter;\nand Doctor's consultation: ");
+        tvContent9.setText(Html.fromHtml("$28.50 per visit <br /> <b>(up to 2 times per year)</b>"));
+
+        horizontalLine.setVisibility(View.GONE);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvHeader.setVisibility(View.GONE);
+        tvContent.setVisibility(View.VISIBLE);
+        tvContent1.setVisibility(View.VISIBLE);
+        tvContent2.setVisibility(View.VISIBLE);
+        tvContent3.setVisibility(View.VISIBLE);
+        tvContent4.setVisibility(View.VISIBLE);
+        tvContent5.setVisibility(View.VISIBLE);
+        tvContent6.setVisibility(View.VISIBLE);
+        tvContent7.setVisibility(View.VISIBLE);
+        tvContent8.setVisibility(View.VISIBLE);
+        tvContent9.setVisibility(View.VISIBLE);
+        ivImg.setVisibility(View.VISIBLE);
+
         return rootView;
     }
 
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

@@ -1,20 +1,35 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 
 
 public class BookingAppt extends ActionBarActivity {
+
+static int SUBMIT_DIALOG =1;
+
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +40,8 @@ public class BookingAppt extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-    }
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,6 +58,23 @@ public class BookingAppt extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if ( id == R.id.Submit)
+        {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
+            builder1.setMessage("Booking of Appointment Successful ");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -63,3 +95,4 @@ public class BookingAppt extends ActionBarActivity {
         }
     }
 }
+

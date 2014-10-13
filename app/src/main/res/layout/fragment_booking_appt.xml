@@ -1,4 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -81,11 +84,19 @@
             android:textSize="18dp"
             android:layout_marginBottom="10dp"/>
         <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="10.00am "
-            android:layout_marginBottom="10dp"/>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="10.00am "
+        android:layout_marginBottom="10dp"/>
 
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Submit"
+        android:layout_marginBottom="10dp"/>
     </LinearLayout>
-
-
+</ScrollView>

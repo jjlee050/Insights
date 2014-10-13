@@ -16,8 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.util.ClinicAdapter;
+import com.fypj.insightsLocal.model.Dental;
+import com.fypj.insightsLocal.util.DentalAdapter;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -81,13 +81,13 @@ public class NearestDentalFragment extends Fragment {
         getActivity().getActionBar().setTitle("CHAS Clinics");
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
 
-        final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic());
-        ClinicArrList.add(new Clinic());
-        ClinicArrList.add(new Clinic());
+        final ArrayList<Dental> DentalArrList = new ArrayList<Dental>();
+        DentalArrList.add(new Dental(1, "A St*R Dental Surgery", "Mon - Fri: 9.00am - 9.00pm\n\nSat: 9.00am - 5.00pm\n\nSun: 9.00am -1.00pm\n\n(Closed on Public Holidays)"));
+        DentalArrList.add(new Dental(2, "Ace Dental Centre", "Mon - Fri: 9.00am - 8.00pm\n\nSat-Sun: 9.00am - 1.00pm\n\n(Closed on Public Holidays)"));
+        DentalArrList.add(new Dental(3, "Amk Central Dental Surgery", "Mon - Fri: 9.00am - 12.30pm,\n2.00pm - 4.30pm\n\nSat-Sun:9.00am - 12.30pm"));
 
 
-        ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
+        DentalAdapter adapter = new DentalAdapter(this.getActivity(), android.R.id.text1, DentalArrList);
         lvNearestClinic.setAdapter(adapter);
 
         lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,8 +95,8 @@ public class NearestDentalFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(NearestDentalFragment.this.getActivity(),ViewClinicActivity.class);
                 intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getName());
-                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getAddress());
+                intent.putExtra("ClinicName",DentalArrList.get(position).getClinicName());
+                intent.putExtra("ClinicOH",DentalArrList.get(position).getClinicOH());
                 startActivity(intent);
             }
         });

@@ -1,34 +1,32 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-import  com.fypj.insightsLocal.model.Clinic;
 
-public class NearestClinicFragment extends Fragment {
+import java.util.Locale;
+
+public class EligibilityFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
-    MainPageActivity activity;
+    ViewPioneerPackageActivity activity;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
@@ -36,20 +34,20 @@ public class NearestClinicFragment extends Fragment {
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
 
-    public NearestClinicFragment newInstance(MainPageActivity activity,int sectionNumber) {
-        NearestClinicFragment fragment = new NearestClinicFragment();
+    public EligibilityFragment newInstance(ViewPioneerPackageActivity activity,int sectionNumber) {
+        EligibilityFragment fragment = new EligibilityFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, 1);
+        args.putInt(ARG_SECTION_NUMBER, 3);
         this.activity = activity;
         fragment.setArguments(args);
         setHasOptionsMenu(true);
         return fragment;
     }
-    public NearestClinicFragment() {
+    public EligibilityFragment() {
     }
 
 
@@ -76,36 +74,47 @@ public class NearestClinicFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_nearest_clinc, container, false);
-
-        getActivity().getActionBar().setTitle("CHAS Clinics");
-        final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
-
-        final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"338 Family Clinic","Mon - Thurs: \n8.30am - 12.30pm,\n2.00pm- 4.30pm,\n7.00pm - 9.00pm\nFri-Sun: 8.30am - 12.30pm\n(Closed on Public Holidays)"));
-        ClinicArrList.add(new Clinic(2, "Accord Medical Clinic", "Mon - Fri: 8.30am - 10.00pm \n\nSat, Sun & PH :\n9.00am - 12.30pm,\n7.00pm - 10.00pm"));
-        ClinicArrList.add(new Clinic(3, "Ang Mo Kio Family Medicine Clinic Pte Ltd", "Mon - Fri:\n8.30am - 3pm,\n6.00pm - 10.00pm\n\nSat: 9.00am - 10.00pm\nSun: 2.00pm - 9.00pm\n(Closed on Public Holidays)"));
+        View rootView = inflater.inflate(R.layout.fragment_view_pg_eligibility, container, false);
+        TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
+        TextView tvHeader = (TextView) rootView.findViewById(R.id.tv_header);
+        View horizontalLine = rootView.findViewById(R.id.horizontal_line);
+        TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
+        TextView tvContent1 = (TextView) rootView.findViewById(R.id.tv_content1);
+        ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
 
 
-        ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
-        lvNearestClinic.setAdapter(adapter);
+        tvContent1.setClickable(true);
+        tvContent1.setMovementMethod(LinkMovementMethod.getInstance());
 
-        lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(NearestClinicFragment.this.getActivity(),ViewClinicActivity.class);
-                intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
-                intent.putExtra("ClinicOH ",ClinicArrList.get(position).getClinicOH());
 
-                startActivity(intent);
-            }
-        });
+
+        tvTitle.setText("Eligibility for Pioneer Generation Package");
+        tvHeader.setText("The package will help Pioneers with their healthcare costs for life. The benefits are as below: ");
+
+
+            tvContent.setText(Html.fromHtml("In order to apply CHAS for Pioneer Generation, Living Singapore Citizens <b>who meet 2 criteria:</b> <br /><br />" +
+
+                    "1. Aged 16 and above in 1965 - this means:<br />" +
+                    " &nbsp; &nbsp;&nbsp;&nbsp;• Born on or before 31 December 1949<br />" +
+                    " &nbsp; &nbsp;&nbsp;&nbsp;• Aged 65 and above in 2014<br /><br />"+
+                    "2. Obtained citizenship on or before 31 December 1986."));
+           tvContent1.setText(Html.fromHtml("Those eligible for the Pioneer Generation Package would have received a notification letter in June 2014. Please keep your NRIC address updated.<br /><br />" +
+                    "<b>For more information:</b> Call the Pioneer Generation hotline at 1800-2222-888 or visit <a href=http://www.cpf.gov.sg/pioneers/pgp_Faq.asp> the website</a>." ));
+
+
+        horizontalLine.setVisibility(View.GONE);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvHeader.setVisibility(View.GONE);
+        tvContent.setVisibility(View.VISIBLE);
+        tvContent1.setVisibility(View.VISIBLE);
+        ivImg.setVisibility(View.VISIBLE);
+
         return rootView;
     }
 
+
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

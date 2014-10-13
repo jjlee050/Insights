@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -48,7 +49,6 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                "Cover Page",
                                 "Overview",
                                 "Benefits",
                                 "Subsidies",
@@ -97,10 +97,39 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
         // container view.
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch(position) {
+            case 0:
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, PlaceholderFragment.newInstance(this, position + 1))
+                        .commit();
+                break;
+
+            case 1:
+                BenefitsFragment benefitsFragment = new BenefitsFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, benefitsFragment.newInstance(this, position + 1))
+                        .commit();
+                break;
+            case 2:
+                SubsidesFragment subsidiesFragment = new SubsidesFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1))
+                        .commit();
+                break;
+            case 3:
+                EligibilityFragment eligibilityFragment = new EligibilityFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, eligibilityFragment.newInstance(this, position + 1))
+                        .commit();
+                break;
+
+        }
+
         return true;
+
     }
 
     /**
@@ -117,7 +146,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static PlaceholderFragment newInstance(ViewPioneerPackageActivity viewPioneerPackageActivity, int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
