@@ -134,7 +134,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
                     fragment = new ViewClinicDetailsFragment();
                     break;
                 case 1:
-                    fragment = new ViewClinicLocationFragment();
+                    fragment = new ViewClinicDetailsFragment();
                     break;
             }
             return fragment;
