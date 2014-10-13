@@ -46,7 +46,7 @@ public class ClinicAdapter extends ArrayAdapter {
 
             }
             else if(position == 2){
-                ivImg.setImageResource(R.drawable.amkfamily);
+                ivImg.setImageResource(R.drawable.amk_family);
 
             }
 

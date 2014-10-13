@@ -56,7 +56,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
         final ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
 
         final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
-        latestEventArrList.add(new Event(Long.parseLong("1"),"Monthly Brisk Walk","Saturday, September 20, 2014 7:00 AM",null,"Brisk Walk for elderly residents",null,null,null));
+        latestEventArrList.add(new Event(Long.parseLong("1"),"Monthly Brisk Walk","Saturday, September 20, 2014 7:00 AM","NIL","Brisk Walk for elderly residents","Ang Mo Kio CC","62087913","Ang Mio Kio Community Centre"));
         latestEventArrList.add(new Event(Long.parseLong("2"),"Walkathon","27 September 2014 3.00PM to 6.00PM",null,"A long walk from Seragoon CC to Hougang CC.",null,null,null));
 
         LatestEventsListAdapter adapter = new LatestEventsListAdapter(this.getActivity(), android.R.id.text1, latestEventArrList);
@@ -108,7 +108,6 @@ public class ViewAllLatestEventsFragment extends Fragment {
                 intent.putExtra("contactNo",latestEventArrList.get(position).getContactNo());
                 intent.putExtra("location",latestEventArrList.get(position).getLocation());
                 startActivity(intent);
-                ViewAllLatestEventsFragment.this.getActivity().finish();
             }
         });
 

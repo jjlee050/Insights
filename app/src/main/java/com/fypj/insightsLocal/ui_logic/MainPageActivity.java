@@ -77,7 +77,6 @@ public class MainPageActivity extends ActionBarActivity
             case 1:
                 Intent i = new Intent(this,ProfileActivity.class);
                 startActivity(i);
-                this.finish();
             case 2:
                 ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
                 fragmentManager.beginTransaction()
@@ -94,7 +93,6 @@ public class MainPageActivity extends ActionBarActivity
                 Intent intent = new Intent(this,NearestClinicActivity.class);
                 intent.putExtra("choice",0);
                 startActivity(intent);
-                this.finish();
                 break;
         }
         currentPosition = position;
