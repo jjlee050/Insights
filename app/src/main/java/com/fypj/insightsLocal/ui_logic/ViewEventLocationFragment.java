@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Event;
@@ -79,6 +80,7 @@ public class ViewEventLocationFragment extends Fragment {
             String address = bundle.getString("location");
             event = new Event(bundle.getLong("id"),bundle.getString("name"),bundle.getString("dateAndTime"),bundle.getString("guestOfHonour"),bundle.getString("desc"),bundle.getString("organizer"),bundle.getString("contactNo"),address);
         }
+        Toast.makeText(this.getActivity(),event.getLocation(),Toast.LENGTH_LONG).show();
 
         // Get a handle to the Map Fragment
         GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -90,7 +92,7 @@ public class ViewEventLocationFragment extends Fragment {
         Geocoder geoCoder = new Geocoder(getActivity());
         List<Address> addressList = null;
         try {
-            addressList = geoCoder.getFromLocationName("795 Ang Mo Kio Avenue 1, 569976", 1);
+            addressList = geoCoder.getFromLocationName(event.getLocation(), 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,16 +102,28 @@ public class ViewEventLocationFragment extends Fragment {
             for (int i = 0; i < addressList.size(); i++) {
                 latLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
             }
-
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-            Marker marker = map.addMarker(new MarkerOptions().title("Ang Mo Kio Community Centre").position(latLng));
-            marker.showInfoWindow();
+            if(latLng != null) {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                Marker marker = map.addMarker(new MarkerOptions().title("Ang Mo Kio Community Centre").position(latLng));
+                marker.showInfoWindow();
+            }
+            else{
+                showSingapore(map);
+            }
         }
         else{
-            latLng = new LatLng(1.22,103.48);
+            showSingapore(map);
         }
 
 
         return rootView;
     }
+
+    private void showSingapore(GoogleMap map){
+        LatLng singapore = new LatLng(1.3450, 103.8250);
+
+        map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(singapore, 10));
+    }
+
 }

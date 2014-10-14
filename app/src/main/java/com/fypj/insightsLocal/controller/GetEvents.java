@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,12 +34,14 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
     private static InsightsEvent myApiService = null;
     private Activity context;
     private ListView lvEvents;
+    private SwipeRefreshLayout swipeView;
     final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
     private ProgressDialog dialog;
 
-    public GetEvents(Context context, ListView lvEvents){
+    public GetEvents(Context context, ListView lvEvents, SwipeRefreshLayout swipeView){
         this.context = (Activity) context;
         this.lvEvents = lvEvents;
+        this.swipeView = swipeView;
     }
 
     @Override
@@ -86,6 +89,7 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
         });
 
         dialog.dismiss();
+        swipeView.setRefreshing(false);
     }
 
     private void errorOnExecuting(){
@@ -106,5 +110,6 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
                 builder.create().show();
             }
         });
+        swipeView.setRefreshing(false);
     }
 }
