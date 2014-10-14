@@ -1,7 +1,14 @@
 package com.fypj.mymodule.api.util;
 
 import com.fypj.mymodule.api.controller.EventEndpoint;
+import com.fypj.mymodule.api.model.Appointment;
+import com.fypj.mymodule.api.model.Clinic;
 import com.fypj.mymodule.api.model.Event;
+import com.fypj.mymodule.api.model.MedicalHistory;
+import com.fypj.mymodule.api.model.Subsidies;
+import com.fypj.mymodule.api.model.User;
+import com.fypj.mymodule.api.model.User_Packages;
+import com.fypj.mymodule.api.model.User_Subsidies;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -16,7 +23,15 @@ import com.googlecode.objectify.ObjectifyService;
  */
 public class OfyService {
     static{
+        ObjectifyService.register(Appointment.class);
+        ObjectifyService.register(Clinic.class);
         ObjectifyService.register(Event.class);
+        ObjectifyService.register(MedicalHistory.class);
+        ObjectifyService.register(Package.class);
+        ObjectifyService.register(Subsidies.class);
+        ObjectifyService.register(User.class);
+        ObjectifyService.register(User_Packages.class);
+        ObjectifyService.register(User_Subsidies.class);
     }
     public static Objectify ofy() {
         return ObjectifyService.ofy();
