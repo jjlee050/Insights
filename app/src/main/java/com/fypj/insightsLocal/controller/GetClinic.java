@@ -14,14 +14,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
-import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
-import com.fypj.insightsLocal.util.LatestEventsListAdapter;
-import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
-import com.fypj.mymodule.api.insightsEvent.model.Event;
+import com.fypj.insightsLocal.ui_logic.ViewClinicActivity;
+import com.fypj.insightsLocal.util.ClinicAdapter;
+import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,17 +31,17 @@ import java.util.List;
 /**
  * Created by L33525 on 13/10/2014.
  */
-public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Settings {
-    private static InsightsEvent myApiService = null;
+public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
+    private static InsightsClinics myApiService = null;
     private Activity context;
-    private ListView lvEvents;
+    private ListView lvNearestClinic;
     private SwipeRefreshLayout swipeView;
-    final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
+    final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
     private ProgressDialog dialog;
 
-    public GetEvents(Context context, ListView lvEvents, SwipeRefreshLayout swipeView){
+    public GetClinic(Context context, ListView lvNearestClinic, SwipeRefreshLayout swipeView){
         this.context = (Activity) context;
-        this.lvEvents = lvEvents;
+        this.lvNearestClinic = lvNearestClinic;
         this.swipeView = swipeView;
     }
 
@@ -52,12 +52,12 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
     }
 
     @Override
-    protected List<Event> doInBackground(Void... voids) {
+    protected List<Clinic> doInBackground(Void... voids) {
         if(myApiService == null) {  // Only do this once
-            myApiService = AppConstants.getInsightsEventAPI();
+            myApiService = AppConstants.getInsightsClinicsAPI();
         }
         try {
-            return myApiService.listEvents().execute().getItems();
+            return myApiService.listClinics().execute().getItems();
         } catch (IOException e) {
             errorOnExecuting();
             return Collections.EMPTY_LIST;
@@ -65,26 +65,25 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
     }
 
     @Override
-    protected void onPostExecute(List<Event> result) {
-        for (Event e : result) {
-            latestEventArrList.add(e);
+    protected void onPostExecute(List<Clinic> result) {
+        for (Clinic e : result) {
+            ClinicArrList.add(e);
         }
 
-        LatestEventsListAdapter adapter = new LatestEventsListAdapter(context, android.R.id.text1, latestEventArrList);
-        lvEvents.setAdapter(adapter);
+        ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
+        lvNearestClinic.setAdapter(adapter);
 
-        lvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(context, ViewEventActivity.class);
-                intent.putExtra("id", latestEventArrList.get(position).getEventID());
-                intent.putExtra("name", latestEventArrList.get(position).getName());
-                intent.putExtra("dateAndTime", latestEventArrList.get(position).getDateAndTime());
-                intent.putExtra("guestOfHonour", latestEventArrList.get(position).getGuestOfHonour());
-                intent.putExtra("desc", latestEventArrList.get(position).getDesc());
-                intent.putExtra("organizer", latestEventArrList.get(position).getOrganizer());
-                intent.putExtra("contactNo", latestEventArrList.get(position).getContactNo());
-                intent.putExtra("location", latestEventArrList.get(position).getLocation());
+                Intent intent = new Intent(context, ViewClinicActivity.class);
+                intent.putExtra("ClinicID", ClinicArrList.get(position).getClinicID());
+                intent.putExtra("ClinicName", ClinicArrList.get(position).getName());
+                intent.putExtra("ClinicOH", ClinicArrList.get(position).getOperatingHours());
+                intent.putExtra("ClinicAddress", ClinicArrList.get(position).getAddress());
+                intent.putExtra("ClinicContactNo", ClinicArrList.get(position).getContactNo());
+                //intent.putExtra("ClinicType", ClinicArrList.get(position).getType());
+
                 context.startActivity(intent);
             }
         });

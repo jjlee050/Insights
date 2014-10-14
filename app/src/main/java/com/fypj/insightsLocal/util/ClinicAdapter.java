@@ -9,19 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import  com.fypj.insightsLocal.model.Clinic;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
+
 
 import java.util.ArrayList;
 
 /**
  * Created by L33524 on 22/9/2014.
  */
-public class ClinicAdapter extends ArrayAdapter {
+public class ClinicAdapter extends ArrayAdapter<Clinic> {
     private Activity context;
     private ArrayList<Clinic> ClinicArrList;
 
+
+
     public ClinicAdapter(Activity context, int textViewResourceId, ArrayList<Clinic> ClinicArrList) {
-        super(context, R.layout.list_clinic, ClinicArrList);
+        super(context, R.layout.list_clinic , ClinicArrList);
         this.context = (Activity) context;
         this.ClinicArrList = ClinicArrList;
     }

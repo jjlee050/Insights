@@ -6,16 +6,18 @@ public class Clinic{
     private String address;
     private String operatingHours;
     private String contactNo;
+    private String type;
 
-    public Clinic() {
+    public Clinic(Long clinicID, String clinicName, String clinicOH, String clinicAddress, String clinicContactNo) {
     }
 
-    public Clinic(Long clinicID, String name, String address, String operatingHours, String contactNo) {
+    public Clinic(Long clinicID, String name, String address, String operatingHours, String contactNo,String type) {
         this.clinicID = clinicID;
         this.name = name;
         this.address = address;
         this.operatingHours = operatingHours;
         this.contactNo = contactNo;
+        this.type = type;
     }
 
     public Long getClinicID() {
@@ -57,4 +59,7 @@ public class Clinic{
     public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
+    public String getType() {return type;}
+
+    public void setType(String type) {this.type = type;}
 }

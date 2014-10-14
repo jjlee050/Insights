@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.options;
 
+import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -24,6 +25,7 @@ public class AppConstants implements Settings{
      * Class instance of the HTTP transport.
      */
     public static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
+    private static InsightsClinics insightsClinicsAPI;
 
 
     /**
@@ -41,4 +43,16 @@ public class AppConstants implements Settings{
         return builder.build();
     }
 
+    public static InsightsClinics getInsightsClinicsAPI() {
+
+        InsightsClinics.Builder builder = new InsightsClinics.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+                .setRootUrl(LOCAL_API_URL).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    @Override
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        abstractGoogleClientRequest.setDisableGZipContent(true);
+                    }
+                });
+        return builder.build();
+
+    }
 }
