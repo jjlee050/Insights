@@ -11,17 +11,17 @@ public class Subsidies {
     @Id
     private Long subsidiesID;
     private String name;
-    private float amt;
-    private Package packages;
+    private Float amt;
+    private Long packagesID;
 
     public Subsidies() {
     }
 
-    public Subsidies(Long subsidiesID, String name, float amt, Package packages) {
+    public Subsidies(Long subsidiesID, String name, Float amt, Long packagesID) {
         this.subsidiesID = subsidiesID;
         this.name = name;
         this.amt = amt;
-        this.packages = packages;
+        this.packagesID = packagesID;
     }
 
     public Long getSubsidiesID() {
@@ -40,19 +40,19 @@ public class Subsidies {
         this.name = name;
     }
 
-    public float getAmt() {
+    public Float getAmt() {
         return amt;
     }
 
-    public void setAmt(float amt) {
+    public void setAmt(Float amt) {
         this.amt = amt;
     }
 
-    public Package getPackages() {
-        return packages;
+    public Long getPackages() {
+        return packagesID;
     }
 
-    public void setPackages(Package packages) {
-        this.packages = packages;
+    public void setPackages(Long packagesID) {
+        this.packagesID = packagesID;
     }
 }

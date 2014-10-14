@@ -11,14 +11,14 @@ public class User {
     @Id
     private String nric;
     private String name;
-    private int age;
+    private Integer age;
     private String contactNo;
     private String address;
 
     public User() {
     }
 
-    public User(String nric, String name, int age, String contactNo, String address) {
+    public User(String nric, String name, Integer age, String contactNo, String address) {
         this.nric = nric;
         this.name = name;
         this.age = age;
@@ -42,11 +42,11 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

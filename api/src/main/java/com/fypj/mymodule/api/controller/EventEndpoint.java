@@ -5,6 +5,7 @@ package com.fypj.mymodule.api.controller;
  */
 
 import com.fypj.mymodule.api.model.Event;
+import com.fypj.mymodule.api.util.OfyService;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -14,6 +15,8 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class EventEndpoint {
     @ApiMethod(name = "listEvents")
     public CollectionResponse<Event> listEvents(@Nullable @Named("cursor") String cursorString,
                                                @Nullable @Named("count") Integer count) {
-
+        
         Query<Event> query = ofy().load().type(Event.class);
         if (count != null) query.limit(count);
         if (cursorString != null && cursorString != "") {

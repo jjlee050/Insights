@@ -9,41 +9,41 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class User_Subsidies {
     @Id
-    private User user;
+    private Long userID;
     @Id
-    private Subsidies subsidies;
-    private float balance;
+    private Long subsidiesID;
+    private Float balance;
 
     public User_Subsidies() {
     }
 
-    public User_Subsidies(User user, Subsidies subsidies, float balance) {
-        this.user = user;
-        this.subsidies = subsidies;
+    public User_Subsidies(Long userID, Long subsidiesID, Float balance) {
+        this.userID = userID;
+        this.subsidiesID = subsidiesID;
         this.balance = balance;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 
-    public Subsidies getSubsidies() {
-        return subsidies;
+    public Long getSubsidiesID() {
+        return subsidiesID;
     }
 
-    public void setSubsidies(Subsidies subsidies) {
-        this.subsidies = subsidies;
+    public void setSubsidiesID(Long subsidies) {
+        this.subsidiesID = subsidiesID;
     }
 
-    public float getBalance() {
+    public Float getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(Float balance) {
         this.balance = balance;
     }
 }

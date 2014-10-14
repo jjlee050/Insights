@@ -27,14 +27,14 @@ public class AppConstants implements Settings{
     public static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
     private static InsightsClinics insightsClinicsAPI;
 
-
+    private static final String url = LOCAL_API_URL;
     /**
      * Retrieve insights event api service handle to access the API.
      */
     public static InsightsEvent getInsightsEventAPI() {
         // Use a builder to help formulate the API request.
         InsightsEvent.Builder builder = new InsightsEvent.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
-            .setRootUrl(LOCAL_API_URL).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+            .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
             @Override
             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
                     abstractGoogleClientRequest.setDisableGZipContent(true);
