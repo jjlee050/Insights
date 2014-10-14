@@ -56,10 +56,14 @@
         <activity
             android:name=".ui_logic.ViewClinicActivity"
             android:label="@string/title_activity_view__clinic"
+            android:launchMode="singleTask"
             android:parentActivityName=".ui_logic.NearestClinicActivity" >
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.NearestClinicActivity" />
+
+
         </activity>
         <activity
             android:name=".ui_logic.BookingAppt"
@@ -85,6 +89,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
         </activity>
+
+
     </application>
 
 </manifest>
