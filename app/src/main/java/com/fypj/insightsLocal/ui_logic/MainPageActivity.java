@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import com.fypj.insightsLocal.util.HandleXML;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
 
@@ -50,6 +51,9 @@ public class MainPageActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+
+        HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
+        obj.fetchXML();
 
         //new TestAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
         mNavigationDrawerFragment = (NavigationDrawerFragment)

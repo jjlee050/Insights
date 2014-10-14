@@ -11,6 +11,7 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class AppointmentEndpoint {
     // Make sure to add this endpoint to your web.xml file if this is a web application.
 
     public AppointmentEndpoint() {
-
     }
 
     /**

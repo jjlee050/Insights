@@ -22,17 +22,18 @@ import com.googlecode.objectify.ObjectifyService;
  *
  */
 public class OfyService {
+
     static{
         ObjectifyService.register(Appointment.class);
         ObjectifyService.register(Clinic.class);
         ObjectifyService.register(Event.class);
         ObjectifyService.register(MedicalHistory.class);
-        ObjectifyService.register(Package.class);
         ObjectifyService.register(Subsidies.class);
         ObjectifyService.register(User.class);
         ObjectifyService.register(User_Packages.class);
         ObjectifyService.register(User_Subsidies.class);
     }
+
     public static Objectify ofy() {
         return ObjectifyService.ofy();
     }
