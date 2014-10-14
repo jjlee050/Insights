@@ -18,6 +18,14 @@ public class Clinic{
     public Clinic() {
     }
 
+    public Clinic(Long clinicID, String name, String address, String operatingHours, String contactNo) {
+        this.clinicID = clinicID;
+        this.name = name;
+        this.address = address;
+        this.operatingHours = operatingHours;
+        this.contactNo = contactNo;
+    }
+
     public Long getClinicID() {
         return clinicID;
     }

@@ -5,6 +5,7 @@ import com.fypj.mymodule.api.model.Appointment;
 import com.fypj.mymodule.api.model.Clinic;
 import com.fypj.mymodule.api.model.Event;
 import com.fypj.mymodule.api.model.MedicalHistory;
+import com.fypj.mymodule.api.model.Package;
 import com.fypj.mymodule.api.model.Subsidies;
 import com.fypj.mymodule.api.model.User;
 import com.fypj.mymodule.api.model.User_Packages;
@@ -28,10 +29,9 @@ public class OfyService {
         ObjectifyService.register(Clinic.class);
         ObjectifyService.register(Event.class);
         ObjectifyService.register(MedicalHistory.class);
+        ObjectifyService.register(Package.class);
         ObjectifyService.register(Subsidies.class);
         ObjectifyService.register(User.class);
-        ObjectifyService.register(User_Packages.class);
-        ObjectifyService.register(User_Subsidies.class);
     }
 
     public static Objectify ofy() {

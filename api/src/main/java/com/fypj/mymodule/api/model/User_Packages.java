@@ -9,31 +9,31 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class User_Packages {
     @Id
-    private User user;
+    private Long userID;
     @Id
-    private Package packages;
+    private Long packagesID;
 
     public User_Packages() {
     }
 
-    public User_Packages(User user, Package packages) {
-        this.user = user;
-        this.packages = packages;
+    public User_Packages(Long userID, Long packages) {
+        this.userID = userID;
+        this.packagesID = packagesID;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(Long user) {
+        this.userID = userID;
     }
 
-    public Package getPackages() {
-        return packages;
+    public Long getPackagesID() {
+        return packagesID;
     }
 
-    public void setPackages(Package packages) {
-        this.packages = packages;
+    public void setPackagesID(Long packagesID) {
+        this.packagesID = packagesID;
     }
 }
