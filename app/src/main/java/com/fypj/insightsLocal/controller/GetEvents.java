@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
@@ -37,6 +38,7 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
     private static InsightsEvent myApiService = null;
     private Activity context;
     private ListView lvEvents;
+    final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
     private ProgressDialog dialog;
 
     public GetEvents(Context context, ListView lvEvents){
@@ -53,21 +55,7 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
     @Override
     protected List<Event> doInBackground(Void... voids) {
         if(myApiService == null) {  // Only do this once
-            InsightsEvent.Builder builder = new InsightsEvent.Builder(AndroidHttp.newCompatibleTransport(),
-                    new AndroidJsonFactory(), null)
-                    // options for running against local devappserver
-                    // - 10.0.2.2 is localhost's IP address in Android emulator
-                    // - turn off compression when running against local devappserver
-                    .setRootUrl(LOCAL_API_URL)
-                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                        @Override
-                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                            abstractGoogleClientRequest.setDisableGZipContent(true);
-                        }
-                    });
-            // end options for devappserver
-
-            myApiService = builder.build();
+            myApiService = AppConstants.getInsightsEventAPI();
         }
         try {
             return myApiService.listEvents().execute().getItems();
@@ -79,11 +67,8 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
 
     @Override
     protected void onPostExecute(List<Event> result) {
-        final ArrayList<Event> latestEventArrList = new ArrayList<Event>();
-
         for (Event e : result) {
             latestEventArrList.add(e);
-            //Toast.makeText(context, e.getName() + " : " + e.getDesc(), Toast.LENGTH_LONG).show();
         }
 
         LatestEventsListAdapter adapter = new LatestEventsListAdapter(context, android.R.id.text1, latestEventArrList);
