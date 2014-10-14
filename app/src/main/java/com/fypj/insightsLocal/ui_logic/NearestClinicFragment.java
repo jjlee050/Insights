@@ -81,7 +81,7 @@ public class NearestClinicFragment extends Fragment {
         getActivity().getActionBar().setTitle("CHAS Clinics");
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
 
-        final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
+        /*final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
         ClinicArrList.add(new Clinic(1,"338 Family Clinic","Mon - Thurs: \n8.30am - 12.30pm,\n2.00pm- 4.30pm,\n7.00pm - 9.00pm\nFri-Sun: 8.30am - 12.30pm\n(Closed on Public Holidays)"));
         ClinicArrList.add(new Clinic(2, "Accord Medical Clinic", "Mon - Fri: 8.30am - 10.00pm \n\nSat, Sun & PH :\n9.00am - 12.30pm,\n7.00pm - 10.00pm"));
         ClinicArrList.add(new Clinic(3, "Ang Mo Kio Family Medicine Clinic Pte Ltd", "Mon - Fri:\n8.30am - 3pm,\n6.00pm - 10.00pm\n\nSat: 9.00am - 10.00pm\nSun: 2.00pm - 9.00pm\n(Closed on Public Holidays)"));
@@ -100,7 +100,7 @@ public class NearestClinicFragment extends Fragment {
 
                 startActivity(intent);
             }
-        });
+        });*/
         return rootView;
     }
 

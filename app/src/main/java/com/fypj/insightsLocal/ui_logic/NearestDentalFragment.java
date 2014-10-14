@@ -16,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Dental;
+import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.util.DentalAdapter;
 
 import java.util.ArrayList;
@@ -81,10 +81,10 @@ public class NearestDentalFragment extends Fragment {
         getActivity().getActionBar().setTitle("CHAS Clinics");
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
 
-        final ArrayList<Dental> DentalArrList = new ArrayList<Dental>();
-        DentalArrList.add(new Dental(1, "A St*R Dental Surgery", "Mon - Fri: 9.00am - 9.00pm\n\nSat: 9.00am - 5.00pm\n\nSun: 9.00am -1.00pm\n\n(Closed on Public Holidays)"));
-        DentalArrList.add(new Dental(2, "Ace Dental Centre", "Mon - Fri: 9.00am - 8.00pm\n\nSat-Sun: 9.00am - 1.00pm\n\n(Closed on Public Holidays)"));
-        DentalArrList.add(new Dental(3, "Amk Central Dental Surgery", "Mon - Fri: 9.00am - 12.30pm,\n2.00pm - 4.30pm\n\nSat-Sun:9.00am - 12.30pm"));
+        /*final ArrayList<Clinic> DentalArrList = new ArrayList<Clinic>();
+        DentalArrList.add(new Clinic(1, "A St*R Dental Surgery", "Mon - Fri: 9.00am - 9.00pm\n\nSat: 9.00am - 5.00pm\n\nSun: 9.00am -1.00pm\n\n(Closed on Public Holidays)"));
+        DentalArrList.add(new Clinic(2, "Ace Dental Centre", "Mon - Fri: 9.00am - 8.00pm\n\nSat-Sun: 9.00am - 1.00pm\n\n(Closed on Public Holidays)"));
+        DentalArrList.add(new Clinic(3, "Amk Central Dental Surgery", "Mon - Fri: 9.00am - 12.30pm,\n2.00pm - 4.30pm\n\nSat-Sun:9.00am - 12.30pm"));
 
 
         DentalAdapter adapter = new DentalAdapter(this.getActivity(), android.R.id.text1, DentalArrList);
@@ -99,7 +99,7 @@ public class NearestDentalFragment extends Fragment {
                 intent.putExtra("ClinicOH",DentalArrList.get(position).getClinicOH());
                 startActivity(intent);
             }
-        });
+        });*/
 
         return rootView;
     }

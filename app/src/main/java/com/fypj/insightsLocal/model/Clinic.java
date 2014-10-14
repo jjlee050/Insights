@@ -1,42 +1,60 @@
 package com.fypj.insightsLocal.model;
 
-public class Clinic {
-    public String getClinicName() {
-        return ClinicName;
+public class Clinic{
+    private Long clinicID;
+    private String name;
+    private String address;
+    private String operatingHours;
+    private String contactNo;
+
+    public Clinic() {
     }
 
-    public void setClinicName(String clinicName) {
-        ClinicName = clinicName;
+    public Clinic(Long clinicID, String name, String address, String operatingHours, String contactNo) {
+        this.clinicID = clinicID;
+        this.name = name;
+        this.address = address;
+        this.operatingHours = operatingHours;
+        this.contactNo = contactNo;
     }
 
-    private String ClinicName;
-
-
-
-    public int getClinicID() {
-        return ClinicID;
+    public Long getClinicID() {
+        return clinicID;
     }
 
-    public void setClinicID(int clinicID) {
-        ClinicID = clinicID;
+    public void setClinicID(Long clinicID) {
+        this.clinicID = clinicID;
     }
 
-    private int ClinicID;
-
-    public String getClinicOH() {
-        return ClinicOH;
+    public String getName() {
+        return name;
     }
 
-    public void setClinicOH(String clinicOH) {
-        ClinicOH = clinicOH;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    private String ClinicOH;
+    public String getAddress() {
+        return address;
+    }
 
-    public Clinic (int ClinicID , String ClinicName ,String ClinicOH)
-    {
-        this.ClinicID = ClinicID;
-        this.ClinicName = ClinicName;
-        this.ClinicOH = ClinicOH;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getOperatingHours() {
+        return operatingHours;
+    }
+
+    public void setOperatingHours(String operatingHours) {
+        this.operatingHours = operatingHours;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
     }
 }

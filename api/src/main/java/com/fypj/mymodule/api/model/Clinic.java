@@ -1,5 +1,6 @@
 package com.fypj.mymodule.api.model;
 
+import com.google.appengine.api.images.Image;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 /**

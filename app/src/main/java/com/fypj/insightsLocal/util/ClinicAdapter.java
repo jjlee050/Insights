@@ -46,7 +46,7 @@ public class ClinicAdapter extends ArrayAdapter {
 
             }
             else if(position == 2){
-                ivImg.setImageResource(R.drawable.amkfamily);
+                ivImg.setImageResource(R.drawable.amk_family);
 
             }
 
@@ -58,8 +58,8 @@ public class ClinicAdapter extends ArrayAdapter {
 
         System.out.println("Position: " + position);
 
-        tvClinicName.setText(ClinicArrList.get(position).getClinicName());
-        tvClinicOH.setText(ClinicArrList.get(position).getClinicOH());
+        tvClinicName.setText(ClinicArrList.get(position).getName());
+        tvClinicOH.setText(ClinicArrList.get(position).getOperatingHours());
         return rowView;
     }
 }

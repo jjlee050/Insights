@@ -66,6 +66,7 @@ public class MainPageActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
         switch(position){
             case 0:
                 HomeFragment homeFragment = new HomeFragment();
@@ -76,6 +77,7 @@ public class MainPageActivity extends ActionBarActivity
             case 1:
                 Intent i = new Intent(this,ProfileActivity.class);
                 startActivity(i);
+                break;
             case 2:
                 ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
                 fragmentManager.beginTransaction()
@@ -121,7 +123,6 @@ public class MainPageActivity extends ActionBarActivity
                 break;
         }
         System.out.println("Title: " + mTitle);
-        Toast.makeText(this,mTitle,Toast.LENGTH_LONG);
     }
 
     /**

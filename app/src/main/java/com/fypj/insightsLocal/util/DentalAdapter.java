@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Dental;
+import com.fypj.insightsLocal.model.Clinic;
 
 import java.util.ArrayList;
 
@@ -18,9 +18,9 @@ import java.util.ArrayList;
  */
 public class DentalAdapter extends ArrayAdapter {
     private Activity context;
-    private ArrayList<Dental> DentalArrList;
+    private ArrayList<Clinic> DentalArrList;
 
-    public DentalAdapter(Activity context, int textViewResourceId, ArrayList<Dental> DentalArrList) {
+    public DentalAdapter(Activity context, int textViewResourceId, ArrayList<Clinic> DentalArrList) {
         super(context, R.layout.list_clinic, DentalArrList);
         this.context = (Activity) context;
         this.DentalArrList = DentalArrList;
@@ -58,8 +58,8 @@ public class DentalAdapter extends ArrayAdapter {
 
         System.out.println("Position: " + position);
 
-        tvClinicName.setText(DentalArrList.get(position).getClinicName());
-        tvClinicOH.setText(DentalArrList.get(position).getClinicOH());
+        tvClinicName.setText(DentalArrList.get(position).getName());
+        tvClinicOH.setText(DentalArrList.get(position).getOperatingHours());
         return rowView;
     }
 }

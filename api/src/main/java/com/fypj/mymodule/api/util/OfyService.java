@@ -1,5 +1,7 @@
 package com.fypj.mymodule.api.util;
 
+import com.fypj.mymodule.api.controller.EventEndpoint;
+import com.fypj.mymodule.api.model.Event;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -13,6 +15,9 @@ import com.googlecode.objectify.ObjectifyService;
  *
  */
 public class OfyService {
+    static{
+        ObjectifyService.register(Event.class);
+    }
     public static Objectify ofy() {
         return ObjectifyService.ofy();
     }

@@ -49,7 +49,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
             int ClinicID = savedInstanceState.getInt("ClinicID");
             String ClinicName = savedInstanceState.getString("ClinicName");
             String ClinicOH = savedInstanceState.getString("ClinicOH");
-            clinic = new Clinic(ClinicID,ClinicName,ClinicOH);
+            //clinic = new Clinic(ClinicID,ClinicName,ClinicOH);
             actionBar.setTitle(ClinicName);
         }
 

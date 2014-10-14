@@ -33,7 +33,6 @@ appengine {
   downloadSdk = true
   appcfg {
     oauth2 = true
-    noCookies = true
     email = "josephlee050@gmail.com"
   }
   endpoints {

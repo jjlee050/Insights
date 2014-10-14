@@ -66,7 +66,7 @@ public class ViewEventDetailsFragment extends Fragment implements
     private TextView tvEventDesc;
     private TextView tvEventOrganizer;
     private TextView tvEventContactNo;
-
+    private String textSpeech;
 
     public ViewEventDetailsFragment newInstance(int sectionNumber) {
         ViewEventDetailsFragment fragment = new ViewEventDetailsFragment();
@@ -158,9 +158,6 @@ public class ViewEventDetailsFragment extends Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        final String textSpeech = tvEventName.getText() + " will be held on " + tvEventDateAndTime.getText()
-                + " by " + tvEventOrganizer.getText() + ". This event is about " + tvEventDesc.getText()
-                + ". The guest of honour for this event will be " + tvEventGuestOfHonour.getText() + ". Contact " + tvEventContactNo.getText() + "for more information.";
         switch (item.getItemId()) {
             case R.id.share:
                 if(CheckNetworkConnection.isNetworkConnectionAvailable(this.getActivity())) {
@@ -273,10 +270,27 @@ public class ViewEventDetailsFragment extends Fragment implements
 
         tvEventName.setText(bundle.getString("name"));
         tvEventDateAndTime.setText(bundle.getString("dateAndTime"));
-        tvEventGuestOfHonour.setText(bundle.getString("guestOfHonour"));
+        if(bundle.getString("guestOfHonour").equals("-")){
+            tvEventGuestOfHonour.setVisibility(View.GONE);
+            tvEventGuestOfHonour.setText("-");
+        }
+        else {
+            tvEventGuestOfHonour.setVisibility(View.VISIBLE);
+            tvEventGuestOfHonour.setText(bundle.getString("guestOfHonour"));
+        }
         tvEventDesc.setText(bundle.getString("desc"));
-        tvEventOrganizer.setText(bundle.getString("organizer"));
-        tvEventContactNo.setText(bundle.getString("contactNo"));
+        tvEventOrganizer.setText("Organized by: " + bundle.getString("organizer"));
+        tvEventContactNo.setText("Contact " + bundle.getString("contactNo"));
+
+
+        String textSpeech = tvEventName.getText() + " will be held on " + tvEventDateAndTime.getText()
+                + " which is organized by " + bundle.getString("organizer") + ". This event is about " + tvEventDesc.getText();
+        if(!bundle.getString("guestOfHonour").equals("-")){
+            textSpeech += ". The guest of honour for this event will be " + tvEventGuestOfHonour.getText();
+        }
+        textSpeech += ". " + tvEventContactNo.getText() + " for more information.";
+        this.textSpeech = textSpeech;
+        System.out.println(textSpeech);
         return rootView;
     }
 }
