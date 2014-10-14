@@ -21,11 +21,6 @@ import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
