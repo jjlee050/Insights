@@ -57,6 +57,8 @@ public class ViewAllLatestEventsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.latest_events,menu);
+
+
     }
 
     @Override
@@ -64,10 +66,12 @@ public class ViewAllLatestEventsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_all_latest_events, container, false);
         getActivity().getActionBar().setTitle("Lifestyle Events");
+
+        /*HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
+        obj.fetchXML();*/
+
         final ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
-
         swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-
         swipeView.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         swipeView.setEnabled(false);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

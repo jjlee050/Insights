@@ -25,7 +25,7 @@ public class AppConstants implements Settings{
      */
     public static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
 
-    private static final String url = LOCAL_API_URL;
+    private static final String url = REMOTE_API_URL;
     /**
      * Retrieve insights event api service handle to access the API.
      */

@@ -1,7 +1,14 @@
 package com.fypj.insightsLocal.util;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -9,6 +16,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by L33525 on 14/10/2014.
@@ -19,6 +27,9 @@ public class HandleXML {
     private Activity context;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
+    private ArrayList<ParseHtml> mTasks = new ArrayList<ParseHtml>();
+
+    private ProgressDialog dialog;
 
     public HandleXML(String url, Context context){
         this.urlString = url;
@@ -26,6 +37,7 @@ public class HandleXML {
     }
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
+
         int event;
         String text=null;
         try {
@@ -39,6 +51,7 @@ public class HandleXML {
                         text = myParser.getText();
                         break;
                     case XmlPullParser.END_TAG:
+
                         String title = "";
                         String link = "";
                         String description = "";
@@ -52,18 +65,41 @@ public class HandleXML {
                             description = text;
                         }
                         if(link != "") {
-                            new ParseHtml(context,title,link,description).execute();
+                            ParseHtml parseHtml = new ParseHtml(context,title,link,description);
+                            mTasks.add(parseHtml);
                         }
                         break;
                 }
                 event = myParser.next();
             }
+            for(int i=0;i<mTasks.size();i++){
+                mTasks.get(i).execute();
+            }
+
+            int numberOfTasks = mTasks.size();
+            int finishedTasks = mTasks.size();
+            while(finishedTasks > 0){
+                for(int i=0;i<mTasks.size();i++){
+                    if(mTasks.get(i).getStatus() == AsyncTask.Status.FINISHED){
+                        finishedTasks -= 1;
+                    }
+                }
+                if(finishedTasks > 0){
+                    finishedTasks = numberOfTasks;
+                }
+                else{
+                    handler.sendMessage(handler.obtainMessage());
+                }
+            }
+
             parsingComplete = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void fetchXML(){
+        dialog = ProgressDialog.show(context,
+                "Retrieving events from People Association", "Please wait...", true);
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
@@ -89,5 +125,13 @@ public class HandleXML {
             }
         });
         thread.start();
+
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            dialog.dismiss();
+        }
+    };
 }

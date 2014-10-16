@@ -59,6 +59,7 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
             return myApiService.listEvents().execute().getItems();
         } catch (IOException e) {
             errorOnExecuting();
+            e.printStackTrace();
             return Collections.EMPTY_LIST;
         }
     }

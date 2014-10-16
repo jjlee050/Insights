@@ -31,16 +31,12 @@ import java.util.List;
 public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
     private static InsightsEvent myApiService = null;
     private Activity context;
+    private Event event;
     private ProgressDialog dialog;
 
-    public CreateEvent(Context context){
+    public CreateEvent(Context context, Event event){
         this.context = (Activity) context;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        dialog = ProgressDialog.show(context,
-                "Retrieving latest event", "Please wait...", true);
+        this.event = event;
     }
 
     @Override
@@ -50,8 +46,8 @@ public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
         }
         try {
             String text = "";
-            Event event = myApiService.insertEvent(null).execute();
-            if(event != null) {
+            Event createdEvent = myApiService.insertEvent(event).execute();
+            if(createdEvent != null) {
                 return true;
             }
             else{
@@ -59,57 +55,12 @@ public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
             }
         } catch (Exception e) {
             errorOnExecuting();
+            e.printStackTrace();
             return false;
         }
     }
 
-    @Override
-    protected void onPostExecute(Boolean result) {
-        /*for (Event e : result) {
-            latestEventArrList.add(e);
-        }
-
-        LatestEventsListAdapter adapter = new LatestEventsListAdapter(context, android.R.id.text1, latestEventArrList);
-        lvEvents.setAdapter(adapter);
-
-        lvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(context, ViewEventActivity.class);
-                intent.putExtra("id", latestEventArrList.get(position).getEventID());
-                intent.putExtra("name", latestEventArrList.get(position).getName());
-                intent.putExtra("dateAndTime", latestEventArrList.get(position).getDateAndTime());
-                intent.putExtra("guestOfHonour", latestEventArrList.get(position).getGuestOfHonour());
-                intent.putExtra("desc", latestEventArrList.get(position).getDesc());
-                intent.putExtra("organizer", latestEventArrList.get(position).getOrganizer());
-                intent.putExtra("contactNo", latestEventArrList.get(position).getContactNo());
-                intent.putExtra("location", latestEventArrList.get(position).getLocation());
-                context.startActivity(intent);
-            }
-        });
-
-        dialog.dismiss();
-        swipeView.setRefreshing(false);*/
-        dialog.dismiss();
-    }
-
     private void errorOnExecuting(){
         this.cancel(true);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Error in retrieving event ");
-                builder.setMessage("Unable to retrieve event. Please try again.");
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        cancel(true);
-                    }
-                });
-                builder.create().show();
-            }
-        });
     }
 }

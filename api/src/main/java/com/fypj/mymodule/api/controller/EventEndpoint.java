@@ -90,11 +90,19 @@ public class EventEndpoint {
             if (findRecord(event.getEventID()) != null) {
                 throw new ConflictException("Object already exists");
             }
+            else{
+                //Since our @Id field is a Long, Objectify will generate a unique value for us
+                //when we use put
+                ofy().save().entity(event).now();
+                return event;
+            }
         }
-        //Since our @Id field is a Long, Objectify will generate a unique value for us
-        //when we use put
-        ofy().save().entity(event).now();
-        return event;
+        else{
+            //Since our @Id field is a Long, Objectify will generate a unique value for us
+            //when we use put
+            ofy().save().entity(event).now();
+            return event;
+        }
     }
 
     /**
