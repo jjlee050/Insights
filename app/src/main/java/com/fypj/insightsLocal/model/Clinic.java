@@ -1,28 +1,30 @@
 package com.fypj.insightsLocal.model;
 
 public class Clinic{
-    private Long clinicID;
+    private int clinicID;
     private String name;
     private String address;
     private String operatingHours;
     private String contactNo;
+    private String type;
 
-    public Clinic() {
+    public Clinic(Long clinicID, String clinicName, String clinicOH, String clinicAddress, String clinicContactNo) {
     }
 
-    public Clinic(Long clinicID, String name, String address, String operatingHours, String contactNo) {
+    public Clinic(int clinicID, String name, String address) {
         this.clinicID = clinicID;
         this.name = name;
         this.address = address;
         this.operatingHours = operatingHours;
         this.contactNo = contactNo;
+        this.type = type;
     }
 
-    public Long getClinicID() {
+    public int getClinicID() {
         return clinicID;
     }
 
-    public void setClinicID(Long clinicID) {
+    public void setClinicID(int clinicID) {
         this.clinicID = clinicID;
     }
 
@@ -57,4 +59,7 @@ public class Clinic{
     public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
+    public String getType() {return type;}
+
+    public void setType(String type) {this.type = type;}
 }

@@ -64,16 +64,17 @@ static int SUBMIT_DIALOG =1;
             AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
             builder1.setMessage("Booking of Appointment Successful ");
             builder1.setCancelable(true);
-            builder1.setPositiveButton("Ok",
-                    new DialogInterface.OnClickListener() {
+            builder1.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-
+                            Intent intent = new Intent(BookingAppt.this, NearestClinicActivity.class);
+                            startActivity(intent);
                             dialog.cancel();
                         }
                     });
 
             AlertDialog alert11 = builder1.create();
             alert11.show();
+
 
         }
         return super.onOptionsItemSelected(item);

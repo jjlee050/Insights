@@ -18,6 +18,8 @@ public class ViewClinicDetailsFragment extends Fragment{
     private final String ARG_SECTION_NUMBER = "section_number";
     ViewClinicActivity activity;
 
+    private TextView tvClinicName,tvClinicAddress,tvClinicOH,tvClinicContactNo;
+
     public ViewClinicDetailsFragment newInstance(ViewClinicActivity activity,int sectionNumber) {
         ViewClinicDetailsFragment fragment = new ViewClinicDetailsFragment();
         Bundle args = new Bundle();
@@ -34,6 +36,19 @@ public class ViewClinicDetailsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_clinic_details, container, false);
+
+        Bundle bundle = getArguments();
+        tvClinicName = (TextView) rootView.findViewById(R.id.tv_Clinic_name);
+        tvClinicAddress = (TextView) rootView.findViewById(R.id.tv_Clinic_Address);
+        tvClinicOH = (TextView) rootView.findViewById(R.id.tv_Clinic_OH);
+        tvClinicContactNo = (TextView) rootView.findViewById(R.id.tv_Clinic_Contact);
+
+
+        tvClinicName.setText(bundle.getString("ClinicName"));
+        tvClinicAddress.setText(bundle.getString("ClinicAddress"));
+        tvClinicOH.setText(bundle.getString("ClinicOH"));
+        tvClinicContactNo.setText(bundle.getString("ClinicContactNo"));
+
 
         return rootView;
     }

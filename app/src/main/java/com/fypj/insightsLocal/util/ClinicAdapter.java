@@ -1,6 +1,7 @@
 package com.fypj.insightsLocal.util;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import  com.fypj.insightsLocal.model.Clinic;
+//import com.fypj.insightsLocal.model.Clinic;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
+
 
 import java.util.ArrayList;
 
 /**
  * Created by L33524 on 22/9/2014.
  */
-public class ClinicAdapter extends ArrayAdapter {
+public class ClinicAdapter extends ArrayAdapter<Clinic> {
     private Activity context;
     private ArrayList<Clinic> ClinicArrList;
 
@@ -25,6 +28,7 @@ public class ClinicAdapter extends ArrayAdapter {
         this.context = (Activity) context;
         this.ClinicArrList = ClinicArrList;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

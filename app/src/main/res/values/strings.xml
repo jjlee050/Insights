@@ -27,6 +27,7 @@
     <string name="title_activity_view_pioneer_package">View Pioneer Package </string>
     <string name="title_activity_view_pioneer_packages">ViewPioneerPackagesActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="search">Search</string>
 
 
 </resources>
