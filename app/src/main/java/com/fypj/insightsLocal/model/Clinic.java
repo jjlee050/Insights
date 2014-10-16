@@ -1,7 +1,7 @@
 package com.fypj.insightsLocal.model;
 
 public class Clinic{
-    private Long clinicID;
+    private int clinicID;
     private String name;
     private String address;
     private String operatingHours;
@@ -11,7 +11,7 @@ public class Clinic{
     public Clinic(Long clinicID, String clinicName, String clinicOH, String clinicAddress, String clinicContactNo) {
     }
 
-    public Clinic(Long clinicID, String name, String address, String operatingHours, String contactNo,String type) {
+    public Clinic(int clinicID, String name, String address) {
         this.clinicID = clinicID;
         this.name = name;
         this.address = address;
@@ -20,11 +20,11 @@ public class Clinic{
         this.type = type;
     }
 
-    public Long getClinicID() {
+    public int getClinicID() {
         return clinicID;
     }
 
-    public void setClinicID(Long clinicID) {
+    public void setClinicID(int clinicID) {
         this.clinicID = clinicID;
     }
 

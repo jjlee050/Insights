@@ -54,6 +54,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.MainPageActivity" />
 
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".ui_logic.ViewClinicActivity"

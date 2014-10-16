@@ -13,6 +13,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 
@@ -27,11 +29,12 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-
+    ListView _listView;
     /**
      * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         savedInstanceState = getIntent().getExtras();
 
@@ -55,6 +59,8 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
+
+
             }
         });
 
@@ -62,9 +68,13 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_medic).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_tooth).setTabListener(this));
 
+        _listView = (ListView) findViewById(R.id.lv_nearest_clinic);
+
         if(savedInstanceState != null){
             int position = savedInstanceState.getInt("choice");
             actionBar.setSelectedNavigationItem(position);
+
+
         }
     }
 
@@ -74,7 +84,13 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nearest_clinc, menu);
 
-        return true;
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+
+        return super.onCreateOptionsMenu( menu );
     }
 
     @Override
@@ -86,6 +102,8 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         if (id == R.id.action_settings) {
             return true;
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -137,7 +155,11 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
             // Show 3 total pages.
             return 2;
         }
+
+
     }
+
+
 }
 
 

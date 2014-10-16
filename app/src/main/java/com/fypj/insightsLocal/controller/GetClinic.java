@@ -32,7 +32,7 @@ import java.util.List;
  * Created by L33525 on 13/10/2014.
  */
 public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
-    private static InsightsClinics myApiService = null;
+  private static InsightsClinics myApiService = null;
     private Activity context;
     private ListView lvNearestClinic;
     private SwipeRefreshLayout swipeView;
@@ -48,7 +48,7 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
     @Override
     protected void onPreExecute() {
         dialog = ProgressDialog.show(context,
-                "Retrieving latest event", "Please wait...", true);
+                "Retrieving Clinics", "Please wait...", true);
     }
 
     @Override

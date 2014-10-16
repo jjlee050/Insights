@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:text="338 Family Clinic"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_alignParentLeft="true"
@@ -34,19 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16dp"
-        android:text="338 Ang Mo Kio Avenue 1, #01-1615,"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:id="@+id/tv_Clinic_PostalCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:text="Singapore - 560338"
-        android:layout_marginTop="3dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -59,10 +46,9 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/tv_clin_goh"/>
+        android:layout_below="@+id/tv_Clinic_Address"/>
 
     <TextView
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Operating Hours:"
@@ -73,37 +59,15 @@
         android:layout_alignParentStart="true"/>
 
     <TextView
-
+        android:id="@+id/tv_Clinic_OH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mon-Fri: 10.00am - 4.30pm"
         android:textSize="14dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sat: 10.00am - 12.30pm"
-        android:textSize="14dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sun n PH : Closed"
-        android:textSize="14dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
 
     <View
         android:id="@+id/horizontal_line1"
@@ -113,7 +77,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/tv_clinic_goh"/>
+        android:layout_below="@+id/tv_Clinic_OH"/>
     <TextView
 
         android:layout_width="wrap_content"
@@ -126,10 +90,9 @@
         android:layout_alignParentStart="true"/>
 
     <TextView
-
+        android:id="@+id/tv_Clinic_Contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tel: 6454 9408"
         android:textSize="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
