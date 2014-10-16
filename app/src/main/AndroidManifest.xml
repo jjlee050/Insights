@@ -44,6 +44,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.MainPageActivity" />
+
         </activity>
         <activity
             android:name=".ui_logic.NearestClinicActivity"
@@ -52,6 +53,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.MainPageActivity" />
+
         </activity>
         <activity
             android:name=".ui_logic.ViewClinicActivity"
@@ -62,8 +64,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.NearestClinicActivity" />
-
-
         </activity>
         <activity
             android:name=".ui_logic.BookingAppt"

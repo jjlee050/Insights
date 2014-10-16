@@ -46,7 +46,7 @@ public class AppConstants implements Settings{
     public static InsightsClinics getInsightsClinicsAPI() {
 
         InsightsClinics.Builder builder = new InsightsClinics.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
-                .setRootUrl(LOCAL_API_URL).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
                         abstractGoogleClientRequest.setDisableGZipContent(true);
