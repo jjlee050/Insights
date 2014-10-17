@@ -11,7 +11,7 @@ public class Clinic{
     public Clinic(Long clinicID, String clinicName, String clinicOH, String clinicAddress, String clinicContactNo) {
     }
 
-    public Clinic(int clinicID, String name, String address) {
+    public Clinic(int clinicID, String name, String address , String operatingHours ,String contactNo,String type ) {
         this.clinicID = clinicID;
         this.name = name;
         this.address = address;

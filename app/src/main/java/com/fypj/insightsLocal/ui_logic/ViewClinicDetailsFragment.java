@@ -1,6 +1,8 @@
 package com.fypj.insightsLocal.ui_logic;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +20,10 @@ public class ViewClinicDetailsFragment extends Fragment{
     private final String ARG_SECTION_NUMBER = "section_number";
     ViewClinicActivity activity;
 
-    private TextView tvClinicName,tvClinicAddress,tvClinicOH,tvClinicContactNo;
+    private TextView tvClinicName;
+    private TextView tvClinicAddress;
+    private TextView tvClinicOH;
+    private TextView tvClinicContactNo;
 
     public ViewClinicDetailsFragment newInstance(ViewClinicActivity activity,int sectionNumber) {
         ViewClinicDetailsFragment fragment = new ViewClinicDetailsFragment();
@@ -32,12 +37,27 @@ public class ViewClinicDetailsFragment extends Fragment{
     public ViewClinicDetailsFragment() {
     }
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
+
+    public boolean isPackageExisted(String targetPackage){
+        PackageManager pm = this.getActivity().getPackageManager();
+        try {
+            PackageInfo info=pm.getPackageInfo(targetPackage,PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_clinic_details, container, false);
-
         Bundle bundle = getArguments();
+
         tvClinicName = (TextView) rootView.findViewById(R.id.tv_Clinic_name);
         tvClinicAddress = (TextView) rootView.findViewById(R.id.tv_Clinic_Address);
         tvClinicOH = (TextView) rootView.findViewById(R.id.tv_Clinic_OH);
@@ -48,6 +68,13 @@ public class ViewClinicDetailsFragment extends Fragment{
         tvClinicAddress.setText(bundle.getString("ClinicAddress"));
         tvClinicOH.setText(bundle.getString("ClinicOH"));
         tvClinicContactNo.setText(bundle.getString("ClinicContactNo"));
+
+
+
+        tvClinicName.setVisibility(View.VISIBLE);
+        tvClinicAddress.setVisibility(View.VISIBLE);
+        tvClinicOH.setVisibility(View.VISIBLE);
+        tvClinicContactNo.setVisibility(View.VISIBLE);
 
 
         return rootView;

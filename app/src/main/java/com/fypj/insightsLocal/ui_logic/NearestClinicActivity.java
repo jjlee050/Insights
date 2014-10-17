@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.R;
 
 public class NearestClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -34,7 +34,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
      * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-
+    private Clinic clinic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,17 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         savedInstanceState = getIntent().getExtras();
+
+        if(savedInstanceState != null){
+            Long id = savedInstanceState.getLong("ClinicID");
+            String name = savedInstanceState.getString("ClinicName");
+            String operatingHours = savedInstanceState.getString("ClinicOH");
+            String address = savedInstanceState.getString("ClinicAddress");
+            String contactNo = savedInstanceState.getString("ClinicContactNo");
+
+            actionBar.setTitle(name);
+            clinic = new Clinic(id,name,operatingHours,address,contactNo);
+        }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

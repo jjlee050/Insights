@@ -46,13 +46,15 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null){
-            int ClinicID = savedInstanceState.getInt("ClinicID");
-            String ClinicName = savedInstanceState.getString("ClinicName");
-            //String ClinicOH = savedInstanceState.getString("ClinicOH");
-           // String ClinicAddress = savedInstanceState.getString("ClinicAddress");
-           // String ClinicContactNo = savedInstanceState.getString("ClinicContactNo");
 
-            actionBar.setTitle(ClinicName);
+            Long id = savedInstanceState.getLong("ClinicID");
+            String name = savedInstanceState.getString("ClinicName");
+            String operatingHours = savedInstanceState.getString("ClinicOH");
+            String address = savedInstanceState.getString("ClinicAddress");
+            String contactNo = savedInstanceState.getString("ClinicContactNo");
+
+            actionBar.setTitle(name);
+            clinic = new Clinic(id,name,operatingHours,address,contactNo);
         }
 
         // Create the adapter that will return a fragment for each of the three
