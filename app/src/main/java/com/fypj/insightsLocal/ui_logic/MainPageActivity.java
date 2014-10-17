@@ -1,10 +1,15 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
@@ -136,6 +141,7 @@ public class MainPageActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
@@ -156,6 +162,15 @@ public class MainPageActivity extends ActionBarActivity
                 case 3:
                     getMenuInflater().inflate(R.menu.latest_events, menu);
                     restoreActionBar();
+                    // Associate searchable configuration with the SearchView
+                    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+                    MenuItem mSearchMenuItem = menu.findItem(R.id.action_search);
+                    SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchMenuItem);
+                    if(searchManager != null) {
+                        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                    }
+                    mSearchView.setIconifiedByDefault(false);
+
                     break;
                 case 4:
                     getMenuInflater().inflate(R.menu.nearest_clinc, menu);

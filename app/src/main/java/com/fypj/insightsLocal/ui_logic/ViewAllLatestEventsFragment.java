@@ -61,13 +61,6 @@ public class ViewAllLatestEventsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.latest_events,menu);
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) this.getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-                .getActionView();
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(this.getActivity().getComponentName()));
-
     }
 
     @Override
