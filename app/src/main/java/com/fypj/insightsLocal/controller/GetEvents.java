@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
+import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
@@ -90,6 +93,13 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
             }
         });
 
+        EventSQLController controller = new EventSQLController(context);
+        if(controller.getAllEvent().size() > 0){
+            controller.deleteAllEvents();
+        }
+        for(int i=0;i<latestEventArrList.size();i++) {
+            controller.insertEvent(latestEventArrList.get(i));
+        }
         dialog.dismiss();
         swipeView.setRefreshing(false);
     }

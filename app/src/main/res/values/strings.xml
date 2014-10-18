@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_id">1448892845363751</string>
     <string name="app_name">Insights</string>
     <string name="hello_world">Hello world!</string>
@@ -28,6 +29,6 @@
     <string name="title_activity_view_pioneer_packages">ViewPioneerPackagesActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="search">Search</string>
-
+    <string name="title_activity_view_event_search_results">Event Results Found</string>
 
 </resources>

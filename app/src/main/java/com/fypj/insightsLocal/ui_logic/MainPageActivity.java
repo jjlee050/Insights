@@ -162,21 +162,22 @@ public class MainPageActivity extends ActionBarActivity
                 case 3:
                     getMenuInflater().inflate(R.menu.latest_events, menu);
                     restoreActionBar();
-                    // Associate searchable configuration with the SearchView
                     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-                    MenuItem mSearchMenuItem = menu.findItem(R.id.action_search);
-                    SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchMenuItem);
-                    if(searchManager != null) {
-                        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-                    }
-                    mSearchView.setIconifiedByDefault(false);
+                    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
+                    if(searchView != null) {
+                        System.out.println("Executing");
+                        //ComponentName cn = new ComponentName(this, ViewEventSearchResultsActivity.class);
+                        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                    }
+                    searchView.setIconifiedByDefault(false);
                     break;
                 case 4:
                     getMenuInflater().inflate(R.menu.nearest_clinc, menu);
                     restoreActionBar();
                     break;
             }
+
             return true;
         }
         return super.onCreateOptionsMenu(menu);

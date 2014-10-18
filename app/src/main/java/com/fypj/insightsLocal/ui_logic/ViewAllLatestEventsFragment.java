@@ -3,6 +3,7 @@ package com.fypj.insightsLocal.ui_logic;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -23,7 +24,9 @@ import android.widget.ListView;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetEvents;
 
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
+import com.fypj.mymodule.api.insightsEvent.model.Event;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,8 @@ import java.util.ArrayList;
 public class ViewAllLatestEventsFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_num--ber";
     private SwipeRefreshLayout swipeView;
+    private ListView lvLatestEvents;
+    private SearchView searchView;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -48,20 +53,11 @@ public class ViewAllLatestEventsFragment extends Fragment {
         return fragment;
     }
 
-    public SwipeRefreshLayout getSwipeView() {
-        return swipeView;
-    }
-
-    public void setSwipeView(SwipeRefreshLayout swipeView) {
-        this.swipeView = swipeView;
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.latest_events,menu);
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +68,7 @@ public class ViewAllLatestEventsFragment extends Fragment {
         /*HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
         obj.fetchXML();*/
 
-        final ListView lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
+        lvLatestEvents = (ListView) rootView.findViewById(R.id.lv_latest_events);
         swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
         swipeView.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         swipeView.setEnabled(false);
@@ -104,7 +100,6 @@ public class ViewAllLatestEventsFragment extends Fragment {
             }
         });
         getAllEvents(lvLatestEvents);
-
         return rootView;
     }
 
