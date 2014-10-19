@@ -11,16 +11,13 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
-import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
@@ -70,38 +67,40 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
 
     @Override
     protected void onPostExecute(List<Event> result) {
-        for (Event e : result) {
-            latestEventArrList.add(e);
-        }
-
-        LatestEventsListAdapter adapter = new LatestEventsListAdapter(context, android.R.id.text1, latestEventArrList);
-        lvEvents.setAdapter(adapter);
-
-        lvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(context, ViewEventActivity.class);
-                intent.putExtra("id", latestEventArrList.get(position).getEventID());
-                intent.putExtra("name", latestEventArrList.get(position).getName());
-                intent.putExtra("dateAndTime", latestEventArrList.get(position).getDateAndTime());
-                intent.putExtra("guestOfHonour", latestEventArrList.get(position).getGuestOfHonour());
-                intent.putExtra("desc", latestEventArrList.get(position).getDesc());
-                intent.putExtra("organizer", latestEventArrList.get(position).getOrganizer());
-                intent.putExtra("contactNo", latestEventArrList.get(position).getContactNo());
-                intent.putExtra("location", latestEventArrList.get(position).getLocation());
-                context.startActivity(intent);
+        if(result != null) {
+            for (Event e : result) {
+                latestEventArrList.add(e);
             }
-        });
 
-        EventSQLController controller = new EventSQLController(context);
-        if(controller.getAllEvent().size() > 0){
-            controller.deleteAllEvents();
+            LatestEventsListAdapter adapter = new LatestEventsListAdapter(context, android.R.id.text1, latestEventArrList);
+            lvEvents.setAdapter(adapter);
+
+            lvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    Intent intent = new Intent(context, ViewEventActivity.class);
+                    intent.putExtra("id", latestEventArrList.get(position).getEventID());
+                    intent.putExtra("name", latestEventArrList.get(position).getName());
+                    intent.putExtra("dateAndTime", latestEventArrList.get(position).getDateAndTime());
+                    intent.putExtra("guestOfHonour", latestEventArrList.get(position).getGuestOfHonour());
+                    intent.putExtra("desc", latestEventArrList.get(position).getDesc());
+                    intent.putExtra("organizer", latestEventArrList.get(position).getOrganizer());
+                    intent.putExtra("contactNo", latestEventArrList.get(position).getContactNo());
+                    intent.putExtra("location", latestEventArrList.get(position).getLocation());
+                    context.startActivity(intent);
+                }
+            });
+
+            EventSQLController controller = new EventSQLController(context);
+            if (controller.getAllEvent().size() > 0) {
+                controller.deleteAllEvents();
+            }
+            for (int i = 0; i < latestEventArrList.size(); i++) {
+                controller.insertEvent(latestEventArrList.get(i));
+            }
+            dialog.dismiss();
+            swipeView.setRefreshing(false);
         }
-        for(int i=0;i<latestEventArrList.size();i++) {
-            controller.insertEvent(latestEventArrList.get(i));
-        }
-        dialog.dismiss();
-        swipeView.setRefreshing(false);
     }
 
     private void errorOnExecuting(){

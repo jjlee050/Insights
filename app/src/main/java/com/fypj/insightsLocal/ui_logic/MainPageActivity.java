@@ -1,21 +1,14 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
 
-import com.fypj.insightsLocal.util.HandleXML;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
 
@@ -72,6 +65,7 @@ public class MainPageActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack();
+        Intent i = null;
         switch(position){
             case 0:
                 HomeFragment homeFragment = new HomeFragment();
@@ -80,25 +74,22 @@ public class MainPageActivity extends ActionBarActivity
                         .commit();
                 break;
             case 1:
-                Intent i = new Intent(this,ProfileActivity.class);
+                i = new Intent(this,ProfileActivity.class);
                 startActivity(i);
                 break;
             case 2:
-                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
-                        .commit();
+                i = new Intent(this,ViewAllPioneerPackagesActivity.class);
+                startActivity(i);
                 break;
             case 3:
-                ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
-                        .commit();
+                i = new Intent(this,ViewAllLatestEventsActivity.class);
+                i.putExtra("choice", 0);
+                startActivity(i);
                 break;
             case 4:
-                Intent intent = new Intent(this,NearestClinicActivity.class);
-                intent.putExtra("choice",0);
-                startActivity(intent);
+                i = new Intent(this,NearestClinicActivity.class);
+                i.putExtra("choice",0);
+                startActivity(i);
                 break;
         }
         currentPosition = position;
@@ -162,15 +153,6 @@ public class MainPageActivity extends ActionBarActivity
                 case 3:
                     getMenuInflater().inflate(R.menu.latest_events, menu);
                     restoreActionBar();
-                    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-                    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-
-                    if(searchView != null) {
-                        System.out.println("Executing");
-                        //ComponentName cn = new ComponentName(this, ViewEventSearchResultsActivity.class);
-                        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-                    }
-                    searchView.setIconifiedByDefault(false);
                     break;
                 case 4:
                     getMenuInflater().inflate(R.menu.nearest_clinc, menu);

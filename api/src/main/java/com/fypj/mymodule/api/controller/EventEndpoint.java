@@ -87,7 +87,8 @@ public class EventEndpoint {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
         if (event.getEventID() != null) {
-            if (findRecord(event.getEventID()) != null) {
+            Event foundRecord = ofy().load().type(Event.class).filter("name",event.getName()).first().now();
+            if (foundRecord != null) {
                 throw new ConflictException("Object already exists");
             }
             else{

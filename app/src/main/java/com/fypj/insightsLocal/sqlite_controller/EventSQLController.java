@@ -80,6 +80,28 @@ public class EventSQLController {
         return event;
     }
 
+    public ArrayList<Event> searchEvent(String query){
+        ArrayList<Event> eventList = new ArrayList<Event>();
+        conn.open();
+        Cursor cursor = conn.getDB().query(conn.getEventTable(), null, "name LIKE '%" + query + "%'", null, null, null, "dateAndTime", null);
+        if(cursor.moveToFirst()){
+            do{
+                Event event = new Event();
+                event.setEventID(cursor.getLong(cursor.getColumnIndex("eventID")));
+                event.setName(cursor.getString(cursor.getColumnIndex("name")));
+                event.setDateAndTime(cursor.getString(cursor.getColumnIndex("dateAndTime")));
+                event.setGuestOfHonour(cursor.getString(cursor.getColumnIndex("guestOfHonour")));
+                event.setDesc(cursor.getString(cursor.getColumnIndex("desc")));
+                event.setOrganizer(cursor.getString(cursor.getColumnIndex("organizer")));
+                event.setContactNo(cursor.getString(cursor.getColumnIndex("contactNo")));
+                event.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+                eventList.add(event);
+            }while(cursor.moveToNext());
+        }
+        conn.close();
+        return eventList;
+    }
+
     public void deleteAllEvents(){
         conn.open();
         conn.getDB().delete(conn.getEventTable(), null, null);

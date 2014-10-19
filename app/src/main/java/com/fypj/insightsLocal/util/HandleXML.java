@@ -1,14 +1,13 @@
 package com.fypj.insightsLocal.util;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
+
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
+import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsActivity;
+import com.fypj.mymodule.api.insightsEvent.model.Event;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -24,20 +23,19 @@ import java.util.ArrayList;
 public class HandleXML {
 
     private String urlString = null;
-    private Activity context;
+    private ViewAllLatestEventsActivity activity;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
     private ArrayList<ParseHtml> mTasks = new ArrayList<ParseHtml>();
 
     private ProgressDialog dialog;
 
-    public HandleXML(String url, Context context){
+    public HandleXML(String url, ViewAllLatestEventsActivity activity){
         this.urlString = url;
-        this.context = (Activity)context;
+        this.activity = (ViewAllLatestEventsActivity)activity;
     }
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
-
         int event;
         String text=null;
         try {
@@ -64,8 +62,8 @@ public class HandleXML {
                         else if(name.equals("description")){
                             description = text;
                         }
-                        if(link != "") {
-                            ParseHtml parseHtml = new ParseHtml(context,title,link,description);
+                        if((link != "")) {
+                            ParseHtml parseHtml = new ParseHtml(activity, title, link, description);
                             mTasks.add(parseHtml);
                         }
                         break;
@@ -98,7 +96,7 @@ public class HandleXML {
         }
     }
     public void fetchXML(){
-        dialog = ProgressDialog.show(context,
+        dialog = ProgressDialog.show(activity,
                 "Retrieving events from People Association", "Please wait...", true);
         Thread thread = new Thread(new Runnable(){
             @Override
@@ -131,6 +129,7 @@ public class HandleXML {
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            activity.getAllEvents();
             dialog.dismiss();
         }
     };

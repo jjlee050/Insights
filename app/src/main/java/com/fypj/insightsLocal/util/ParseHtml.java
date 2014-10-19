@@ -10,6 +10,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.fypj.insightsLocal.controller.CreateEvent;
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
+import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsActivity;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 
 import org.jsoup.Jsoup;
@@ -28,18 +30,17 @@ import java.util.Date;
  * Created by L33525 on 14/10/2014.
  */
 public class ParseHtml extends AsyncTask<Void, Void, String> {
-    private Activity context;
+    private ViewAllLatestEventsActivity activity;
     private String title,link,description;
     private Event event = new Event();
     private ArrayList<String> valueArrList = new ArrayList<String>();
 
-    public ParseHtml(Context context, String title, String link, String description){
-        this.context = (Activity)context;
+    public ParseHtml(ViewAllLatestEventsActivity activity, String title, String link, String description){
+        this.activity = (ViewAllLatestEventsActivity)activity;
         this.title = title;
         this.link = link;
         this.description = description;
     }
-
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -104,12 +105,37 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
                 ca.setTime(dt);
                 cnow.setTime(dnow);
                 if(cnow.getTimeInMillis() - ca.getTimeInMillis() < 0){
-                    CreateEvent createEvent = new CreateEvent(context, event);
-                    createEvent.execute();
+                    EventSQLController controller = new EventSQLController(activity);
+                    ArrayList<Event> eventArrList = controller.getAllEvent();
+                    if(eventArrList.size() > 0) {
+                        boolean duplicate = false;
+                        for (int i = 0; i < eventArrList.size(); i++) {
+                            if ((eventArrList.get(i).getName().equals(event.getName())) || (eventArrList.get(i).getDesc().equals(event.getDesc()))) {
+                                duplicate = true;
+                                break;
+                            }
+                        }
+                        if (!duplicate) {
+                            createEvent(event);
+                        }
+                    }
+                    else{
+                        createEvent(event);
+                    }
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void createEvent(Event event){
+        if((event.getName().contains("Walk") || (event.getDesc().contains("Walk")))) {
+            CreateEvent createEvent = new CreateEvent(activity, event);
+            createEvent.execute();
+        }
+        else{
+            return;
         }
     }
 
