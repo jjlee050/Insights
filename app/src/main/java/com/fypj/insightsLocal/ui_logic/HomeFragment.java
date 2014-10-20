@@ -4,17 +4,13 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -65,17 +61,13 @@ public class HomeFragment extends Fragment {
 
                 if(position == 0){
                     HomeFragment.this.position = 3;
-                    ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(activity,position + 1))
-                            .commit();
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllPioneerPackagesActivity.class);
+                    startActivity(intent);
                 }
                 if(position == 1){
                     HomeFragment.this.position = 4;
-                    ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
-                            .commit();
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllLatestEventsActivity.class);
+                    startActivity(intent);
                 }
                 if(position == 2){
                     Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);

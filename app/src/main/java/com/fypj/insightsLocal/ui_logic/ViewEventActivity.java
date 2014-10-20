@@ -12,11 +12,13 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
+import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 
 public class ViewEventActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -30,7 +32,7 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     ViewEventPagerAdapter mSectionsPagerAdapter;
-
+    JazzyViewPager mJazzy;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -62,23 +64,25 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
             event = new Event(id,name,dateAndTime,guestOfHonour,desc,organizer,contactNo,location);
         }
 
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new ViewEventPagerAdapter(ViewEventActivity.this,getSupportFragmentManager(),event);
-
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mJazzy = (JazzyViewPager) findViewById(R.id.jazzy_pager);
+
+        mJazzy.setTransitionEffect(JazzyViewPager.TransitionEffect.Accordion);
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mJazzy.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
             }
         });
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new ViewEventPagerAdapter(ViewEventActivity.this,getSupportFragmentManager(),event,mJazzy);
+
+        mJazzy.setAdapter(mSectionsPagerAdapter);
 
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_place).setTabListener(this));
@@ -106,7 +110,7 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
+        mJazzy.setCurrentItem(tab.getPosition());
     }
 
     @Override

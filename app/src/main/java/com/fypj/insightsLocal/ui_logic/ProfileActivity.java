@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.util.ProfilePagerAdapter;
+import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
+import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 public class ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
 
@@ -33,7 +35,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     ProfilePagerAdapter mSectionsPagerAdapter;
-
+    JazzyViewPager mJazzy;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -48,21 +50,29 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mJazzy = (JazzyViewPager) findViewById(R.id.jazzy_pager);
 
-        getActionBar().setTitle("John Tan");
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mJazzy.setTransitionEffect(JazzyViewPager.TransitionEffect.Accordion);
+        // When swiping between different sections, select the corresponding
+        // tab. We can also use ActionBar.Tab#select() to do this if we have
+        // a reference to the Tab.
+        mJazzy.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
             }
         });
+
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager(),mJazzy);
+
+        mJazzy.setAdapter(mSectionsPagerAdapter);
+
+        getActionBar().setTitle("John Tan");
+
         actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Medical History").setTabListener(this));
     }

@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
 
-import com.fypj.insightsLocal.util.HandleXML;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
 
@@ -52,10 +50,6 @@ public class MainPageActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
-        HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
-        obj.fetchXML();
-
-        //new TestAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -71,6 +65,7 @@ public class MainPageActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack();
+        Intent i = null;
         switch(position){
             case 0:
                 HomeFragment homeFragment = new HomeFragment();
@@ -79,25 +74,22 @@ public class MainPageActivity extends ActionBarActivity
                         .commit();
                 break;
             case 1:
-                Intent i = new Intent(this,ProfileActivity.class);
+                i = new Intent(this,ProfileActivity.class);
                 startActivity(i);
                 break;
             case 2:
-                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
-                        .commit();
+                i = new Intent(this,ViewAllPioneerPackagesActivity.class);
+                startActivity(i);
                 break;
             case 3:
-                ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
-                        .commit();
+                i = new Intent(this,ViewAllLatestEventsActivity.class);
+                i.putExtra("choice", 0);
+                startActivity(i);
                 break;
             case 4:
-                Intent intent = new Intent(this,NearestClinicActivity.class);
-                intent.putExtra("choice",0);
-                startActivity(intent);
+                i = new Intent(this,NearestClinicActivity.class);
+                i.putExtra("choice",0);
+                startActivity(i);
                 break;
         }
         currentPosition = position;
@@ -140,6 +132,7 @@ public class MainPageActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
@@ -166,6 +159,7 @@ public class MainPageActivity extends ActionBarActivity
                     restoreActionBar();
                     break;
             }
+
             return true;
         }
         return super.onCreateOptionsMenu(menu);

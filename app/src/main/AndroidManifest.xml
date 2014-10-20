@@ -21,9 +21,10 @@
         android:icon="@drawable/hearts_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAeKIYaz96Jlg2-y69D25XBzL1x4vBs8gk" />
+            android:value="AIzaSyBBhQjmi8onbM5X5akIeDv-QfDopWjQzzg" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -31,20 +32,29 @@
         <activity
             android:name=".ui_logic.MainPageActivity"
             android:label="@string/app_name" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui_logic.ViewAllLatestEventsActivity"
+            android:label="@string/title_activity_view_event"
+            android:parentActivityName=".ui_logic.MainPageActivity" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui_logic.MainPageActivity" />
         </activity>
         <activity
             android:name=".ui_logic.ViewEventActivity"
             android:label="@string/title_activity_view_event"
-            android:parentActivityName=".ui_logic.MainPageActivity" >
+            android:parentActivityName=".ui_logic.ViewAllLatestEventsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui_logic.MainPageActivity" />
-
+                android:value=".ui_logic.ViewAllLatestEventsFragmentActivity" />
         </activity>
         <activity
             android:name=".ui_logic.NearestClinicActivity"
@@ -57,14 +67,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui_logic.ViewClinicActivity"
             android:label="@string/title_activity_view__clinic"
             android:launchMode="singleTask"
             android:parentActivityName=".ui_logic.NearestClinicActivity" >
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.NearestClinicActivity" />
@@ -77,14 +85,24 @@
             android:name=".ui_logic.CheckEligibilityActivity"
             android:label="@string/title_activity_check_eligibilty" >
         </activity>
+
         <activity
-            android:name=".ui_logic.ViewPioneerPackageActivity"
+            android:name=".ui_logic.ViewAllPioneerPackagesActivity"
             android:label="@string/title_activity_view_pioneer_package"
             android:parentActivityName=".ui_logic.MainPageActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
         </activity>
+        <activity
+            android:name=".ui_logic.ViewPioneerPackageActivity"
+            android:label="@string/title_activity_view_pioneer_package"
+            android:parentActivityName=".ui_logic.ViewAllPioneerPackagesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui_logic.ViewAllPioneerPackagesActivity" />
+        </activity>
+
         <activity
             android:name=".ui_logic.ProfileActivity"
             android:label="@string/title_activity_profile"
@@ -93,8 +111,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
         </activity>
-
-
     </application>
 
 </manifest>
