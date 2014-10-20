@@ -1,14 +1,13 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import android.support.v4.app.FragmentManager;
+import android.annotation.TargetApi;
+import android.content.pm.ActivityInfo;
+import android.app.FragmentManager;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.content.Context;
-import android.os.Build;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +20,15 @@ import com.fypj.insightsLocal.R;
 
 import java.util.ArrayList;
 
-public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener{
 
     /**
      * The serialization (saved instance state) Bundle key representing the
      * current dropdown position.
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-
+    private String[] titles = new String[] {"Overview","Benefits","Subsidies","Eligibility"};
+    private int currentIndex = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +48,9 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
                         actionBar.getThemedContext(),
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
-                        new String[] {
-                                "Overview",
-                                "Benefits",
-                                "Subsidies",
-                                "Eligibility",
-                        }),
+                        titles),
                 this);
+
     }
 
     @Override
@@ -97,33 +93,34 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
         // container view.
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         switch(position) {
             case 0:
-
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, PlaceholderFragment.newInstance(this, position + 1))
                         .commit();
+                currentIndex = 0;
                 break;
-
             case 1:
                 BenefitsFragment benefitsFragment = new BenefitsFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, benefitsFragment.newInstance(this, position + 1))
                         .commit();
+                currentIndex = 1;
                 break;
             case 2:
                 SubsidesFragment subsidiesFragment = new SubsidesFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1))
                         .commit();
+                currentIndex = 2;
                 break;
             case 3:
                 EligibilityFragment eligibilityFragment = new EligibilityFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, eligibilityFragment.newInstance(this, position + 1))
                         .commit();
+                currentIndex = 3;
                 break;
 
         }

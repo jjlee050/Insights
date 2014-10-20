@@ -77,8 +77,8 @@ public class ViewAllLatestEventsActivity extends Activity {
             }
         });
 
-        /*HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
-        obj.fetchXML();*/
+        HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
+        obj.fetchXML();
     }
 
     @Override
