@@ -30,5 +30,11 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="search">Search</string>
     <string name="title_activity_view_event_search_results">Event Results Found</string>
+    <string name="title_activity_login">Login</string>
+    <string name="nric">Enter your NRIC</string>
+    <string name="password">Enter your password</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget password</string>
+    <string name="sign_up">Sign Up</string>
 
 </resources>

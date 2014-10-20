@@ -1,9 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import android.annotation.TargetApi;
-import android.content.pm.ActivityInfo;
 import android.app.FragmentManager;
-import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.app.Fragment;
@@ -17,8 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.fypj.insightsLocal.R;
-
-import java.util.ArrayList;
 
 public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener{
 
@@ -221,5 +216,4 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
             return rootView;
         }
     }
-
 }

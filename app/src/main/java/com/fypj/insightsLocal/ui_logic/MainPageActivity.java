@@ -91,6 +91,11 @@ public class MainPageActivity extends ActionBarActivity
                 i.putExtra("choice",0);
                 startActivity(i);
                 break;
+            case 6:
+                i = new Intent(this,LoginActivity.class);
+                startActivity(i);
+                finish();
+                break;
         }
         currentPosition = position;
     }
@@ -116,6 +121,9 @@ public class MainPageActivity extends ActionBarActivity
                 break;
             case 5:
                 mTitle = "CHAS Clinic";
+                break;
+            case 7:
+                mTitle = "Log out";
                 break;
         }
         System.out.println("Title: " + mTitle);
@@ -156,6 +164,10 @@ public class MainPageActivity extends ActionBarActivity
                     break;
                 case 4:
                     getMenuInflater().inflate(R.menu.nearest_clinc, menu);
+                    restoreActionBar();
+                    break;
+                case 6:
+                    getMenuInflater().inflate(R.menu.login, menu);
                     restoreActionBar();
                     break;
             }
