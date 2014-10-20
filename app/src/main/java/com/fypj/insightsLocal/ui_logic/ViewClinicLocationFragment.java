@@ -58,7 +58,8 @@ public class ViewClinicLocationFragment extends Fragment {
         Bundle bundle = getArguments();
         if(bundle != null) {
             String address = bundle.getString("ClinicAddress");
-            clinic = new Clinic(bundle.getLong("ClinicId"),bundle.getString("ClinicName"),bundle.getString("ClinicOH"),bundle.getString("ClinicContactNo"),address);
+            clinic = new Clinic(bundle.getLong("ClinicId"),bundle.getString("ClinicName"),bundle.getString("ClinicOH"),bundle.getString("ClinicContactNo"),address,bundle.getString("Category"));
+            System.out.println("Address: " + address);
         }
         Toast.makeText(this.getActivity(), clinic.getAddress(), Toast.LENGTH_LONG).show();
 
@@ -72,7 +73,8 @@ public class ViewClinicLocationFragment extends Fragment {
         Geocoder geoCoder = new Geocoder(getActivity());
         List<Address> addressList = null;
         try {
-            addressList = geoCoder.getFromLocationName(clinic.getAddress(), 1);
+            addressList = geoCoder.getFromLocationName(clinic.getAddress(),1);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -82,7 +82,7 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
                 intent.putExtra("ClinicOH", ClinicArrList.get(position).getOperatingHours());
                 intent.putExtra("ClinicAddress", ClinicArrList.get(position).getAddress());
                 intent.putExtra("ClinicContactNo", ClinicArrList.get(position).getContactNo());
-                //intent.putExtra("ClinicType", ClinicArrList.get(position).getType());
+                intent.putExtra("ClinicCategory", ClinicArrList.get(position).getCategory());
 
                 context.startActivity(intent);
             }

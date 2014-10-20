@@ -53,9 +53,10 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
             String operatingHours = savedInstanceState.getString("ClinicOH");
             String address = savedInstanceState.getString("ClinicAddress");
             String contactNo = savedInstanceState.getString("ClinicContactNo");
+            String category = savedInstanceState.getString("Category");
 
             actionBar.setTitle(name);
-            clinic = new Clinic(id,name,operatingHours,address,contactNo);
+            clinic = new Clinic(id,name,operatingHours,address,contactNo,category);
         }
 
         // Create the adapter that will return a fragment for each of the three

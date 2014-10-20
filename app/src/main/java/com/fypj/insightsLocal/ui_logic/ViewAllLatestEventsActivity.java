@@ -77,12 +77,13 @@ public class ViewAllLatestEventsActivity extends Activity {
             }
         });
 
-        /*HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
-        obj.fetchXML();*/
+        HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
+        obj.fetchXML();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.latest_events, menu);
         getMenuInflater().inflate(R.menu.latest_events, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();

@@ -53,9 +53,11 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
             String operatingHours = savedInstanceState.getString("ClinicOH");
             String address = savedInstanceState.getString("ClinicAddress");
             String contactNo = savedInstanceState.getString("ClinicContactNo");
+            String category = savedInstanceState.getString("Category");
 
             actionBar.setTitle(name);
-            clinic = new Clinic(id,name,operatingHours,address,contactNo);
+            clinic = new Clinic(id,name,operatingHours,address,contactNo,category);
+            System.out.println(address);
         }
 
         // Create the adapter that will return a fragment for each of the three

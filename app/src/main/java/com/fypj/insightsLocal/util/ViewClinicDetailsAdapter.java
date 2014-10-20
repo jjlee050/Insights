@@ -40,6 +40,7 @@ public class ViewClinicDetailsAdapter extends FragmentPagerAdapter {
                 args.putString("ClinicAddress",clinic.getAddress());
                 args.putString("ClinicOH",clinic.getOperatingHours());
                 args.putString("ClinicContactNo",clinic.getContactNo());
+                args.putString("ClinicCategory",clinic.getCategory());
 
 
                 fragment.setArguments(args);
@@ -53,6 +54,7 @@ public class ViewClinicDetailsAdapter extends FragmentPagerAdapter {
                 args1.putString("ClinicAddress",clinic.getAddress());
                 args1.putString("ClinicOH",clinic.getOperatingHours());
                 args1.putString("ClinicContactNo",clinic.getContactNo());
+                args1.putString("ClinicCategory",clinic.getCategory());
 
                 fragment.setArguments(args1);
                 break;

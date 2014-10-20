@@ -71,11 +71,6 @@ public class ViewClinicDetailsFragment extends Fragment{
 
 
 
-        tvClinicName.setVisibility(View.VISIBLE);
-        tvClinicAddress.setVisibility(View.VISIBLE);
-        tvClinicOH.setVisibility(View.VISIBLE);
-        tvClinicContactNo.setVisibility(View.VISIBLE);
-
 
         return rootView;
     }

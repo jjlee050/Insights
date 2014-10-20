@@ -45,7 +45,7 @@ public class ViewClinicHistoryFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_view_clinic_history, container, false);
         ListView lvClinicHistoryList = (ListView) rootView.findViewById(R.id.lv_clinic_history_list);
         ArrayList<MedicalHistory> clinicHistoryArrayList = new ArrayList<MedicalHistory>();
-        clinicHistoryArrayList.add(new MedicalHistory(Long.parseLong("1"),new Clinic(new Long(1),"338 Family Clinic","","",""),null,null,"Flu",24));
+        clinicHistoryArrayList.add(new MedicalHistory(Long.parseLong("1"),new Clinic(new Long(1),"338 Family Clinic","","","",""),null,null,"Flu",24));
         ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(ViewClinicHistoryFragment.this.getActivity(),android.R.id.text1,clinicHistoryArrayList);
         lvClinicHistoryList.setAdapter(adapter);
         return rootView;
