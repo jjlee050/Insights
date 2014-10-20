@@ -34,6 +34,9 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
     private String title,link,description;
     private Event event = new Event();
     private ArrayList<String> valueArrList = new ArrayList<String>();
+    private String[] keywords = {"Walk","Lifestyle"};
+
+
 
     public ParseHtml(ViewAllLatestEventsActivity activity, String title, String link, String description){
         this.activity = (ViewAllLatestEventsActivity)activity;
@@ -130,7 +133,14 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
     }
 
     private void createEvent(Event event){
-        if((event.getName().contains("Walk") || (event.getDesc().contains("Walk")))) {
+        boolean checkLifestyleEvents = false;
+        for(int i=0;i<keywords.length;i++){
+            if((event.getName().contains(keywords[0]) || (event.getDesc().contains(keywords[0])))) {
+                checkLifestyleEvents = true;
+                break;
+            }
+        }
+        if(checkLifestyleEvents){
             CreateEvent createEvent = new CreateEvent(activity, event);
             createEvent.execute();
         }

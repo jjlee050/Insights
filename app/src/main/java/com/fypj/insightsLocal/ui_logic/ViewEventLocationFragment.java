@@ -139,10 +139,13 @@ public class ViewEventLocationFragment extends Fragment {
     private List<Address> geocoding(String location){
         Geocoder geoCoder = new Geocoder(getActivity());
         List<Address> addressList = null;
-        try {
-            addressList = geoCoder.getFromLocationName(location,1,1.164632,103.543739,1.481777,104.077263);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if(CheckNetworkConnection.isNetworkConnectionAvailable(ViewEventLocationFragment.this.getActivity())) {
+            try {
+                addressList = geoCoder.getFromLocationName(location, 1, 1.164632, 103.543739, 1.481777, 104.077263);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return addressList;
     }

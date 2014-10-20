@@ -36,37 +36,56 @@ public class ViewEventPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
+        if(CheckNetworkConnection.isNetworkConnectionAvailable(context)) {
+            switch (position) {
+                case 0:
+                    fragment = new ViewEventDetailsFragment();
 
-        switch(position){
-            case 0:
-                fragment = new ViewEventDetailsFragment();
+                    Bundle args = new Bundle();
+                    args.putLong("id", event.getEventID());
+                    args.putString("name", event.getName());
+                    args.putString("dateAndTime", event.getDateAndTime());
+                    args.putString("guestOfHonour", event.getGuestOfHonour());
+                    args.putString("desc", event.getDesc());
+                    args.putString("organizer", event.getOrganizer());
+                    args.putString("contactNo", event.getContactNo());
 
-                Bundle args = new Bundle();
-                args.putLong("id", event.getEventID());
-                args.putString("name",event.getName());
-                args.putString("dateAndTime",event.getDateAndTime());
-                args.putString("guestOfHonour",event.getGuestOfHonour());
-                args.putString("desc",event.getDesc());
-                args.putString("organizer",event.getOrganizer());
-                args.putString("contactNo",event.getContactNo());
+                    fragment.setArguments(args);
+                    break;
+                case 1:
+                    fragment = new ViewEventLocationFragment();
 
-                fragment.setArguments(args);
-                break;
-            case 1:
-                fragment = new ViewEventLocationFragment();
+                    Bundle args1 = new Bundle();
+                    args1.putLong("id", event.getEventID());
+                    args1.putString("name", event.getName());
+                    args1.putString("dateAndTime", event.getDateAndTime());
+                    args1.putString("guestOfHonour", event.getGuestOfHonour());
+                    args1.putString("desc", event.getDesc());
+                    args1.putString("organizer", event.getOrganizer());
+                    args1.putString("contactNo", event.getContactNo());
+                    args1.putString("location", event.getLocation());
 
-                Bundle args1 = new Bundle();
-                args1.putLong("id",event.getEventID());
-                args1.putString("name",event.getName());
-                args1.putString("dateAndTime",event.getDateAndTime());
-                args1.putString("guestOfHonour",event.getGuestOfHonour());
-                args1.putString("desc",event.getDesc());
-                args1.putString("organizer",event.getOrganizer());
-                args1.putString("contactNo",event.getContactNo());
-                args1.putString("location",event.getLocation());
+                    fragment.setArguments(args1);
+                    break;
+            }
+        }
+        else{
+            switch (position) {
+                case 0:
+                    fragment = new ViewEventDetailsFragment();
 
-                fragment.setArguments(args1);
-                break;
+                    Bundle args = new Bundle();
+                    args.putLong("id", event.getEventID());
+                    args.putString("name", event.getName());
+                    args.putString("dateAndTime", event.getDateAndTime());
+                    args.putString("guestOfHonour", event.getGuestOfHonour());
+                    args.putString("desc", event.getDesc());
+                    args.putString("organizer", event.getOrganizer());
+                    args.putString("contactNo", event.getContactNo());
+
+                    fragment.setArguments(args);
+                    break;
+            }
         }
         return fragment;
     }
@@ -80,7 +99,13 @@ public class ViewEventPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 2;
+        if(CheckNetworkConnection.isNetworkConnectionAvailable(context)) {
+            // Show 2 total pages.
+            return 2;
+        }
+        else{
+            // Show 1 total pages.
+            return 1;
+        }
     }
 }

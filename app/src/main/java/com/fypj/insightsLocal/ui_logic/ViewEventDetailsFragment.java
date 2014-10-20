@@ -153,6 +153,10 @@ public class ViewEventDetailsFragment extends Fragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.view_event,menu);
+        MenuItem share = menu.findItem(R.id.share);
+        if(!CheckNetworkConnection.isNetworkConnectionAvailable(ViewEventDetailsFragment.this.getActivity())) {
+            share.setVisible(false);
+        }
     }
 
     @Override

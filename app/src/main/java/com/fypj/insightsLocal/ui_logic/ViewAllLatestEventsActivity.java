@@ -21,12 +21,19 @@ import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetEvents;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.util.HandleXML;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 /**
  * Created by jess on 19-Sep-14.
@@ -56,7 +63,7 @@ public class ViewAllLatestEventsActivity extends Activity {
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refresh();
+                        refresh(true);
                     }
                 }, 1000);
             }
@@ -76,9 +83,13 @@ public class ViewAllLatestEventsActivity extends Activity {
                     swipeView.setEnabled(false);
             }
         });
-
-        HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170",this);
-        obj.fetchXML();
+        if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
+            HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
+            obj.fetchXML();
+        }
+        else{
+            refresh(true);
+        }
     }
 
     @Override
@@ -149,10 +160,12 @@ public class ViewAllLatestEventsActivity extends Activity {
         new GetEvents(ViewAllLatestEventsActivity.this,lvLatestEvents,swipeView).execute();
     }
 
-    private void refresh(){
+    private void refresh(boolean refresh){
         EventSQLController controller = new EventSQLController(ViewAllLatestEventsActivity.this);
 
         latestEventArrList = controller.getAllEvent();
+
+        sortDate();
 
         LatestEventsListAdapter adapter = new LatestEventsListAdapter(ViewAllLatestEventsActivity.this, android.R.id.text1, latestEventArrList);
         lvLatestEvents.setAdapter(adapter);
@@ -172,6 +185,28 @@ public class ViewAllLatestEventsActivity extends Activity {
                 startActivity(intent);
             }
         });
-        swipeView.setRefreshing(false);
+        if(refresh) {
+            swipeView.setRefreshing(false);
+        }
+    }
+
+    private void sortDate(){
+
+        Collections.sort(latestEventArrList, new Comparator<Event>() {
+            public int compare(Event o1, Event o2) {
+
+                DateFormat df = new SimpleDateFormat("dd MMMM yyyy h:mma");
+                try {
+                    Date dt = df.parse(o1.getDateAndTime().substring(0, o1.getDateAndTime().lastIndexOf("to")));
+                    Date dt2 = df.parse(o2.getDateAndTime().substring(0, o2.getDateAndTime().lastIndexOf("to")));
+                    if (dt == null || dt2 == null)
+                        return 0;
+                    return dt.compareTo(dt2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
     }
 }
