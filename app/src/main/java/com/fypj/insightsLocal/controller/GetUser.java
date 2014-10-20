@@ -78,7 +78,7 @@ public class GetUser extends AsyncTask<Void,Void,List<User>>{
                 }
             }
             if(recordExists){
-                
+
             }
             dialog.dismiss();
         }
