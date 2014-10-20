@@ -31,6 +31,7 @@ public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
             String text = "";
             Event createdEvent = myApiService.insertEvent(event).execute();
             if(createdEvent != null) {
+                System.out.println("Created: " + event.getName());
                 return true;
             }
             else{

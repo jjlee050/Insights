@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.ui_logic.ViewEventDetailsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewEventLocationFragment;
+import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 /**
  * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
@@ -20,10 +22,13 @@ import com.fypj.insightsLocal.ui_logic.ViewEventLocationFragment;
 public class ViewEventPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     private Event event;
-    public ViewEventPagerAdapter(Context context,FragmentManager fm, Event event) {
+    private JazzyViewPager mJazzy;
+
+    public ViewEventPagerAdapter(Context context,FragmentManager fm, Event event, JazzyViewPager mJazzy) {
         super(fm);
         this.context = context;
         this.event = event;
+        this.mJazzy = mJazzy;
     }
 
     @Override
@@ -64,6 +69,13 @@ public class ViewEventPagerAdapter extends FragmentPagerAdapter {
                 break;
         }
         return fragment;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, final int position) {
+        Object obj = super.instantiateItem(container, position);
+        mJazzy.setObjectForPosition(obj, position);
+        return obj;
     }
 
     @Override

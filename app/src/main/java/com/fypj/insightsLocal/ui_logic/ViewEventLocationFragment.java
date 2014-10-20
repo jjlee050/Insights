@@ -84,7 +84,7 @@ public class ViewEventLocationFragment extends Fragment {
 
         // Get a handle to the Map Fragment
         GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
-        map.getUiSettings().setScrollGesturesEnabled(false);
+        map.getUiSettings().setScrollGesturesEnabled(true);
         map.getUiSettings().setZoomGesturesEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(false);
         map.getUiSettings().setRotateGesturesEnabled(false);
@@ -92,7 +92,7 @@ public class ViewEventLocationFragment extends Fragment {
         Geocoder geoCoder = new Geocoder(getActivity());
         List<Address> addressList = null;
         try {
-            addressList = geoCoder.getFromLocationName(event.getLocation(),1);
+            addressList = geoCoder.getFromLocationName(event.getLocation(),1,1.164632,103.543739,1.481777,104.077263);
         } catch (IOException e) {
             e.printStackTrace();
         }

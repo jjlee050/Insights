@@ -63,8 +63,11 @@ public class HandleXML {
                             description = text;
                         }
                         if((link != "")) {
+                            System.out.println("Link: " + link);
                             ParseHtml parseHtml = new ParseHtml(activity, title, link, description);
-                            mTasks.add(parseHtml);
+                            if(!link.equals("http://www.pa.gov.sg/events.html?view=events")) {
+                                mTasks.add(parseHtml);
+                            }
                         }
                         break;
                 }
