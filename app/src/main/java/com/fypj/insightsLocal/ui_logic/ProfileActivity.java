@@ -106,7 +106,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
+        mJazzy.setCurrentItem(tab.getPosition());
     }
 
     @Override
