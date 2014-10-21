@@ -39,6 +39,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
      */
     ProfilePagerAdapter mSectionsPagerAdapter;
     JazzyViewPager mJazzy;
+    User user;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -67,14 +68,14 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
             }
         });
 
+        getData();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager(),mJazzy);
+        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager(),mJazzy,user);
 
         mJazzy.setAdapter(mSectionsPagerAdapter);
 
-        getData();
 
         actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Medical History").setTabListener(this));
@@ -127,6 +128,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
             UserSQLController controller = new UserSQLController(this);
             User user = controller.getUser(nric);
             getActionBar().setTitle(user.getName());
+            this.user = user;
         }
     }
 }

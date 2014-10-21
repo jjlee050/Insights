@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.util.ProfileListAdapter;
+import com.fypj.mymodule.api.insightsUser.model.User;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,17 @@ public class ViewProfileFragment extends Fragment {
         ArrayList<String> titleArrList = new ArrayList<String>();
         titleArrList.add("Basic Information");
         titleArrList.add("Balance");
-        ProfileListAdapter adapter = new ProfileListAdapter(ViewProfileFragment.this.getActivity(),android.R.id.text1,titleArrList);
+
+        Bundle bundle = getArguments();
+        User user = new User();
+        user.setNric(bundle.getString("nric"));
+        user.setName(bundle.getString("name"));
+        user.setPassword(bundle.getString("password"));
+        user.setAge(bundle.getInt("age"));
+        user.setContactNo(bundle.getString("contactNo"));
+        user.setAddress(bundle.getString("address"));
+
+        ProfileListAdapter adapter = new ProfileListAdapter(ViewProfileFragment.this.getActivity(),android.R.id.text1,titleArrList,user);
         lvProfileList.setAdapter(adapter);
         return rootView;
     }

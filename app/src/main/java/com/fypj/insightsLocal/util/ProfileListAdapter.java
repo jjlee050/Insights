@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.mymodule.api.insightsUser.model.User;
 
 import java.util.ArrayList;
 
@@ -18,11 +19,13 @@ import java.util.ArrayList;
 public class ProfileListAdapter extends ArrayAdapter<String> {
     private Activity context;
     private ArrayList<String> titleArrList;
+    private User user;
 
-    public ProfileListAdapter(Activity context, int textViewResourceId, ArrayList<String> titleArrList) {
+    public ProfileListAdapter(Activity context, int textViewResourceId, ArrayList<String> titleArrList, User user) {
         super(context, R.layout.list_packages, titleArrList);
         this.context = (Activity) context;
         this.titleArrList = titleArrList;
+        this.user = user;
     }
 
     @Override
@@ -36,10 +39,10 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
         tvTitle.setText(titleArrList.get(position));
         if(position == 0){
             tvInfo.setText(Html.fromHtml("" +
-                    "<p>Name: John Tan</p>" +
-                    "<p>Age: 68</p>" +
-                    "<p>Contact No: 9102 2201 </p>" +
-                    "<p>Address: Blk 12 Sembawang Circle S(710289) </p>"));
+                    "<p>Name: "+user.getName()+"</p>" +
+                    "<p>Age: "+user.getAge()+"</p>" +
+                    "<p>Contact No: "+user.getContactNo()+" </p>" +
+                    "<p>Address: "+user.getAddress()+" </p>"));
         }
         else{
             tvInfo.setText(Html.fromHtml("" +
