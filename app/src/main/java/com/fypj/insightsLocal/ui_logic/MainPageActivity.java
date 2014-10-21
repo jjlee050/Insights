@@ -1,6 +1,8 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
@@ -92,6 +94,7 @@ public class MainPageActivity extends ActionBarActivity
                 startActivity(i);
                 break;
             case 6:
+                removeData();
                 i = new Intent(this,LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -193,4 +196,10 @@ public class MainPageActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void removeData(){
+        SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();      //its clear all data.
+        editor.commit();  //Don't forgot to commit  SharedPreferences.
+    }
 }

@@ -25,7 +25,7 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getActionBar().hide();
-
+        getData();
         etNric = (EditText) findViewById(R.id.et_nric);
         etPassword = (EditText) findViewById(R.id.et_password);
     }
@@ -53,18 +53,30 @@ public class LoginActivity extends ActionBarActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                new GetUser(this,etNric.getText().toString(),etPassword.getText().toString()).execute();
-                /*Intent i = new Intent(LoginActivity.this, MainPageActivity.class);
-                startActivity(i);
-                this.finish();*/
+                if((etNric.getText().toString().equals("")) || (etPassword.getText().toString().equals(""))) {
+                    if(etNric.getText().toString().equals("")) {
+                        etNric.setError("Please enter your nric");
+                    }
+                    if(etPassword.getText().toString().equals("")) {
+                        etPassword.setError("Please enter your password");
+                    }
+                }
+                else{
+                    new GetUser(this,etNric.getText().toString(),etPassword.getText().toString()).execute();
+                }
                 break;
         }
     }
 
-    private void writeData(){
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("nric", etNric.getText().toString());
-        editor.commit();
+    public void getData(){
+        SharedPreferences sharedPref= getSharedPreferences("insightsPreferences", 0);
+        String nric = sharedPref.getString("nric", "");
+        String password = sharedPref.getString("password", "");
+        if((!nric.equals("")) && (!password.equals(""))){
+            Intent i = new Intent(this, MainPageActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
+
 }

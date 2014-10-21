@@ -37,4 +37,8 @@
     <string name="forget_password">Forget password</string>
     <string name="sign_up">Sign Up</string>
 
+    <string-array name="language">
+        <item name="English">English</item>
+        <item name="Chinese">Chinese</item>
+    </string-array>
 </resources>
