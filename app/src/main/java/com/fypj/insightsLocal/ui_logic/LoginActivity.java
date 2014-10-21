@@ -91,11 +91,11 @@ public class LoginActivity extends ActionBarActivity {
                                 }
                             }
                             else{
-                                errorOnExecuting();
+                                errorOnExecuting("There is no such user record.");
                             }
                         }
                         else{
-                            errorOnExecuting();
+                            errorOnExecuting("There is no such user record.");
                         }
                     }
                 }
@@ -160,10 +160,10 @@ public class LoginActivity extends ActionBarActivity {
         editor.commit();
     }
 
-    public void errorOnExecuting(){
+    public void errorOnExecuting(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error in verifying user ");
-        builder.setMessage("Please try again.");
+        builder.setTitle("Error verifying user ");
+        builder.setMessage(message);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

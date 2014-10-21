@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
+import com.fypj.mymodule.api.insightsUser.model.User;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusShare;
@@ -221,12 +224,23 @@ public class ViewEventDetailsFragment extends Fragment implements
                     intent.setAction(Intent.ACTION_VIEW);
                     intent.setPackage("com.google.android.apps.translate");
 
+                    SharedPreferences sharedPref= this.getActivity().getSharedPreferences("insightsPreferences", 0);
+                    String nric = sharedPref.getString("nric", "");
+                    String language = "";
+                    if(!nric.equals("")){
+                        UserSQLController controller = new UserSQLController(this.getActivity());
+                        language = controller.getUserPreferredLanguage(nric);
+                    }
+                    else{
+                        language = "zh";
+                    }
+
                     Uri uri = new Uri.Builder()
                             .scheme("http")
                             .authority("translate.google.com")
                             .path("/m/translate")
                             .appendQueryParameter("q", textSpeech)
-                            .appendQueryParameter("tl", "ms") // target language
+                            .appendQueryParameter("tl", language) // target language
                             .appendQueryParameter("sl", "en") // source language
                             .build();
                     //intent.setType("text/plain"); //not needed, but possible
@@ -289,7 +303,7 @@ public class ViewEventDetailsFragment extends Fragment implements
 
         String textSpeech = tvEventName.getText() + " will be held on " + tvEventDateAndTime.getText()
                 + " which is organized by " + bundle.getString("organizer") + ". This event is about " + tvEventDesc.getText();
-        if(!bundle.getString("guestOfHonour").equals("-")){
+        if((!bundle.getString("guestOfHonour").equals("-")) && (!bundle.getString("guestOfHonour").equalsIgnoreCase("Nil"))){
             textSpeech += ". The guest of honour for this event will be " + tvEventGuestOfHonour.getText();
         }
         textSpeech += ". " + tvEventContactNo.getText() + " for more information.";

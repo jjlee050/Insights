@@ -120,7 +120,7 @@ public class GetUser extends AsyncTask<Void,Void,List<User>>{
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
                 dialog.dismiss();
-                context.errorOnExecuting();
+                context.errorOnExecuting(message);
             }
         });
     }

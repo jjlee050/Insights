@@ -87,7 +87,16 @@ public class UserSQLController {
 
     public long updatePreferredLanguage(User user, String preferredLanguage){
         ContentValues cv = new ContentValues();
-        cv.put("preferredLanguage",preferredLanguage);
+        String shortForm = "";
+        if(preferredLanguage.equals("English")){
+            shortForm = "en";
+        }
+        else if(preferredLanguage.equals("Chinese")){
+            shortForm = "zh-CN";
+        }
+        if(!shortForm.equals("")) {
+            cv.put("preferredLanguage", shortForm);
+        }
         return conn.getDB().update(conn.getUserTable(), cv, "nric = ?", new String[]{user.getNric()});
     }
 
