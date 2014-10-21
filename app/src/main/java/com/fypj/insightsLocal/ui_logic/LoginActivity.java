@@ -1,18 +1,26 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetUser;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
+import com.fypj.mymodule.api.insightsUser.model.User;
 
 /**
  * Created by jess on 20-Oct-14.
@@ -62,7 +70,34 @@ public class LoginActivity extends ActionBarActivity {
                     }
                 }
                 else{
-                    new GetUser(this,etNric.getText().toString(),etPassword.getText().toString()).execute();
+                    if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
+                        new GetUser(this, etNric.getText().toString(), etPassword.getText().toString()).execute();
+                    }
+                    else{
+                        UserSQLController controller = new UserSQLController(this);
+                        String nric = etNric.getText().toString();
+                        User user = controller.getUser(nric);
+                        if(user != null){
+                            if(etPassword.getText().toString().equals(user.getPassword())){
+                                int status = controller.getUserSignInStatus(nric);
+                                if(status == 0) {
+                                    final AlertDialog alertDialog = createAlertDialogForPreferredLanguage(controller,user);
+                                    // show it
+                                    alertDialog.show();
+                                    alertDialog.setCanceledOnTouchOutside(false);
+                                }
+                                else if(status == 1){
+                                    goToMainPage();
+                                }
+                            }
+                            else{
+                                errorOnExecuting();
+                            }
+                        }
+                        else{
+                            errorOnExecuting();
+                        }
+                    }
                 }
                 break;
         }
@@ -77,6 +112,65 @@ public class LoginActivity extends ActionBarActivity {
             startActivity(i);
             finish();
         }
+    }
+
+
+    public AlertDialog createAlertDialogForPreferredLanguage(final UserSQLController controller, User foundUser){
+
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.dialog_set_preferred_language, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptsView);
+
+        // set dialog message
+        alertDialogBuilder.setTitle("First-Time Login");
+        // create alert dialog
+
+        final Spinner mSpinner= (Spinner) promptsView.findViewById(R.id.sp_language);
+        ArrayAdapter<String> spLanguageArrAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.language));
+        mSpinner.setAdapter(spLanguageArrAdapter);
+
+        final User finalFoundUser = foundUser;
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                controller.updateSignInStatus(finalFoundUser,1);
+                controller.updatePreferredLanguage(finalFoundUser,mSpinner.getSelectedItem().toString());
+                goToMainPage();
+            }
+        });
+        return alertDialogBuilder.create();
+    }
+
+    public void goToMainPage(){
+        writeData(etNric.getText().toString(),etPassword.getText().toString());
+        Intent i = new Intent(this, MainPageActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+
+    public void writeData(String nric, String password){
+        SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("nric", nric);
+        editor.putString("password", password);
+        editor.commit();
+    }
+
+    public void errorOnExecuting(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error in verifying user ");
+        builder.setMessage("Please try again.");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show();
     }
 
 }

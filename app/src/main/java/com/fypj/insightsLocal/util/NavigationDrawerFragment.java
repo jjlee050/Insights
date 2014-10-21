@@ -106,9 +106,6 @@ public class NavigationDrawerFragment extends Fragment {
                 new String[]{
                         "Home",
                         "My Profile",
-                        "Pioneer Generation Packages",
-                        "Lifestyle Events",
-                        "CHAS Clinic Locator",
                         "Settings",
                         "Log out"
                 }));

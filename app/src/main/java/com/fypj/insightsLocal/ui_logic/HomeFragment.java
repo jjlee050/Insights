@@ -60,12 +60,10 @@ public class HomeFragment extends Fragment {
                 FragmentManager fragmentManager = HomeFragment.this.getActivity().getSupportFragmentManager();
 
                 if(position == 0){
-                    HomeFragment.this.position = 3;
                     Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllPioneerPackagesActivity.class);
                     startActivity(intent);
                 }
                 if(position == 1){
-                    HomeFragment.this.position = 4;
                     Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllLatestEventsActivity.class);
                     startActivity(intent);
                 }
@@ -73,7 +71,6 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
                     intent.putExtra("choice",0);
                     startActivity(intent);
-                    HomeFragment.this.getActivity().finish();
                 }
             }
         });
