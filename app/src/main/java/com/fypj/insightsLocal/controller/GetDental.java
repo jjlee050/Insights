@@ -18,8 +18,7 @@ import android.widget.ListView;
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.ui_logic.ViewClinicActivity;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-
+import com.fypj.insightsLocal.util.DentalAdapter;
 import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 
@@ -32,16 +31,16 @@ import java.util.List;
 /**
  * Created by L33525 on 13/10/2014.
  */
-public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
+public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
   private static InsightsClinics myApiService = null;
     private Activity context;
     private ListView lvNearestClinic;
     private SwipeRefreshLayout swipeView;
-    final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
+    final ArrayList<Clinic> DentalArrList = new ArrayList<Clinic>();
     private ProgressDialog dialog;
 
 
-    public GetClinic(Context context, ListView lvNearestClinic, SwipeRefreshLayout swipeView){
+    public GetDental(Context context, ListView lvNearestClinic, SwipeRefreshLayout swipeView){
         this.context = (Activity) context;
         this.lvNearestClinic = lvNearestClinic;
         this.swipeView = swipeView;
@@ -69,25 +68,25 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
     @Override
     protected void onPostExecute(List<Clinic> result) {
         for (Clinic e : result) {
-            ClinicArrList.add(e);
+            DentalArrList.add(e);
 
 
-            if (e.getCategory() == "Medical") {
+            if (e.getCategory() == "Dental") {
 
 
-                ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
+                DentalAdapter adapter = new DentalAdapter(context, android.R.id.text1,DentalArrList);
                 lvNearestClinic.setAdapter(adapter);
 
                 lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                         Intent intent = new Intent(context, ViewClinicActivity.class);
-                        intent.putExtra("ClinicID", ClinicArrList.get(position).getClinicID());
-                        intent.putExtra("ClinicName", ClinicArrList.get(position).getName());
-                        intent.putExtra("ClinicAddress", ClinicArrList.get(position).getAddress());
-                        intent.putExtra("ClinicOH", ClinicArrList.get(position).getOperatingHours());
-                        intent.putExtra("ClinicContactNo", ClinicArrList.get(position).getContactNo());
-                        intent.putExtra("ClinicCategory", ClinicArrList.get(position).getCategory());
+                        intent.putExtra("ClinicID", DentalArrList.get(position).getClinicID());
+                        intent.putExtra("ClinicName", DentalArrList.get(position).getName());
+                        intent.putExtra("ClinicAddress", DentalArrList.get(position).getAddress());
+                        intent.putExtra("ClinicOH", DentalArrList.get(position).getOperatingHours());
+                        intent.putExtra("ClinicContactNo", DentalArrList.get(position).getContactNo());
+                        intent.putExtra("ClinicCategory", DentalArrList.get(position).getCategory());
 
                         context.startActivity(intent);
 

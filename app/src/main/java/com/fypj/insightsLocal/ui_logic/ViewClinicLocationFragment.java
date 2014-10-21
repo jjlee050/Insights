@@ -58,8 +58,8 @@ public class ViewClinicLocationFragment extends Fragment {
         Bundle bundle = getArguments();
         if(bundle != null) {
             String address = bundle.getString("ClinicAddress");
-            clinic = new Clinic(bundle.getLong("ClinicId"),bundle.getString("ClinicName"),bundle.getString("ClinicOH"),bundle.getString("ClinicContactNo"),address,bundle.getString("Category"));
-            System.out.println("Address: " + address);
+            clinic = new Clinic(bundle.getLong("ClinicId"),bundle.getString("ClinicName"),address,bundle.getString("ClinicOH"),bundle.getString("ClinicContactNo"),bundle.getString("Category"));
+
         }
         Toast.makeText(this.getActivity(), clinic.getAddress(), Toast.LENGTH_LONG).show();
 

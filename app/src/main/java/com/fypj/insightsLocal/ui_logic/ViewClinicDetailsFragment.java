@@ -43,15 +43,7 @@ public class ViewClinicDetailsFragment extends Fragment{
 
     }
 
-    public boolean isPackageExisted(String targetPackage){
-        PackageManager pm = this.getActivity().getPackageManager();
-        try {
-            PackageInfo info=pm.getPackageInfo(targetPackage,PackageManager.GET_META_DATA);
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-        return true;
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,7 +52,7 @@ public class ViewClinicDetailsFragment extends Fragment{
 
         tvClinicName = (TextView) rootView.findViewById(R.id.tv_Clinic_name);
         tvClinicAddress = (TextView) rootView.findViewById(R.id.tv_Clinic_Address);
-        tvClinicOH = (TextView) rootView.findViewById(R.id.tv_Clinic_OH);
+        tvClinicOH = (TextView) rootView.findViewById(R.id.tv_ClinicOH);
         tvClinicContactNo = (TextView) rootView.findViewById(R.id.tv_Clinic_Contact);
 
 
@@ -68,7 +60,6 @@ public class ViewClinicDetailsFragment extends Fragment{
         tvClinicAddress.setText(bundle.getString("ClinicAddress"));
         tvClinicOH.setText(bundle.getString("ClinicOH"));
         tvClinicContactNo.setText(bundle.getString("ClinicContactNo"));
-
 
 
 

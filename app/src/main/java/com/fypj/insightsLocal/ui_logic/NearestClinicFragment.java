@@ -161,6 +161,7 @@ public class NearestClinicFragment extends Fragment {
 
         private void getAllClinic(ListView lvNearestClinic){
             new GetClinic(NearestClinicFragment.this.getActivity(),lvNearestClinic,swipeView).execute();
+
         }
 
 
