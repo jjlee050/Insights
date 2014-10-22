@@ -80,8 +80,8 @@ public class MainPageActivity extends ActionBarActivity
                 startActivity(i);
                 break;
             case 2:
-                /*i = new Intent(this,ViewAllPioneerPackagesActivity.class);
-                startActivity(i);*/
+                i = new Intent(this,SettingsActivity.class);
+                startActivity(i);
                 break;
             case 3:
                 removeData();

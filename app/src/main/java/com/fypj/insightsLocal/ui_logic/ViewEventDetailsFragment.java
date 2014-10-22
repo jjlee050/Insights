@@ -35,6 +35,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
 
+import java.util.Locale;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -69,7 +71,10 @@ public class ViewEventDetailsFragment extends Fragment implements
     private TextView tvEventDesc;
     private TextView tvEventOrganizer;
     private TextView tvEventContactNo;
+
     private String textSpeech;
+    private String language;
+    private Locale ttsLanguage;
 
     public ViewEventDetailsFragment newInstance(int sectionNumber) {
         ViewEventDetailsFragment fragment = new ViewEventDetailsFragment();
@@ -224,16 +229,6 @@ public class ViewEventDetailsFragment extends Fragment implements
                     intent.setAction(Intent.ACTION_VIEW);
                     intent.setPackage("com.google.android.apps.translate");
 
-                    SharedPreferences sharedPref= this.getActivity().getSharedPreferences("insightsPreferences", 0);
-                    String nric = sharedPref.getString("nric", "");
-                    String language = "";
-                    if(!nric.equals("")){
-                        UserSQLController controller = new UserSQLController(this.getActivity());
-                        language = controller.getUserPreferredLanguage(nric);
-                    }
-                    else{
-                        language = "zh";
-                    }
 
                     Uri uri = new Uri.Builder()
                             .scheme("http")
@@ -255,6 +250,7 @@ public class ViewEventDetailsFragment extends Fragment implements
                     public void onInit(int status) {
                         if(status != TextToSpeech.ERROR){
                             //ttobj.setLanguage(Locale.)
+                            ttobj.setLanguage(Locale.CHINESE);
                             ttobj.speak(textSpeech, TextToSpeech.QUEUE_FLUSH, null);
                         }
                     }
@@ -309,6 +305,26 @@ public class ViewEventDetailsFragment extends Fragment implements
         textSpeech += ". " + tvEventContactNo.getText() + " for more information.";
         this.textSpeech = textSpeech;
         System.out.println(textSpeech);
+
+
+        SharedPreferences sharedPref= this.getActivity().getSharedPreferences("insightsPreferences", 0);
+        String nric = sharedPref.getString("nric", "");
+        String language = "";
+        if(!nric.equals("")){
+            UserSQLController controller = new UserSQLController(this.getActivity());
+            language = controller.getUserPreferredLanguage(nric);
+            if(language.equals("zh-CN")){
+                ttsLanguage = Locale.CHINESE;
+            }
+            else{
+                ttsLanguage = Locale.ENGLISH;
+            }
+        }
+        else{
+            language = "zh-CN";
+            ttsLanguage = Locale.CHINESE;
+        }
+
         return rootView;
     }
 }
