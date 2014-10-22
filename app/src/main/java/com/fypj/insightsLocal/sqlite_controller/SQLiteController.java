@@ -40,7 +40,7 @@ public class SQLiteController {
                     + "(eventID LONG PRIMARY KEY, name TEXT, dateAndTime TEXT, guestOfHonour TEXT, desc TEXT, organizer TEXT, contactNo TEXT, location TEXT)");
             db.execSQL("CREATE TABLE "
                     + database_user
-                    + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, nric TEXT, name TEXT, password TEXT, age TEXT, contactNo TEXT, address TEXT, preferredLanguage TEXT, firstTimeSignIn INTEGER)");
+                    + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, nric TEXT, name TEXT, password TEXT, age TEXT, contactNo TEXT, address TEXT, firstTimeSignIn INTEGER)");
             /*db.execSQL("CREATE TABLE "
                     + database_user_saved_event
                     + "(eventID INTEGER PRIMARY KEY, eventAdminNRIC TEXT, eventName TEXT, eventCategory TEXT, eventDescription TEXT, eventDateTimeFrom DATETIME, eventDateTimeTo DATETIME, occurence TEXT, noOfParticipantsAllowed INTEGER, active INTEGER, eventFBPostID INTEGER)");

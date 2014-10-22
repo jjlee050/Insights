@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -41,11 +42,13 @@ public class SettingsActivity extends PreferenceActivity {
      * shown on tablets.
      */
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        context = this;
     }
 
     /**
@@ -117,7 +120,7 @@ public class SettingsActivity extends PreferenceActivity {
         // their values. When their values change, their summaries are updated
         // to reflect the new value, per the Android Design guidelines.
         bindPreferenceSummaryToValue(findPreference("example_text"));
-        bindPreferenceSummaryToValue(findPreference("example_list"));
+        bindPreferenceSummaryToValue(findPreference("preferred_language"));
         bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         bindPreferenceSummaryToValue(findPreference("sync_frequency"));
     }
@@ -167,6 +170,13 @@ public class SettingsActivity extends PreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
+
+            if(preference.getKey().equals("preferred_language")){
+                SharedPreferences sharedPref = context.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("preferred_language", stringValue);
+                editor.commit();
+            }
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -220,16 +230,17 @@ public class SettingsActivity extends PreferenceActivity {
      *
      * @see #sBindPreferenceSummaryToValueListener
      */
-    private static void bindPreferenceSummaryToValue(Preference preference) {
+    private void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+        System.out.println(preference.getKey());
+
+        SharedPreferences sharedPref = SettingsActivity.this.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
 
         // Trigger the listener immediately with the preference's
         // current value.
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+                sharedPref.getString(preference.getKey(), ""));
     }
 
     /**
@@ -247,8 +258,9 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+            SettingsActivity activity = new SettingsActivity();
+            activity.bindPreferenceSummaryToValue(findPreference("example_text"));
+            activity.bindPreferenceSummaryToValue(findPreference("preferred_language"));
         }
     }
 
@@ -267,7 +279,8 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            SettingsActivity activity = new SettingsActivity();
+            activity.bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         }
     }
 
@@ -286,7 +299,8 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            SettingsActivity activity = new SettingsActivity();
+            activity.bindPreferenceSummaryToValue(findPreference("sync_frequency"));
         }
     }
 }

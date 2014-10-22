@@ -3,6 +3,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -250,7 +251,7 @@ public class ViewEventDetailsFragment extends Fragment implements
                     public void onInit(int status) {
                         if(status != TextToSpeech.ERROR){
                             //ttobj.setLanguage(Locale.)
-                            ttobj.setLanguage(Locale.CHINESE);
+                            ttobj.setLanguage(ttsLanguage);
                             ttobj.speak(textSpeech, TextToSpeech.QUEUE_FLUSH, null);
                         }
                     }
@@ -296,6 +297,12 @@ public class ViewEventDetailsFragment extends Fragment implements
         tvEventOrganizer.setText("Organized by: " + bundle.getString("organizer"));
         tvEventContactNo.setText("Contact " + bundle.getString("contactNo"));
 
+        setSpeechAndLanguage(bundle);
+
+        return rootView;
+    }
+
+    private void setSpeechAndLanguage(Bundle bundle){
 
         String textSpeech = tvEventName.getText() + " will be held on " + tvEventDateAndTime.getText()
                 + " which is organized by " + bundle.getString("organizer") + ". This event is about " + tvEventDesc.getText();
@@ -307,24 +314,22 @@ public class ViewEventDetailsFragment extends Fragment implements
         System.out.println(textSpeech);
 
 
-        SharedPreferences sharedPref= this.getActivity().getSharedPreferences("insightsPreferences", 0);
+        SharedPreferences sharedPref= this.getActivity().getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
         String nric = sharedPref.getString("nric", "");
-        String language = "";
+        String language = sharedPref.getString("preferred_language", "");
         if(!nric.equals("")){
-            UserSQLController controller = new UserSQLController(this.getActivity());
-            language = controller.getUserPreferredLanguage(nric);
+            System.out.println("Language: " + language);
             if(language.equals("zh-CN")){
                 ttsLanguage = Locale.CHINESE;
             }
             else{
+                language = "en";
                 ttsLanguage = Locale.ENGLISH;
             }
         }
         else{
-            language = "zh-CN";
-            ttsLanguage = Locale.CHINESE;
+            language = "en";
+            ttsLanguage = Locale.ENGLISH;
         }
-
-        return rootView;
     }
 }

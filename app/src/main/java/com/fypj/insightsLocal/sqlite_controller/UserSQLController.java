@@ -28,7 +28,6 @@ public class UserSQLController {
         cv.put("age", user.getAge());
         cv.put("contactNo", user.getContactNo());
         cv.put("address", user.getAddress());
-        cv.put("preferredLanguage","English");
         cv.put("firstTimeSignIn",0);
         conn.getDB().insert(conn.getUserTable(), null, cv);
         conn.close();
@@ -53,16 +52,6 @@ public class UserSQLController {
         return user;
     }
 
-    public String getUserPreferredLanguage(String nric){
-        String preferredLanguage = "";
-        conn.open();
-        Cursor cursor = conn.getDB().query(conn.getUserTable(), new String[]{"preferredLanguage"}, "nric = ?", new String[]{ nric }, null, null, null, null);
-        if(cursor.moveToFirst()){
-            preferredLanguage = cursor.getString(cursor.getColumnIndex("preferredLanguage"));
-        }
-        return preferredLanguage;
-    }
-
     public int getUserSignInStatus(String nric){
         int status = -1;
         conn.open();
@@ -74,29 +63,14 @@ public class UserSQLController {
     }
 
 
-    public long updateSignInStatus(User user, int signInStatus){
+    public long updateSignInStatus(User user, int signInStatus) {
         ContentValues cv = new ContentValues();
         /**
          * Sign-in Status:
          * 0 = First-Time
          * 1 = Already sign in before
          */
-        cv.put("firstTimeSignIn",signInStatus);
-        return conn.getDB().update(conn.getUserTable(), cv, "nric = ?", new String[]{user.getNric()});
-    }
-
-    public long updatePreferredLanguage(User user, String preferredLanguage){
-        ContentValues cv = new ContentValues();
-        String shortForm = "";
-        if(preferredLanguage.equals("English")){
-            shortForm = "en";
-        }
-        else if(preferredLanguage.equals("Chinese")){
-            shortForm = "zh-CN";
-        }
-        if(!shortForm.equals("")) {
-            cv.put("preferredLanguage", shortForm);
-        }
+        cv.put("firstTimeSignIn", signInStatus);
         return conn.getDB().update(conn.getUserTable(), cv, "nric = ?", new String[]{user.getNric()});
     }
 

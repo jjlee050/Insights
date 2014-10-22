@@ -95,10 +95,8 @@ public class GetUser extends AsyncTask<Void,Void,List<User>>{
                     int status = controller.getUserSignInStatus(foundUser.getNric());
                     System.out.println("Status: " + status);
                     if(status == 0) {
-                        final AlertDialog alertDialog = context.createAlertDialogForPreferredLanguage(controller,foundUser);
-                        // show it
-                        alertDialog.show();
-                        alertDialog.setCanceledOnTouchOutside(false);
+                        context.goToMainPage();
+                        context.goToSettingsPage();
                     }
                     else if(status == 1){
                         context.goToMainPage();

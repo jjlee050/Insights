@@ -81,10 +81,8 @@ public class LoginActivity extends ActionBarActivity {
                             if(etPassword.getText().toString().equals(user.getPassword())){
                                 int status = controller.getUserSignInStatus(nric);
                                 if(status == 0) {
-                                    final AlertDialog alertDialog = createAlertDialogForPreferredLanguage(controller,user);
-                                    // show it
-                                    alertDialog.show();
-                                    alertDialog.setCanceledOnTouchOutside(false);
+                                    goToMainPage();
+                                    goToSettingsPage();
                                 }
                                 else if(status == 1){
                                     goToMainPage();
@@ -114,41 +112,17 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-
-    public AlertDialog createAlertDialogForPreferredLanguage(final UserSQLController controller, User foundUser){
-
-        LayoutInflater li = LayoutInflater.from(this);
-        View promptsView = li.inflate(R.layout.dialog_set_preferred_language, null);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setView(promptsView);
-
-        // set dialog message
-        alertDialogBuilder.setTitle("First-Time Login");
-        // create alert dialog
-
-        final Spinner mSpinner= (Spinner) promptsView.findViewById(R.id.sp_language);
-        ArrayAdapter<String> spLanguageArrAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.language));
-        mSpinner.setAdapter(spLanguageArrAdapter);
-
-        final User finalFoundUser = foundUser;
-        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                controller.updateSignInStatus(finalFoundUser,1);
-                controller.updatePreferredLanguage(finalFoundUser,mSpinner.getSelectedItem().toString());
-                goToMainPage();
-            }
-        });
-        return alertDialogBuilder.create();
-    }
-
     public void goToMainPage(){
         writeData(etNric.getText().toString(),etPassword.getText().toString());
         Intent i = new Intent(this, MainPageActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public void goToSettingsPage(){
+        writeData(etNric.getText().toString(),etPassword.getText().toString());
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
     }
 
 
@@ -159,6 +133,7 @@ public class LoginActivity extends ActionBarActivity {
         editor.putString("password", password);
         editor.commit();
     }
+
 
     public void errorOnExecuting(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
