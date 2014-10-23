@@ -53,4 +53,10 @@ public class UserMedicalHistoriesSQLController {
         conn.close();
         return medicalHistory;
     }
+
+    public void deleteAllMedicalHistories(){
+        conn.open();
+        conn.getDB().delete(conn.getUserMedicalHistoriesTable(), null, null);
+        conn.close();
+    }
 }

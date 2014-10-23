@@ -69,28 +69,20 @@ public class GetUserMedicalHistory extends AsyncTask<Void,Void,List<MedicalHisto
                 userMedicalHistoriesArrList.add(e);
             }
 
+            ArrayList<MedicalHistory> myMedicalHistoriesArrList = new ArrayList<MedicalHistory>();
+            UserMedicalHistoriesSQLController controller = new UserMedicalHistoriesSQLController(context);
             if(userMedicalHistoriesArrList.size() > 0){
-                ArrayList<MedicalHistory> medicalHistoriesArrList = new ArrayList<MedicalHistory>();
-                for(int i=0;i<userMedicalHistoriesArrList.size();i++){
-                    if(userMedicalHistoriesArrList.get(i).getNric().equals(nric)){
-                        UserMedicalHistoriesSQLController controller = new UserMedicalHistoriesSQLController(context);
-                        MedicalHistory foundMedicalHistory = controller.getMedicalHistory(userMedicalHistoriesArrList.get(i).getMedicalHistoryID());
-                        if(foundMedicalHistory.getMedicalHistoryID() == 0){
-                            controller.insertUserMedicalHistory(userMedicalHistoriesArrList.get(i));
-                            medicalHistoriesArrList.add(userMedicalHistoriesArrList.get(i));
-                        }
-                    }
+                controller.deleteAllMedicalHistories();
+            }
+            for(int i=0;i<userMedicalHistoriesArrList.size();i++){
+                controller.insertUserMedicalHistory(userMedicalHistoriesArrList.get(i));
+                if(userMedicalHistoriesArrList.get(i).getNric().equals(nric)){
+                    myMedicalHistoriesArrList.add(userMedicalHistoriesArrList.get(i));
                 }
-                ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(context,android.R.id.text1,medicalHistoriesArrList);
-                lvClinicHistoryList.setAdapter(adapter);
             }
-            else{
-                errorOnExecuting("There is no user's medical information.");
-            }
-            dialog.dismiss();
-        }
-        else{
-            errorOnExecuting("There is no user's medical information.");
+
+            ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(context,android.R.id.text1,myMedicalHistoriesArrList);
+            lvClinicHistoryList.setAdapter(adapter);
             dialog.dismiss();
         }
     }
