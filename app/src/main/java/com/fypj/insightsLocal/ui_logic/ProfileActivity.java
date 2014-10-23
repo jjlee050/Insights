@@ -3,6 +3,7 @@ package com.fypj.insightsLocal.ui_logic;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -20,8 +21,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.insightsLocal.util.ProfilePagerAdapter;
 import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
+import com.fypj.mymodule.api.insightsUser.model.User;
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 public class ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
@@ -36,6 +39,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
      */
     ProfilePagerAdapter mSectionsPagerAdapter;
     JazzyViewPager mJazzy;
+    User user;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -64,14 +68,14 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
             }
         });
 
+        getData();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager(),mJazzy);
+        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager(),mJazzy,user);
 
         mJazzy.setAdapter(mSectionsPagerAdapter);
 
-        getActionBar().setTitle("John Tan");
 
         actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Medical History").setTabListener(this));
@@ -115,5 +119,16 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    public void getData(){
+        SharedPreferences sharedPref= getSharedPreferences("insightsPreferences", 0);
+        String nric = sharedPref.getString("nric", "");
+        if(!nric.equals("")){
+            UserSQLController controller = new UserSQLController(this);
+            User user = controller.getUser(nric);
+            getActionBar().setTitle(user.getName());
+            this.user = user;
+        }
     }
 }

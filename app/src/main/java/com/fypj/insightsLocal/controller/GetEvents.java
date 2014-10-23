@@ -24,8 +24,13 @@ import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,6 +76,7 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
             for (Event e : result) {
                 latestEventArrList.add(e);
             }
+            sortDate();
 
             LatestEventsListAdapter adapter = new LatestEventsListAdapter(context, android.R.id.text1, latestEventArrList);
             lvEvents.setAdapter(adapter);
@@ -122,5 +128,24 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
             }
         });
         swipeView.setRefreshing(false);
+    }
+
+    private void sortDate(){
+        Collections.sort(latestEventArrList, new Comparator<Event>() {
+            public int compare(Event o1, Event o2) {
+
+                DateFormat df = new SimpleDateFormat("dd MMMM yyyy h:mma");
+                try {
+                    Date dt = df.parse(o1.getDateAndTime().substring(0,o1.getDateAndTime().lastIndexOf("to")));
+                    Date dt2 = df.parse(o2.getDateAndTime().substring(0,o2.getDateAndTime().lastIndexOf("to")));
+                    if (dt == null || dt2 == null)
+                        return 0;
+                    return dt.compareTo(dt2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
     }
 }

@@ -86,8 +86,22 @@ public class EventEndpoint {
     public Event insertEvent(Event event) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
-        if (event.getEventID() != null) {
-            Event foundRecord = ofy().load().type(Event.class).filter("name",event.getName()).first().now();
+        if (event.getEventID() == null) {
+            Query<Event> query = ofy().load().type(Event.class);
+            List<Event> records = new ArrayList<Event>();
+            QueryResultIterator<Event> iterator = query.iterator();
+            while (iterator.hasNext()) {
+                records.add(iterator.next());
+            }
+
+            Event foundRecord = null;
+            for(int i=0;i<records.size();i++){
+                if(records.get(i).getName().equals(event.getName())){
+                    foundRecord = records.get(i);
+                    break;
+                }
+            }
+
             if (foundRecord != null) {
                 throw new ConflictException("Object already exists");
             }
@@ -98,11 +112,8 @@ public class EventEndpoint {
                 return event;
             }
         }
-        else{
-            //Since our @Id field is a Long, Objectify will generate a unique value for us
-            //when we use put
-            ofy().save().entity(event).now();
-            return event;
+        else {
+            return null;
         }
     }
 

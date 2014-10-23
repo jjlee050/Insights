@@ -3,9 +3,11 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -25,12 +27,16 @@ import android.widget.Toast;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
+import com.fypj.mymodule.api.insightsUser.model.User;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusShare;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+
+import java.util.Locale;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -66,7 +72,10 @@ public class ViewEventDetailsFragment extends Fragment implements
     private TextView tvEventDesc;
     private TextView tvEventOrganizer;
     private TextView tvEventContactNo;
+
     private String textSpeech;
+    private String language;
+    private Locale ttsLanguage;
 
     public ViewEventDetailsFragment newInstance(int sectionNumber) {
         ViewEventDetailsFragment fragment = new ViewEventDetailsFragment();
@@ -153,6 +162,10 @@ public class ViewEventDetailsFragment extends Fragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.view_event,menu);
+        MenuItem share = menu.findItem(R.id.share);
+        if(!CheckNetworkConnection.isNetworkConnectionAvailable(ViewEventDetailsFragment.this.getActivity())) {
+            share.setVisible(false);
+        }
     }
 
     @Override
@@ -217,12 +230,13 @@ public class ViewEventDetailsFragment extends Fragment implements
                     intent.setAction(Intent.ACTION_VIEW);
                     intent.setPackage("com.google.android.apps.translate");
 
+
                     Uri uri = new Uri.Builder()
                             .scheme("http")
                             .authority("translate.google.com")
                             .path("/m/translate")
                             .appendQueryParameter("q", textSpeech)
-                            .appendQueryParameter("tl", "ms") // target language
+                            .appendQueryParameter("tl", language) // target language
                             .appendQueryParameter("sl", "en") // source language
                             .build();
                     //intent.setType("text/plain"); //not needed, but possible
@@ -237,6 +251,7 @@ public class ViewEventDetailsFragment extends Fragment implements
                     public void onInit(int status) {
                         if(status != TextToSpeech.ERROR){
                             //ttobj.setLanguage(Locale.)
+                            ttobj.setLanguage(ttsLanguage);
                             ttobj.speak(textSpeech, TextToSpeech.QUEUE_FLUSH, null);
                         }
                     }
@@ -282,15 +297,39 @@ public class ViewEventDetailsFragment extends Fragment implements
         tvEventOrganizer.setText("Organized by: " + bundle.getString("organizer"));
         tvEventContactNo.setText("Contact " + bundle.getString("contactNo"));
 
+        setSpeechAndLanguage(bundle);
+
+        return rootView;
+    }
+
+    private void setSpeechAndLanguage(Bundle bundle){
 
         String textSpeech = tvEventName.getText() + " will be held on " + tvEventDateAndTime.getText()
                 + " which is organized by " + bundle.getString("organizer") + ". This event is about " + tvEventDesc.getText();
-        if(!bundle.getString("guestOfHonour").equals("-")){
+        if((!bundle.getString("guestOfHonour").equals("-")) && (!bundle.getString("guestOfHonour").equalsIgnoreCase("Nil"))){
             textSpeech += ". The guest of honour for this event will be " + tvEventGuestOfHonour.getText();
         }
         textSpeech += ". " + tvEventContactNo.getText() + " for more information.";
         this.textSpeech = textSpeech;
         System.out.println(textSpeech);
-        return rootView;
+
+
+        SharedPreferences sharedPref= this.getActivity().getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        String nric = sharedPref.getString("nric", "");
+        String language = sharedPref.getString("preferred_language", "");
+        if(!nric.equals("")){
+            System.out.println("Language: " + language);
+            if(language.equals("zh-CN")){
+                ttsLanguage = Locale.CHINESE;
+            }
+            else{
+                language = "en";
+                ttsLanguage = Locale.ENGLISH;
+            }
+        }
+        else{
+            language = "en";
+            ttsLanguage = Locale.ENGLISH;
+        }
     }
 }

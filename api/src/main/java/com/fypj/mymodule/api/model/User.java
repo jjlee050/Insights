@@ -11,6 +11,7 @@ public class User {
     @Id
     private String nric;
     private String name;
+    private String password;
     private Integer age;
     private String contactNo;
     private String address;
@@ -18,9 +19,10 @@ public class User {
     public User() {
     }
 
-    public User(String nric, String name, Integer age, String contactNo, String address) {
+    public User(String nric, String name, String password, Integer age, String contactNo, String address) {
         this.nric = nric;
         this.name = name;
+        this.password = password;
         this.age = age;
         this.contactNo = contactNo;
         this.address = address;
@@ -40,6 +42,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getAge() {

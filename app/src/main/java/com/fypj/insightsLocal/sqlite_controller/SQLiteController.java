@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SQLiteController {
     private static final String database_name = "insights";
     private static final String database_event = "event";
+    private static final String database_user = "user";
     private static final int database_version = 1;
     private DBHelper ourHelper;
     private final Context ourContext;
@@ -37,6 +38,9 @@ public class SQLiteController {
             db.execSQL("CREATE TABLE "
                     + database_event
                     + "(eventID LONG PRIMARY KEY, name TEXT, dateAndTime TEXT, guestOfHonour TEXT, desc TEXT, organizer TEXT, contactNo TEXT, location TEXT)");
+            db.execSQL("CREATE TABLE "
+                    + database_user
+                    + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, nric TEXT, name TEXT, password TEXT, age TEXT, contactNo TEXT, address TEXT, firstTimeSignIn INTEGER)");
             /*db.execSQL("CREATE TABLE "
                     + database_user_saved_event
                     + "(eventID INTEGER PRIMARY KEY, eventAdminNRIC TEXT, eventName TEXT, eventCategory TEXT, eventDescription TEXT, eventDateTimeFrom DATETIME, eventDateTimeTo DATETIME, occurence TEXT, noOfParticipantsAllowed INTEGER, active INTEGER, eventFBPostID INTEGER)");
@@ -93,5 +97,9 @@ public class SQLiteController {
 
     public String getEventTable(){
         return database_event;
+    }
+
+    public String getUserTable(){
+        return database_user;
     }
 }

@@ -45,8 +45,6 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         savedInstanceState = getIntent().getExtras();
@@ -84,8 +82,15 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
 
         mJazzy.setAdapter(mSectionsPagerAdapter);
 
-        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_place).setTabListener(this));
+        if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
+            actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_place).setTabListener(this));
+
+        }
+        else{
+            actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
+        }
 
     }
 

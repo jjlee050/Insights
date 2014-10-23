@@ -1,6 +1,8 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
@@ -78,18 +80,14 @@ public class MainPageActivity extends ActionBarActivity
                 startActivity(i);
                 break;
             case 2:
-                i = new Intent(this,ViewAllPioneerPackagesActivity.class);
+                i = new Intent(this,SettingsActivity.class);
                 startActivity(i);
                 break;
             case 3:
-                i = new Intent(this,ViewAllLatestEventsActivity.class);
-                i.putExtra("choice", 0);
+                removeData();
+                i = new Intent(this,LoginActivity.class);
                 startActivity(i);
-                break;
-            case 4:
-                i = new Intent(this,NearestClinicActivity.class);
-                i.putExtra("choice",0);
-                startActivity(i);
+                finish();
                 break;
         }
         currentPosition = position;
@@ -109,13 +107,10 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "My Profile";
                 break;
             case 3:
-                mTitle = "Pioneer Generation Packages";
+                mTitle = "Settings";
                 break;
             case 4:
-                mTitle = "Lifestyle Events";
-                break;
-            case 5:
-                mTitle = "CHAS Clinic";
+                mTitle = "Log out";
                 break;
         }
         System.out.println("Title: " + mTitle);
@@ -147,15 +142,11 @@ public class MainPageActivity extends ActionBarActivity
                     restoreActionBar();
                     break;
                 case 2:
-                    getMenuInflater().inflate(R.menu.pioneer_packages, menu);
-                    restoreActionBar();
+                    /*getMenuInflater().inflate(R.menu.pioneer_packages, menu);
+                    restoreActionBar();*/
                     break;
                 case 3:
-                    getMenuInflater().inflate(R.menu.latest_events, menu);
-                    restoreActionBar();
-                    break;
-                case 4:
-                    getMenuInflater().inflate(R.menu.nearest_clinc, menu);
+                    getMenuInflater().inflate(R.menu.login, menu);
                     restoreActionBar();
                     break;
             }
@@ -181,4 +172,10 @@ public class MainPageActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void removeData(){
+        SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();      //its clear all data.
+        editor.commit();  //Don't forgot to commit  SharedPreferences.
+    }
 }

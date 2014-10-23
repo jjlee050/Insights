@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.util;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.fypj.insightsLocal.ui_logic.ViewClinicHistoryFragment;
 import com.fypj.insightsLocal.ui_logic.ViewProfileFragment;
+import com.fypj.mymodule.api.insightsUser.model.User;
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 /**
@@ -15,10 +17,12 @@ import com.jfeinstein.jazzyviewpager.JazzyViewPager;
  */
 public class ProfilePagerAdapter extends FragmentPagerAdapter {
     private JazzyViewPager mJazzy;
+    private User user;
 
-    public ProfilePagerAdapter(FragmentManager fm, JazzyViewPager mJazzy) {
+    public ProfilePagerAdapter(FragmentManager fm, JazzyViewPager mJazzy, User user) {
         super(fm);
         this.mJazzy = mJazzy;
+        this.user = user;
     }
 
     @Override
@@ -29,6 +33,14 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
         switch(position){
             case 0:
                 fragment = new ViewProfileFragment();
+                Bundle args = new Bundle();
+                args.putString("nric", user.getNric());
+                args.putString("name", user.getName());
+                args.putString("password", user.getPassword());
+                args.putInt("age", user.getAge());
+                args.putString("contactNo", user.getContactNo());
+                args.putString("address", user.getAddress());
+                fragment.setArguments(args);
                 break;
             case 1:
                 fragment = new ViewClinicHistoryFragment();
