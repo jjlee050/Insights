@@ -12,6 +12,7 @@ public class SQLiteController {
     private static final String database_name = "insights";
     private static final String database_event = "event";
     private static final String database_user = "user";
+    private static final String database_clinic = "Clinic";
     private static final int database_version = 1;
     private DBHelper ourHelper;
     private final Context ourContext;
@@ -41,10 +42,10 @@ public class SQLiteController {
             db.execSQL("CREATE TABLE "
                     + database_user
                     + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, nric TEXT, name TEXT, password TEXT, age TEXT, contactNo TEXT, address TEXT, firstTimeSignIn INTEGER)");
-            /*db.execSQL("CREATE TABLE "
-                    + database_user_saved_event
-                    + "(eventID INTEGER PRIMARY KEY, eventAdminNRIC TEXT, eventName TEXT, eventCategory TEXT, eventDescription TEXT, eventDateTimeFrom DATETIME, eventDateTimeTo DATETIME, occurence TEXT, noOfParticipantsAllowed INTEGER, active INTEGER, eventFBPostID INTEGER)");
             db.execSQL("CREATE TABLE "
+                    + database_clinic
+                    + "(ClinicID INTEGER PRIMARY KEY, ClinicName TEXT, ClinicAddress TEXT, ClinicOH TEXT, ClinicContactNo TEXT, Category TEXT)");
+            /*db.execSQL("CREATE TABLE "
                     + database_event_location_details
                     + "(eventLocationID INTEGER PRIMARY KEY, eventID INTEGER, eventLocationName TEXT, eventLocationAddress TEXT, eventLocationHyperLink TEXT, eventLocationLat INTEGER, eventLocationLng INTEGER)");
             db.execSQL("CREATE TABLE "
@@ -101,5 +102,9 @@ public class SQLiteController {
 
     public String getUserTable(){
         return database_user;
+    }
+
+    public String getClinicTable(){
+        return database_clinic;
     }
 }

@@ -17,8 +17,6 @@ public class Clinic{
     private String contactNo;
 
 
-    public Clinic() {
-    }
 
     public Clinic(Long clinicID, String name, String category, String address, String operatingHours, String contactNo) {
         this.clinicID = clinicID;

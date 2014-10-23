@@ -56,10 +56,10 @@ public class ViewClinicDetailsFragment extends Fragment{
         tvClinicContactNo = (TextView) rootView.findViewById(R.id.tv_Clinic_Contact);
 
 
-        tvClinicName.setText(bundle.getString("ClinicName"));
-        tvClinicAddress.setText(bundle.getString("ClinicAddress"));
-        tvClinicOH.setText(bundle.getString("ClinicOH"));
-        tvClinicContactNo.setText(bundle.getString("ClinicContactNo"));
+        tvClinicName.setText(bundle.getString("name"));
+        tvClinicAddress.setText(bundle.getString("address"));
+        tvClinicOH.setText(bundle.getString("operatingHours"));
+        tvClinicContactNo.setText(bundle.getString("contactNo"));
 
 
 

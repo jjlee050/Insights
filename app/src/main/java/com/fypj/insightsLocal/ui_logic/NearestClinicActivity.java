@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,13 +14,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.fypj.insightsLocal.model.Clinic;
+//import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Dental;
-import com.fypj.insightsLocal.util.ViewClinicDetailsAdapter;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
+import com.fypj.insightsLocal.util.ClinicAdapter;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
+
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
+
+import java.util.ArrayList;
 
 public class NearestClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -39,7 +47,9 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
     ViewPager mViewPager;
     private Clinic clinic;
     private Dental dental;
-    JazzyViewPager mJazzy;
+    private ListView lvNearestClinic;
+    private ArrayList<Clinic> searchResultsArrList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +62,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
 
         savedInstanceState = getIntent().getExtras();
 
-        if(savedInstanceState != null){
+        /*if(savedInstanceState != null){
             Long id = savedInstanceState.getLong("ClinicID");
             String name = savedInstanceState.getString("ClinicName");
             String address = savedInstanceState.getString("ClinicAddress");
@@ -63,7 +73,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
             actionBar.setTitle(name);
             clinic = new Clinic(id,name,address,operatingHours,contactNo,category);
             dental = new Dental(id,name,address,operatingHours,contactNo,category);
-        }
+        }*/
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -102,10 +112,43 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
+        if(searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(false);
 
-        return super.onCreateOptionsMenu( menu );
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+                    //System.out.println("Query: " + query);
+                    ClinicSQLController controller = new ClinicSQLController(NearestClinicActivity.this);
+                    searchResultsArrList = controller.searchClinic(query);
+
+                    ClinicAdapter adapter = new ClinicAdapter(NearestClinicActivity.this, android.R.id.text1, searchResultsArrList);
+                    lvNearestClinic.setAdapter(adapter);
+
+                 lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                     @Override
+                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                         Intent intent = new Intent(NearestClinicActivity.this, NearestClinicActivity.class);
+                         intent.putExtra("clinicID", searchResultsArrList.get(position).getClinicID());
+                         intent.putExtra("name", searchResultsArrList.get(position).getName());
+                         intent.putExtra("address", searchResultsArrList.get(position).getAddress());
+                         intent.putExtra("operatingHours", searchResultsArrList.get(position).getOperatingHours());
+                         intent.putExtra("contactNo", searchResultsArrList.get(position).getContactNo());
+
+                         startActivity(intent);
+                     }
+                 });
+                    return false;
+                }
+            });
+        }
+        return true;
     }
 
     @Override

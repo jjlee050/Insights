@@ -79,12 +79,12 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                         Intent intent = new Intent(context, ViewClinicActivity.class);
-                        intent.putExtra("ClinicID", ClinicArrList.get(position).getClinicID());
-                        intent.putExtra("ClinicName", ClinicArrList.get(position).getName());
-                        intent.putExtra("ClinicAddress", ClinicArrList.get(position).getAddress());
-                        intent.putExtra("ClinicOH", ClinicArrList.get(position).getOperatingHours());
-                        intent.putExtra("ClinicContactNo", ClinicArrList.get(position).getContactNo());
-                        intent.putExtra("ClinicCategory", ClinicArrList.get(position).getCategory());
+                        intent.putExtra("clinicID", ClinicArrList.get(position).getClinicID());
+                        intent.putExtra("name", ClinicArrList.get(position).getName());
+                        intent.putExtra("address", ClinicArrList.get(position).getAddress());
+                        intent.putExtra("operatingHours", ClinicArrList.get(position).getOperatingHours());
+                        intent.putExtra("contactNo", ClinicArrList.get(position).getContactNo());
+                        intent.putExtra("category", ClinicArrList.get(position).getCategory());
 
                         context.startActivity(intent);
 
