@@ -10,9 +10,10 @@ import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetUserMedicalHistory;
-import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.model.MedicalHistory;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.UserMedicalHistoriesSQLController;
 import com.fypj.insightsLocal.util.ClinicHistoryListAdapter;
+import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,16 @@ public class ViewClinicHistoryFragment extends Fragment {
 
         SharedPreferences sharedPref= ViewClinicHistoryFragment.this.getActivity().getSharedPreferences("insightsPreferences", 0);
         String nric = sharedPref.getString("nric", "");
-        new GetUserMedicalHistory(ViewClinicHistoryFragment.this.getActivity(),nric,lvClinicHistoryList).execute();
+        if(CheckNetworkConnection.isNetworkConnectionAvailable(ViewClinicHistoryFragment.this.getActivity())) {
+            new GetUserMedicalHistory(ViewClinicHistoryFragment.this.getActivity(), nric, lvClinicHistoryList).execute();
+        }
+        else{
+            UserMedicalHistoriesSQLController controller = new UserMedicalHistoriesSQLController(ViewClinicHistoryFragment.this.getActivity());
+            ArrayList<MedicalHistory> myMedicalHistoriesArrList = controller.getMedicalHistoryByNRIC(nric);
+
+            ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(ViewClinicHistoryFragment.this.getActivity(),android.R.id.text1,myMedicalHistoriesArrList);
+            lvClinicHistoryList.setAdapter(adapter);
+        }
         return rootView;
     }
 }

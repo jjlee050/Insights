@@ -7,6 +7,8 @@ import android.database.Cursor;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
 
+import java.util.ArrayList;
+
 /**
  * Created by L33525 on 23/10/2014.
  */
@@ -32,6 +34,27 @@ public class UserMedicalHistoriesSQLController {
 
         conn.getDB().insert(conn.getUserMedicalHistoriesTable(), null, cv);
         conn.close();
+    }
+
+    public ArrayList<MedicalHistory> getMedicalHistoryByNRIC(String nric){
+        ArrayList<MedicalHistory> myMedicalHistoriesArrList = new ArrayList<MedicalHistory>();
+        conn.open();
+        Cursor cursor = conn.getDB().query(conn.getUserMedicalHistoriesTable(), null, "nric = '" + nric + "'", null, null, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                MedicalHistory medicalHistory = new MedicalHistory();
+                medicalHistory.setMedicalHistoryID(cursor.getLong(cursor.getColumnIndex("medicalHistoryID")));
+                medicalHistory.setClinicID(cursor.getLong(cursor.getColumnIndex("clinicID")));
+                medicalHistory.setNric(cursor.getString(cursor.getColumnIndex("nric")));
+                medicalHistory.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                medicalHistory.setTime(cursor.getString(cursor.getColumnIndex("time")));
+                medicalHistory.setService(cursor.getString(cursor.getColumnIndex("service")));
+                medicalHistory.setAmt(cursor.getFloat(cursor.getColumnIndex("amt")));
+                myMedicalHistoriesArrList.add(medicalHistory);
+            }while(cursor.moveToNext());
+        }
+        conn.close();
+        return myMedicalHistoriesArrList;
     }
 
     public MedicalHistory getMedicalHistory(Long medicalHistoryID){

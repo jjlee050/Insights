@@ -88,7 +88,7 @@ public class ViewAllLatestEventsActivity extends Activity {
             obj.fetchXML();
         }
         else{
-            refresh(true);
+            refresh(false);
         }
     }
 
