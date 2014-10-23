@@ -14,7 +14,8 @@ import java.sql.Time;
 public class MedicalHistory {
     @Id
     private Long medicalHistoryID;
-    private Long clinicID;
+    private Clinic clinic;
+    private String nric;
     private String date;
     private String time;
     private String service;
@@ -23,9 +24,10 @@ public class MedicalHistory {
     public MedicalHistory() {
     }
 
-    public MedicalHistory(Long medicalHistoryID, Long clinicID, String date, String time, String service, Float amt) {
+    public MedicalHistory(Long medicalHistoryID, Clinic clinic, String nric, String date, String time, String service, Float amt) {
         this.medicalHistoryID = medicalHistoryID;
-        this.clinicID = clinicID;
+        this.clinic = clinic;
+        this.nric = nric;
         this.date = date;
         this.time = time;
         this.service = service;
@@ -40,12 +42,20 @@ public class MedicalHistory {
         this.medicalHistoryID = medicalHistoryID;
     }
 
-    public Long getClinicID() {
-        return clinicID;
+    public Clinic getClinic() {
+        return clinic;
     }
 
-    public void setClinicID(Long clinicID) {
-        this.clinicID = clinicID;
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
+    }
+
+    public String getNric() {
+        return nric;
+    }
+
+    public void setNric(String nric) {
+        this.nric = nric;
     }
 
     public String getDate() {
