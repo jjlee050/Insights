@@ -1,12 +1,7 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -18,15 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetClinic;
-import com.fypj.insightsLocal.controller.GetEvents;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-import  com.fypj.insightsLocal.model.Clinic;
 
 public class NearestClinicFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";

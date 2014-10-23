@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
@@ -20,10 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.controller.GetEvents;
-import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
-import com.fypj.insightsLocal.util.HandleXML;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 
@@ -83,13 +79,6 @@ public class ViewAllLatestEventsActivity extends Activity {
                     swipeView.setEnabled(false);
             }
         });
-        /*if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
-            HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
-            obj.fetchXML();
-        }
-        else{
-            refresh(false);
-        }*/
         refresh(false);
     }
 
@@ -155,10 +144,6 @@ public class ViewAllLatestEventsActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void getAllEvents(){
-        new GetEvents(ViewAllLatestEventsActivity.this,lvLatestEvents,swipeView).execute();
     }
 
     private void refresh(boolean refresh){

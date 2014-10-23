@@ -34,13 +34,6 @@ public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
             Event createdEvent = myApiService.insertEvent(event).execute();
             if(createdEvent != null) {
                 System.out.println("Created: " + event.getName());
-                try {
-                    EventSQLController controller = new EventSQLController(context);
-                    controller.insertEvent(createdEvent);
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
                 return true;
             }
             else{

@@ -28,24 +28,13 @@ import java.util.List;
 /**
  * Created by L33525 on 23/10/2014.
  */
-public class GetUserMedicalHistory extends AsyncTask<Void,Void,List<MedicalHistory>> {
+public class GetMedicalHistory extends AsyncTask<Void,Void,List<MedicalHistory>> {
     private static InsightsMedicalHistory myApiService = null;
-    private Activity context;
+    private Context context;
     private ArrayList<MedicalHistory> userMedicalHistoriesArrList = new ArrayList<MedicalHistory>();
-    private ProgressDialog dialog;
-    private String nric;
-    private ListView lvClinicHistoryList;
 
-    public GetUserMedicalHistory(Activity context, String nric, ListView lvClinicHistoryList){
+    public GetMedicalHistory(Context context){
         this.context = context;
-        this.nric = nric;
-        this.lvClinicHistoryList = lvClinicHistoryList;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        dialog = ProgressDialog.show(context,
-                "Retriving user's medical information.", "Please wait...", true);
     }
 
     @Override
@@ -73,38 +62,20 @@ public class GetUserMedicalHistory extends AsyncTask<Void,Void,List<MedicalHisto
             UserMedicalHistoriesSQLController controller = new UserMedicalHistoriesSQLController(context);
             if(userMedicalHistoriesArrList.size() > 0){
                 for(int i=0;i<userMedicalHistoriesArrList.size();i++){
-                    controller.insertUserMedicalHistory(userMedicalHistoriesArrList.get(i));
-                    if(controller.getMedicalHistory(userMedicalHistoriesArrList.get(i).getMedicalHistoryID()).equals(Long.parseLong("0")))
+                    if(controller.getMedicalHistory(userMedicalHistoriesArrList.get(i).getMedicalHistoryID()).getMedicalHistoryID().equals(Long.parseLong("0")))
                     {
-                        if (userMedicalHistoriesArrList.get(i).getNric().equals(nric)) {
-                            myMedicalHistoriesArrList.add(userMedicalHistoriesArrList.get(i));
-                        }
+                        controller.insertUserMedicalHistory(userMedicalHistoriesArrList.get(i));
                     }
                 }
             }
+            else{
 
-            ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(context,android.R.id.text1,myMedicalHistoriesArrList);
-            lvClinicHistoryList.setAdapter(adapter);
-            dialog.dismiss();
+            }
+
         }
     }
 
     private void errorOnExecuting(final String message){
         this.cancel(true);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Error verifying user ");
-                builder.setMessage(message);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
-            }
-        });
     }
 }

@@ -1,9 +1,11 @@
 package com.fypj.insightsLocal.ui_logic;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,6 +21,7 @@ import android.widget.Spinner;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetUser;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.service.BackgroundReceiver;
 import com.fypj.insightsLocal.service.BackgroundService;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.mymodule.api.insightsUser.model.User;
@@ -28,6 +31,7 @@ import com.fypj.mymodule.api.insightsUser.model.User;
  */
 public class LoginActivity extends ActionBarActivity {
     private EditText etNric, etPassword;
+    public static final String BROADCAST = "com.fypj.insightsLocal.android.action.broadcast";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,11 @@ public class LoginActivity extends ActionBarActivity {
         etNric = (EditText) findViewById(R.id.et_nric);
         etPassword = (EditText) findViewById(R.id.et_password);
 
-        Intent serviceIntent = new Intent(this, BackgroundService.class);
-        startService(serviceIntent);
+        BackgroundReceiver br = new BackgroundReceiver();
+        IntentFilter intentFilter = new IntentFilter(BROADCAST);
+        registerReceiver(br , intentFilter);
+        Intent intent = new Intent(BROADCAST);
+        sendBroadcast(intent);
     }
 
 

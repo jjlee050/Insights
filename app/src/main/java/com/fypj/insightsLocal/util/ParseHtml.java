@@ -67,7 +67,6 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
             }
 
         } catch (Throwable t) {
-            this.cancel(true);
             t.printStackTrace();
         }
 
@@ -92,7 +91,6 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
             else{
                 event.setDesc(valueArrList.get(5).substring(1));
             }
-            System.out.println(valueArrList.get(0) + "\r\n Date: " + valueArrList.get(0).substring(0,valueArrList.get(0).lastIndexOf("to")));
             DateFormat df = new SimpleDateFormat("dd MMMM yyyy h:mma");
             try {
                 Date dt = df.parse(valueArrList.get(0).substring(0,valueArrList.get(0).lastIndexOf("to")-1));
@@ -135,6 +133,9 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
             }
         }
         if(checkLifestyleEvents){
+            Log.i("Creating event.","Please wait...");
+            EventSQLController controller = new EventSQLController(context);
+            controller.insertEvent(event);
             CreateEvent createEvent = new CreateEvent(context,event);
             createEvent.execute();
         }

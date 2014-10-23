@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -28,12 +29,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <receiver android:name=".service.BackgroundReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".ui_logic.LoginActivity"
@@ -131,6 +126,12 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+        <receiver android:name=".service.BackgroundReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.fypj.insightsLocal.android.action.broadcast" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

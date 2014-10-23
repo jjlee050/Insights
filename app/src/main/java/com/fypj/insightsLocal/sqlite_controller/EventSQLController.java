@@ -24,6 +24,7 @@ public class EventSQLController {
     public void insertEvent(Event event){
         conn.open();
         ContentValues cv = new ContentValues();
+        System.out.println("Putting event.");
         cv.put("name", event.getName());
         cv.put("dateAndTime", event.getDateAndTime());
         cv.put("guestOfHonour", event.getGuestOfHonour());
