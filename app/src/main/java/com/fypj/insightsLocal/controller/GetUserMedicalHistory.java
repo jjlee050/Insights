@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.options.AppConstants;
+import com.fypj.insightsLocal.sqlite_controller.UserMedicalHistoriesSQLController;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.insightsLocal.ui_logic.LoginActivity;
 import com.fypj.insightsLocal.util.ClinicHistoryListAdapter;
@@ -72,7 +73,12 @@ public class GetUserMedicalHistory extends AsyncTask<Void,Void,List<MedicalHisto
                 ArrayList<MedicalHistory> medicalHistoriesArrList = new ArrayList<MedicalHistory>();
                 for(int i=0;i<userMedicalHistoriesArrList.size();i++){
                     if(userMedicalHistoriesArrList.get(i).getNric().equals(nric)){
-                        medicalHistoriesArrList.add(userMedicalHistoriesArrList.get(i));
+                        UserMedicalHistoriesSQLController controller = new UserMedicalHistoriesSQLController(context);
+                        MedicalHistory foundMedicalHistory = controller.getMedicalHistory(userMedicalHistoriesArrList.get(i).getMedicalHistoryID());
+                        if(foundMedicalHistory.getMedicalHistoryID() == 0){
+                            controller.insertUserMedicalHistory(userMedicalHistoriesArrList.get(i));
+                            medicalHistoriesArrList.add(userMedicalHistoriesArrList.get(i));
+                        }
                     }
                 }
                 ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(context,android.R.id.text1,medicalHistoriesArrList);
@@ -81,6 +87,10 @@ public class GetUserMedicalHistory extends AsyncTask<Void,Void,List<MedicalHisto
             else{
                 errorOnExecuting("There is no user's medical information.");
             }
+            dialog.dismiss();
+        }
+        else{
+            errorOnExecuting("There is no user's medical information.");
             dialog.dismiss();
         }
     }

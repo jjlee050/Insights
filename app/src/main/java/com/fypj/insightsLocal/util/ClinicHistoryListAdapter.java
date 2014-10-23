@@ -36,7 +36,8 @@ public class ClinicHistoryListAdapter extends ArrayAdapter<MedicalHistory> {
 
         DecimalFormat formatter = new DecimalFormat("$00.00");
 
-        tvClinicName.setText(clinicHistoryArrayList.get(position).getClinicID());
+        int clinicID = Integer.parseInt(String.valueOf(clinicHistoryArrayList.get(position).getClinicID()));
+        tvClinicName.setText(String.valueOf(clinicID));
         tvService.setText(clinicHistoryArrayList.get(position).getService());
         tvAmt.setText(formatter.format(clinicHistoryArrayList.get(position).getAmt()));
 
