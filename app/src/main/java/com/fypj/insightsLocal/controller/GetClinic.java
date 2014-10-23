@@ -69,11 +69,8 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
     @Override
     protected void onPostExecute(List<Clinic> result) {
         for (Clinic e : result) {
+            if (e.getCategory().equals("Medical")) {
             ClinicArrList.add(e);
-
-
-            if (e.getCategory() == "Medical") {
-
 
                 ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
                 lvNearestClinic.setAdapter(adapter);

@@ -84,7 +84,7 @@ public class NearestDentalFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_nearest_dental, container, false);
 
         getActivity().getActionBar().setTitle("CHAS Clinics");
-        final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
+        final ListView lvNearestDental = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
 
         /*final ArrayList<Clinic> DentalArrList = new ArrayList<Clinic>();
         DentalArrList.add(new Clinic(1, "A St*R Dental Surgery", "Mon - Fri: 9.00am - 9.00pm\n\nSat: 9.00am - 5.00pm\n\nSun: 9.00am -1.00pm\n\n(Closed on Public Holidays)"));
@@ -116,13 +116,12 @@ public class NearestDentalFragment extends Fragment {
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        getAllClinic(lvNearestClinic);
-                    }
+                        getAllClinic(lvNearestDental); }
                 }, 1000);
             }
         });
 
-        lvNearestClinic.setOnScrollListener(new AbsListView.OnScrollListener() {
+        lvNearestDental.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
@@ -136,7 +135,7 @@ public class NearestDentalFragment extends Fragment {
                     swipeView.setEnabled(false);
             }
         });
-        getAllClinic(lvNearestClinic);
+        getAllClinic(lvNearestDental);
 
 
         return rootView;
@@ -153,8 +152,8 @@ public class NearestDentalFragment extends Fragment {
 
 
 
-    private void getAllClinic(ListView lvNearestClinic){
-        new GetDental(NearestDentalFragment.this.getActivity(),lvNearestClinic,swipeView).execute();
+    private void getAllClinic(ListView lvNearestDental){
+        new GetDental(NearestDentalFragment.this.getActivity(),lvNearestDental,swipeView).execute();
 
     }
 

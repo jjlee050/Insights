@@ -16,6 +16,7 @@ public class Clinic{
     private String operatingHours;
     private String contactNo;
 
+
     public Clinic() {
     }
 
@@ -26,6 +27,7 @@ public class Clinic{
         this.address = address;
         this.operatingHours = operatingHours;
         this.contactNo = contactNo;
+
     }
 
     public Long getClinicID() {
@@ -75,4 +77,6 @@ public class Clinic{
     public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
+
+
 }

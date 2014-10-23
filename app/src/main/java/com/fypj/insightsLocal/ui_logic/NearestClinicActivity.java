@@ -17,6 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.model.Dental;
+import com.fypj.insightsLocal.util.ViewClinicDetailsAdapter;
+import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 public class NearestClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -35,6 +38,8 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
      */
     ViewPager mViewPager;
     private Clinic clinic;
+    private Dental dental;
+    JazzyViewPager mJazzy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +55,15 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         if(savedInstanceState != null){
             Long id = savedInstanceState.getLong("ClinicID");
             String name = savedInstanceState.getString("ClinicName");
-              String address = savedInstanceState.getString("ClinicAddress");
+            String address = savedInstanceState.getString("ClinicAddress");
             String operatingHours = savedInstanceState.getString("ClinicOH");
             String contactNo = savedInstanceState.getString("ClinicContactNo");
             String category = savedInstanceState.getString("Category");
 
             actionBar.setTitle(name);
             clinic = new Clinic(id,name,address,operatingHours,contactNo,category);
+            dental = new Dental(id,name,address,operatingHours,contactNo,category);
         }
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.

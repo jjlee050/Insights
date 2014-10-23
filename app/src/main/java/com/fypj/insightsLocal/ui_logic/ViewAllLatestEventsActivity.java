@@ -84,7 +84,6 @@ public class ViewAllLatestEventsActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.latest_events, menu);
-        getMenuInflater().inflate(R.menu.latest_events, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 

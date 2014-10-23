@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.fypj.insightsLocal.model.Dental;
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.ui_logic.ViewClinicActivity;
@@ -34,15 +35,15 @@ import java.util.List;
 public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
   private static InsightsClinics myApiService = null;
     private Activity context;
-    private ListView lvNearestClinic;
+    private ListView lvNearestDental;
     private SwipeRefreshLayout swipeView;
     final ArrayList<Clinic> DentalArrList = new ArrayList<Clinic>();
     private ProgressDialog dialog;
 
 
-    public GetDental(Context context, ListView lvNearestClinic, SwipeRefreshLayout swipeView){
+    public GetDental(Context context, ListView lvNearestDental, SwipeRefreshLayout swipeView){
         this.context = (Activity) context;
-        this.lvNearestClinic = lvNearestClinic;
+        this.lvNearestDental = lvNearestDental;
         this.swipeView = swipeView;
     }
 
@@ -68,16 +69,18 @@ public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Se
     @Override
     protected void onPostExecute(List<Clinic> result) {
         for (Clinic e : result) {
+           if (e.getCategory().equals("Dental"))
+
             DentalArrList.add(e);
 
 
-            if (e.getCategory() == "Dental") {
+            {
 
 
                 DentalAdapter adapter = new DentalAdapter(context, android.R.id.text1,DentalArrList);
-                lvNearestClinic.setAdapter(adapter);
+                lvNearestDental.setAdapter(adapter);
 
-                lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                lvNearestDental.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                         Intent intent = new Intent(context, ViewClinicActivity.class);

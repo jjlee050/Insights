@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 //import com.fypj.insightsLocal.model.Clinic;
+import com.fypj.insightsLocal.model.Dental;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 
 
