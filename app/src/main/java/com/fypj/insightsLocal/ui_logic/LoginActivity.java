@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetUser;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.service.BackgroundService;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.mymodule.api.insightsUser.model.User;
 
@@ -36,6 +37,9 @@ public class LoginActivity extends ActionBarActivity {
         getData();
         etNric = (EditText) findViewById(R.id.et_nric);
         etPassword = (EditText) findViewById(R.id.et_password);
+
+        Intent serviceIntent = new Intent(this, BackgroundService.class);
+        startService(serviceIntent);
     }
 
 

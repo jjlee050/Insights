@@ -72,12 +72,14 @@ public class GetUserMedicalHistory extends AsyncTask<Void,Void,List<MedicalHisto
             ArrayList<MedicalHistory> myMedicalHistoriesArrList = new ArrayList<MedicalHistory>();
             UserMedicalHistoriesSQLController controller = new UserMedicalHistoriesSQLController(context);
             if(userMedicalHistoriesArrList.size() > 0){
-                controller.deleteAllMedicalHistories();
-            }
-            for(int i=0;i<userMedicalHistoriesArrList.size();i++){
-                controller.insertUserMedicalHistory(userMedicalHistoriesArrList.get(i));
-                if(userMedicalHistoriesArrList.get(i).getNric().equals(nric)){
-                    myMedicalHistoriesArrList.add(userMedicalHistoriesArrList.get(i));
+                for(int i=0;i<userMedicalHistoriesArrList.size();i++){
+                    controller.insertUserMedicalHistory(userMedicalHistoriesArrList.get(i));
+                    if(controller.getMedicalHistory(userMedicalHistoriesArrList.get(i).getMedicalHistoryID()).equals(Long.parseLong("0")))
+                    {
+                        if (userMedicalHistoriesArrList.get(i).getNric().equals(nric)) {
+                            myMedicalHistoriesArrList.add(userMedicalHistoriesArrList.get(i));
+                        }
+                    }
                 }
             }
 

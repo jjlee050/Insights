@@ -1,17 +1,11 @@
 package com.fypj.insightsLocal.util;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.fypj.insightsLocal.controller.CreateEvent;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
-import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsActivity;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 
 import org.jsoup.Jsoup;
@@ -30,7 +24,7 @@ import java.util.Date;
  * Created by L33525 on 14/10/2014.
  */
 public class ParseHtml extends AsyncTask<Void, Void, String> {
-    private ViewAllLatestEventsActivity activity;
+    private Context context;
     private String title,link,description;
     private Event event = new Event();
     private ArrayList<String> valueArrList = new ArrayList<String>();
@@ -38,8 +32,8 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
 
 
 
-    public ParseHtml(ViewAllLatestEventsActivity activity, String title, String link, String description){
-        this.activity = (ViewAllLatestEventsActivity)activity;
+    public ParseHtml(Context context, String title, String link, String description){
+        this.context = context;
         this.title = title;
         this.link = link;
         this.description = description;
@@ -108,7 +102,7 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
                 ca.setTime(dt);
                 cnow.setTime(dnow);
                 if(cnow.getTimeInMillis() - ca.getTimeInMillis() < 0){
-                    EventSQLController controller = new EventSQLController(activity);
+                    EventSQLController controller = new EventSQLController(context);
                     ArrayList<Event> eventArrList = controller.getAllEvent();
                     if(eventArrList.size() > 0) {
                         boolean duplicate = false;
@@ -141,7 +135,7 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
             }
         }
         if(checkLifestyleEvents){
-            CreateEvent createEvent = new CreateEvent(activity, event);
+            CreateEvent createEvent = new CreateEvent(context,event);
             createEvent.execute();
         }
         else{

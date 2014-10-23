@@ -1,9 +1,11 @@
 package com.fypj.insightsLocal.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.fypj.insightsLocal.options.AppConstants;
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsActivity;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
@@ -13,12 +15,12 @@ import com.fypj.mymodule.api.insightsEvent.model.Event;
  */
 public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
     private static InsightsEvent myApiService = null;
-    private ViewAllLatestEventsActivity activity;
+    private Context context;
     private Event event;
     private ProgressDialog dialog;
 
-    public CreateEvent(ViewAllLatestEventsActivity activity, Event event){
-        this.activity = (ViewAllLatestEventsActivity) activity;
+    public CreateEvent(Context context, Event event){
+        this.context = context;
         this.event = event;
     }
 
@@ -32,6 +34,13 @@ public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
             Event createdEvent = myApiService.insertEvent(event).execute();
             if(createdEvent != null) {
                 System.out.println("Created: " + event.getName());
+                try {
+                    EventSQLController controller = new EventSQLController(context);
+                    controller.insertEvent(createdEvent);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
                 return true;
             }
             else{

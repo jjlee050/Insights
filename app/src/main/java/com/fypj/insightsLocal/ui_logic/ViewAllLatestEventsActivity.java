@@ -83,13 +83,14 @@ public class ViewAllLatestEventsActivity extends Activity {
                     swipeView.setEnabled(false);
             }
         });
-        if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
+        /*if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
             HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
             obj.fetchXML();
         }
         else{
             refresh(false);
-        }
+        }*/
+        refresh(false);
     }
 
     @Override

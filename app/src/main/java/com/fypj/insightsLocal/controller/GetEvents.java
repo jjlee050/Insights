@@ -96,14 +96,6 @@ public class GetEvents extends AsyncTask<Void, Void, List<Event>> implements Set
                     context.startActivity(intent);
                 }
             });
-
-            EventSQLController controller = new EventSQLController(context);
-            if (controller.getAllEvent().size() > 0) {
-                controller.deleteAllEvents();
-            }
-            for (int i = 0; i < latestEventArrList.size(); i++) {
-                controller.insertEvent(latestEventArrList.get(i));
-            }
             dialog.dismiss();
             swipeView.setRefreshing(false);
         }

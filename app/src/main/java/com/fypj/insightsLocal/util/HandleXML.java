@@ -1,6 +1,7 @@
 package com.fypj.insightsLocal.util;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -23,16 +24,16 @@ import java.util.ArrayList;
 public class HandleXML {
 
     private String urlString = null;
-    private ViewAllLatestEventsActivity activity;
+    private Context context;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
     private ArrayList<ParseHtml> mTasks = new ArrayList<ParseHtml>();
 
     private ProgressDialog dialog;
 
-    public HandleXML(String url, ViewAllLatestEventsActivity activity){
+    public HandleXML(String url, Context context){
         this.urlString = url;
-        this.activity = (ViewAllLatestEventsActivity)activity;
+        this.context = context;
     }
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
@@ -64,7 +65,7 @@ public class HandleXML {
                         }
                         if((link != "")) {
                             System.out.println("Link: " + link);
-                            ParseHtml parseHtml = new ParseHtml(activity, title, link, description);
+                            ParseHtml parseHtml = new ParseHtml(context, title, link, description);
                             if(!link.equals("http://www.pa.gov.sg/events.html?view=events")) {
                                 mTasks.add(parseHtml);
                             }
@@ -99,8 +100,6 @@ public class HandleXML {
         }
     }
     public void fetchXML(){
-        dialog = ProgressDialog.show(activity,
-                "Retrieving events from People Association", "Please wait...", true);
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
@@ -132,8 +131,7 @@ public class HandleXML {
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            activity.getAllEvents();
-            dialog.dismiss();
+            //activity.getAllEvents();
         }
     };
 }
