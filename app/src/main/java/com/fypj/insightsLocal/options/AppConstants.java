@@ -2,6 +2,7 @@ package com.fypj.insightsLocal.options;
 
 import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
+import com.fypj.mymodule.api.insightsMedicalHistory.InsightsMedicalHistory;
 import com.fypj.mymodule.api.insightsUser.InsightsUser;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -60,6 +61,19 @@ public class AppConstants implements Settings{
     public static InsightsUser getInsightsUserAPI() {
 
         InsightsUser.Builder builder = new InsightsUser.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+                .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    @Override
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        abstractGoogleClientRequest.setDisableGZipContent(true);
+                    }
+                });
+        return builder.build();
+
+    }
+
+    public static InsightsMedicalHistory getInsightsMedicalHistoriesAPI() {
+
+        InsightsMedicalHistory.Builder builder = new InsightsMedicalHistory.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {

@@ -15,6 +15,7 @@ public class MedicalHistory {
     @Id
     private Long medicalHistoryID;
     private Long clinicID;
+    private String nric;
     private String date;
     private String time;
     private String service;
@@ -23,9 +24,10 @@ public class MedicalHistory {
     public MedicalHistory() {
     }
 
-    public MedicalHistory(Long medicalHistoryID, Long clinicID, String date, String time, String service, Float amt) {
+    public MedicalHistory(Long medicalHistoryID, Long clinicID, String nric, String date, String time, String service, Float amt) {
         this.medicalHistoryID = medicalHistoryID;
         this.clinicID = clinicID;
+        this.nric = nric;
         this.date = date;
         this.time = time;
         this.service = service;
@@ -46,6 +48,14 @@ public class MedicalHistory {
 
     public void setClinicID(Long clinicID) {
         this.clinicID = clinicID;
+    }
+
+    public String getNric() {
+        return nric;
+    }
+
+    public void setNric(String nric) {
+        this.nric = nric;
     }
 
     public String getDate() {

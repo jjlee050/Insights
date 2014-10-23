@@ -111,7 +111,7 @@ public class SubsidiesEndpoint {
      * This deletes an existing <code>Subsidy</code> object.
      * @param id The id of the object to be deleted.
      */
-    @ApiMethod(name = "removeSubsidiesy")
+    @ApiMethod(name = "removeSubsidy")
     public void removeSubsidy(@Named("id") Long id) throws NotFoundException {
         Subsidies record = findRecord(id);
         if(record == null) {

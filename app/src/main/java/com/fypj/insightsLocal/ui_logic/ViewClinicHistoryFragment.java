@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.controller.GetUserMedicalHistory;
 import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.model.MedicalHistory;
 import com.fypj.insightsLocal.util.ClinicHistoryListAdapter;
@@ -44,10 +46,10 @@ public class ViewClinicHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_clinic_history, container, false);
         ListView lvClinicHistoryList = (ListView) rootView.findViewById(R.id.lv_clinic_history_list);
-        ArrayList<MedicalHistory> clinicHistoryArrayList = new ArrayList<MedicalHistory>();
-        clinicHistoryArrayList.add(new MedicalHistory(Long.parseLong("1"),new Clinic(new Long(1),"338 Family Clinic","","","",""),null,null,"Flu",24));
-        ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(ViewClinicHistoryFragment.this.getActivity(),android.R.id.text1,clinicHistoryArrayList);
-        lvClinicHistoryList.setAdapter(adapter);
+
+        SharedPreferences sharedPref= ViewClinicHistoryFragment.this.getActivity().getSharedPreferences("insightsPreferences", 0);
+        String nric = sharedPref.getString("nric", "");
+        new GetUserMedicalHistory(ViewClinicHistoryFragment.this.getActivity(),nric,lvClinicHistoryList).execute();
         return rootView;
     }
 }

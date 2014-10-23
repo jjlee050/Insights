@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import  com.fypj.insightsLocal.model.MedicalHistory;
+import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class ClinicHistoryListAdapter extends ArrayAdapter<MedicalHistory> {
 
     public ClinicHistoryListAdapter(Activity context, int textViewResourceId, ArrayList<MedicalHistory> clinicHistoryArrayList) {
         super(context, R.layout.list_clinic_history, clinicHistoryArrayList);
-        this.context = (Activity) context;
+        this.context = context;
         this.clinicHistoryArrayList = clinicHistoryArrayList;
     }
 
@@ -36,7 +36,8 @@ public class ClinicHistoryListAdapter extends ArrayAdapter<MedicalHistory> {
 
         DecimalFormat formatter = new DecimalFormat("$00.00");
 
-        tvClinicName.setText(clinicHistoryArrayList.get(position).getClinic().getName());
+        int clinicID = Integer.parseInt(String.valueOf(clinicHistoryArrayList.get(position).getClinicID()));
+        tvClinicName.setText(String.valueOf(clinicID));
         tvService.setText(clinicHistoryArrayList.get(position).getService());
         tvAmt.setText(formatter.format(clinicHistoryArrayList.get(position).getAmt()));
 
