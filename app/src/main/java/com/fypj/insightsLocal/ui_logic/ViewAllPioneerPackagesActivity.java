@@ -76,7 +76,7 @@ public class ViewAllPioneerPackagesActivity extends Activity {
 
     public void insertPackages(){
         PackagesSQLController controller = new PackagesSQLController(this);
-
+        ArrayList<Packages> packagesArrayList = controller.getAllPackages();
         Packages package1 = new Packages();
         package1.setName("CHAS for Pioneer Generation");
         package1.setOverview("<p>The Government has introduced the Pioneer Generation Package to honour and thank our pioneers for their hard work and dedication. They have made Singapore what it is today.</p><p>About 450,000 Singaporeans will benefit from the Pioneer Generation Package.</p>");
@@ -87,7 +87,8 @@ public class ViewAllPioneerPackagesActivity extends Activity {
 
         Packages package2 = new Packages();
         Packages package3 = new Packages();
-
-        controller.insertPackages(package1);
+        if(packagesArrayList.size() < 1) {
+            controller.insertPackages(package1);
+        }
     }
 }
