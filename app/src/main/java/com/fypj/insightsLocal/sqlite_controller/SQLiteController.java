@@ -14,6 +14,7 @@ public class SQLiteController {
     private static final String database_user = "user";
     private static final String database_clinic = "clinics";
     private static final String database_user_medical_histories = "user_medical_histories";
+    private static final String database_packages = "packages";
     private static final int database_version = 1;
     private DBHelper ourHelper;
     private final Context ourContext;
@@ -49,10 +50,10 @@ public class SQLiteController {
             db.execSQL("CREATE TABLE "
                     + database_clinic
                     + "(ClinicID INTEGER PRIMARY KEY, ClinicName TEXT, ClinicAddress TEXT, ClinicOH TEXT, ClinicContactNo TEXT, Category TEXT)");
-            /*db.execSQL("CREATE TABLE "
-                    + database_user_saved_event
-                    + "(eventID INTEGER PRIMARY KEY, eventAdminNRIC TEXT, eventName TEXT, eventCategory TEXT, eventDescription TEXT, eventDateTimeFrom DATETIME, eventDateTimeTo DATETIME, occurence TEXT, noOfParticipantsAllowed INTEGER, active INTEGER, eventFBPostID INTEGER)");
             db.execSQL("CREATE TABLE "
+                    + database_packages
+                    + "(packagesID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, overview TEXT, benefits TEXT, eligible TEXT)");
+            /*db.execSQL("CREATE TABLE "
                     + database_event_location_details
                     + "(eventLocationID INTEGER PRIMARY KEY, eventID INTEGER, eventLocationName TEXT, eventLocationAddress TEXT, eventLocationHyperLink TEXT, eventLocationLat INTEGER, eventLocationLng INTEGER)");
             db.execSQL("CREATE TABLE "
@@ -116,4 +117,6 @@ public class SQLiteController {
     }
 
     public String getClinicsTable(){ return database_clinic; }
+
+    public String getPackagesTable(){ return database_packages; }
 }

@@ -29,10 +29,11 @@ public class EligibilityFragment extends Fragment {
      */
     ViewPager mViewPager;
 
-    public EligibilityFragment newInstance(ViewPioneerPackageActivity activity,int sectionNumber) {
+    public EligibilityFragment newInstance(ViewPioneerPackageActivity activity,int sectionNumber, String name, String eligible) {
         EligibilityFragment fragment = new EligibilityFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, 3);
+        args.putString("name",name);
+        args.putString("eligible",eligible);
         this.activity = activity;
         fragment.setArguments(args);
         setHasOptionsMenu(true);
@@ -67,38 +68,14 @@ public class EligibilityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_pg_eligibility, container, false);
         TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
-        TextView tvHeader = (TextView) rootView.findViewById(R.id.tv_header);
-        View horizontalLine = rootView.findViewById(R.id.horizontal_line);
         TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
-        TextView tvContent1 = (TextView) rootView.findViewById(R.id.tv_content1);
         ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
 
+        Bundle bundle = getArguments();
 
-        tvContent1.setClickable(true);
-        tvContent1.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTitle.setText(Html.fromHtml("<p>Eligibility Criteria</p>"));
 
-
-
-        tvTitle.setText("Eligibility for Pioneer Generation Package");
-        tvHeader.setText("The package will help Pioneers with their healthcare costs for life. The benefits are as below: ");
-
-
-            tvContent.setText(Html.fromHtml("In order to apply CHAS for Pioneer Generation, Living Singapore Citizens <b>who meet 2 criteria:</b> <br /><br />" +
-
-                    "1. Aged 16 and above in 1965 - this means:<br />" +
-                    " &nbsp; &nbsp;&nbsp;&nbsp;• Born on or before 31 December 1949<br />" +
-                    " &nbsp; &nbsp;&nbsp;&nbsp;• Aged 65 and above in 2014<br /><br />"+
-                    "2. Obtained citizenship on or before 31 December 1986."));
-           tvContent1.setText(Html.fromHtml("Those eligible for the Pioneer Generation Package would have received a notification letter in June 2014. Please keep your NRIC address updated.<br /><br />" +
-                    "<b>For more information:</b> Call the Pioneer Generation hotline at 1800-2222-888 or visit <a href=http://www.cpf.gov.sg/pioneers/pgp_Faq.asp> the website</a>." ));
-
-
-        horizontalLine.setVisibility(View.GONE);
-        tvTitle.setVisibility(View.VISIBLE);
-        tvHeader.setVisibility(View.GONE);
-        tvContent.setVisibility(View.VISIBLE);
-        tvContent1.setVisibility(View.VISIBLE);
-        ivImg.setVisibility(View.VISIBLE);
+        tvContent.setText(Html.fromHtml(bundle.getString("eligible")));
 
         return rootView;
     }

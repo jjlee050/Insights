@@ -16,7 +16,7 @@ public class User_Packages {
     public User_Packages() {
     }
 
-    public User_Packages(Long userID, Long packages) {
+    public User_Packages(Long userID, Long packagesID) {
         this.userID = userID;
         this.packagesID = packagesID;
     }

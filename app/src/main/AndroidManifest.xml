@@ -86,7 +86,11 @@
         </activity>
         <activity
             android:name=".ui_logic.CheckEligibilityActivity"
-            android:label="@string/title_activity_check_eligibilty" >
+            android:label="@string/title_activity_check_eligibilty"
+            android:parentActivityName=".ui_logic.ProfileActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui_logic.ProfileActivity" />
         </activity>
         <activity
             android:name=".ui_logic.ViewAllPioneerPackagesActivity"

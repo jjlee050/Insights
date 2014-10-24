@@ -1,7 +1,6 @@
 package com.fypj.mymodule.api.controller;
 
-import com.fypj.mymodule.api.model.*;
-import com.fypj.mymodule.api.model.Package;
+import com.fypj.mymodule.api.model.Packages;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -43,17 +42,17 @@ public class PackageEndpoint {
      * @return a list of Packages
      */
     @ApiMethod(name = "listPackages")
-    public CollectionResponse<Package> listPackages(@Nullable @Named("cursor") String cursorString,
+    public CollectionResponse<Packages> listPackages(@Nullable @Named("cursor") String cursorString,
                                                                    @Nullable @Named("count") Integer count) {
 
-        Query<Package> query = ofy().load().type(Package.class);
+        Query<Packages> query = ofy().load().type(Packages.class);
         if (count != null) query.limit(count);
         if (cursorString != null && cursorString != "") {
             query = query.startAt(Cursor.fromWebSafeString(cursorString));
         }
 
-        List<Package> records = new ArrayList<Package>();
-        QueryResultIterator<Package> iterator = query.iterator();
+        List<Packages> records = new ArrayList<Packages>();
+        QueryResultIterator<Packages> iterator = query.iterator();
         int num = 0;
         while (iterator.hasNext()) {
             records.add(iterator.next());
@@ -70,7 +69,7 @@ public class PackageEndpoint {
                 cursorString = cursor.toWebSafeString();
             }
         }
-        return CollectionResponse.<Package>builder().setItems(records).setNextPageToken(cursorString).build();
+        return CollectionResponse.<Packages>builder().setItems(records).setNextPageToken(cursorString).build();
     }
 
     /**
@@ -79,7 +78,7 @@ public class PackageEndpoint {
      * @return The object to be added.
      */
     @ApiMethod(name = "insertPackage")
-    public Package insertPackage(Package packages) throws ConflictException {
+    public Packages insertPackage(Packages packages) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
         if (packages.getPackageID() != null) {
@@ -99,7 +98,7 @@ public class PackageEndpoint {
      * @return The object to be updated.
      */
     @ApiMethod(name = "updatePackage")
-    public Package updatePackage(Package packages)throws NotFoundException {
+    public Packages updatePackage(Packages packages)throws NotFoundException {
         if (findRecord(packages.getPackageID()) == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
@@ -113,7 +112,7 @@ public class PackageEndpoint {
      */
     @ApiMethod(name = "removePackage")
     public void removePackage(@Named("id") Long id) throws NotFoundException {
-        Package record = findRecord(id);
+        Packages record = findRecord(id);
         if(record == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
@@ -121,8 +120,8 @@ public class PackageEndpoint {
     }
 
     //Private method to retrieve a <code>Package</code> record
-    private Package findRecord(Long id) {
-        return ofy().load().type(Package.class).id(id).now();
+    private Packages findRecord(Long id) {
+        return ofy().load().type(Packages.class).id(id).now();
         //or return ofy().load().type(Quote.class).filter("id",id).first.now();
     }
 }

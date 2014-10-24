@@ -21,8 +21,9 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_marginTop="20dp"
-            android:padding="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
             android:textStyle="bold"
             android:textSize="20dp"
             android:layout_gravity="center_horizontal"
@@ -30,124 +31,21 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/tv_header"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:padding="@dimen/activity_vertical_margin"
-            android:textSize="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:id="@+id/horizontal_line"
-            android:layout_width="fill_parent"
-            android:layout_height="0.1dip"
-            android:background="@android:color/darker_gray"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            />
-        <TextView
-            android:id="@+id/tv_title2"
-            android:layout_marginTop="20dp"
-            android:padding="2px"
-            android:textStyle="bold"
-            android:textSize="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
             android:id="@+id/tv_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="-25dp"
             android:padding="2px"
             android:textSize="14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_content1"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:padding="2px"
-            android:textSize="14dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TableRow
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                >
-                <TextView
-                    android:id="@+id/tv_title1"
-                    android:layout_marginTop="25dp"
-                    android:padding="2px"
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </TableRow>
-            <TableRow
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent">
-                <TextView
-                    android:id="@+id/tv_content3"
-                    android:layout_marginTop="5dp"
-                    android:padding="2px"
-                    android:textSize="14dp"
-                    android:layout_span="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </TableRow>
-        <TableRow
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:layout_weight="2">
-            <TextView
-                android:id="@+id/tv_age"
-                android:layout_marginTop="5dp"
-                android:padding="2px"
-                android:textSize="14dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tv_info"
-                android:layout_marginTop="5dp"
-                android:padding="2px"
-                android:textSize="14dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            </TableRow>
-            <TableRow
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent">
-                <TextView
-                    android:id="@+id/tv_age1"
-                    android:layout_marginTop="5dp"
-                    android:padding="2px"
-                    android:textSize="14dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/tv_info1"
-                    android:layout_marginTop="5dp"
-                    android:padding="2px"
-                    android:textSize="14dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </TableRow>
-            <TableRow
-                android:layout_height="wrap_content"
                 android:layout_width="fill_parent">
                 <TextView
                     android:id="@+id/tv_extra"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:padding="2px"
                     android:textSize="10dp"
                     android:layout_width="wrap_content"

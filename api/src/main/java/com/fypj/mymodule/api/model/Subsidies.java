@@ -11,13 +11,13 @@ public class Subsidies {
     @Id
     private Long subsidiesID;
     private String name;
-    private Float amt;
+    private String amt;
     private Long packagesID;
 
     public Subsidies() {
     }
 
-    public Subsidies(Long subsidiesID, String name, Float amt, Long packagesID) {
+    public Subsidies(Long subsidiesID, String name, String amt, Long packagesID) {
         this.subsidiesID = subsidiesID;
         this.name = name;
         this.amt = amt;
@@ -40,11 +40,11 @@ public class Subsidies {
         this.name = name;
     }
 
-    public Float getAmt() {
+    public String getAmt() {
         return amt;
     }
 
-    public void setAmt(Float amt) {
+    public void setAmt(String amt) {
         this.amt = amt;
     }
 
