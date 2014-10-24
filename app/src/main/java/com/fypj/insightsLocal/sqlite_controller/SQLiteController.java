@@ -115,5 +115,5 @@ public class SQLiteController {
         return database_user_medical_histories;
     }
 
-    public String getClinicsTable(){ return database_clinic; }
+    public String getClinicTable(){ return database_clinic; }
 }
