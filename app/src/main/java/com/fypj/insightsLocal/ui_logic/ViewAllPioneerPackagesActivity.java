@@ -83,8 +83,6 @@ public class ViewAllPioneerPackagesActivity extends Activity {
         package1.setBenefits("<u> OutPatient Care </u><p>The package will help Pioneers with their healthcare costs for life. The benefits are as below: </p><p><b> Additional 50% off subsidised services </b> at polyclinics and Specialist Outpatient Clinics. </p><p><b> Additional 50% off subsidised medications </b> at polyclinics and Specialist Outpatient Clinics. </p><u>MediShield Life</u><p>Support for all Pioneers’ MediShield Life Premiums with special premium subsidies and Medisave top-ups.</p><p>Age 80 and above* : <b> Premiums fully covered </b></p><p>Age 65 to 79* : <b> Pay half of current premiums </b></p>");
         package1.setEligible("<p>The package will help Pioneers with their healthcare costs for life. The benefits are as below: </p><p>In order to apply CHAS for Pioneer Generation, Living Singapore Citizens <b>who meet 2 criteria:</b> <br /><br />1. Aged 16 and above in 1965 - this means:<br />&nbsp; &nbsp;&nbsp;&nbsp;• Born on or before 31 December 1949<br />&nbsp; &nbsp;&nbsp;&nbsp;• Aged 65 and above in 2014<br /><br />2. Obtained citizenship on or before 31 December 1986.</p><p>Those eligible for the Pioneer Generation Package would have received a notification letter in June 2014. Please keep your NRIC address updated.<br /><br /><b>For more information:</b> Call the Pioneer Generation hotline at 1800-2222-888 or visit <a href=http://www.cpf.gov.sg/pioneers/pgp_Faq.asp> the website</a>.</p>");
 
-
-
         Packages package2 = new Packages();
         Packages package3 = new Packages();
         if(packagesArrayList.size() < 1) {
