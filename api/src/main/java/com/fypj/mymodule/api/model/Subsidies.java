@@ -48,11 +48,11 @@ public class Subsidies {
         this.amt = amt;
     }
 
-    public Long getPackages() {
+    public Long getPackagesID() {
         return packagesID;
     }
 
-    public void setPackages(Long packagesID) {
+    public void setPackagesID(Long packagesID) {
         this.packagesID = packagesID;
     }
 }

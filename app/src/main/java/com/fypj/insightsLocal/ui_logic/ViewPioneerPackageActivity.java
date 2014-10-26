@@ -15,7 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
+import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
+
+import java.util.ArrayList;
 
 public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener{
 
@@ -52,11 +56,13 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
 
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null){
+            Long packagesID = savedInstanceState.getLong("packagesID");
             String name = savedInstanceState.getString("name");
             String overview = savedInstanceState.getString("overview");
             String benefits = savedInstanceState.getString("benefits");
             String eligible = savedInstanceState.getString("eligible");
 
+            packages.setPackageID(packagesID);
             packages.setName(name);
             packages.setOverview(overview);
             packages.setBenefits(benefits);
@@ -88,6 +94,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -105,10 +112,12 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
         // When the given dropdown item is selected, show its contents in the
         // container view.
         FragmentManager fragmentManager = getFragmentManager();
+
         switch(position) {
             case 0:
+                PlaceholderFragment placeholderFragment = new PlaceholderFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(this, position + 1, packages.getName(), packages.getOverview()))
+                        .replace(R.id.container, placeholderFragment.newInstance(this, position + 1, packages.getName(), packages.getOverview()))
                         .commit();
                 currentIndex = 0;
                 break;
@@ -122,7 +131,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
             case 2:
                 SubsidesFragment subsidiesFragment = new SubsidesFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1))
+                        .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1, packages.getName(),packages.getPackageID()))
                         .commit();
                 currentIndex = 2;
                 break;
@@ -149,14 +158,15 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
+        ViewPioneerPackageActivity activity;
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(ViewPioneerPackageActivity viewPioneerPackageActivity, int sectionNumber, String name, String overview) {
+        public PlaceholderFragment newInstance(ViewPioneerPackageActivity activity, int sectionNumber, String name, String overview) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
+            PlaceholderFragment.this.activity = activity;
             args.putString("name",name);
             args.putString("overview",overview);
             fragment.setArguments(args);
@@ -175,9 +185,18 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
             View horizontalLine = rootView.findViewById(R.id.horizontal_line);
             TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
             ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
-
             Bundle bundle = getArguments();
 
+            String name = bundle.getString("name");
+            if(name.equals("CHAS for Pioneer Generation")){
+                ivImg.setImageResource(R.drawable.pioneercard);
+            }
+            else if(name.equals("CHAS Orange")){
+                ivImg.setImageResource(R.drawable.orangecard);
+            }
+            else if(name.equals("CHAS Blue")){
+                ivImg.setImageResource(R.drawable.bluecard);
+            }
             tvTitle.setText(bundle.getString("name"));
             tvHeader.setText("The package will help Pioneers with their healthcare costs for life. The benefits are as below: ");
 

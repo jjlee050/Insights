@@ -69,13 +69,27 @@ public class BenefitsFragment extends Fragment {
         TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
         TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
         TextView tvExtra = (TextView) rootView.findViewById(R.id.tv_extra);
+        ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
 
         Bundle bundle = getArguments();
 
-        tvTitle.setText(Html.fromHtml("<p>"+bundle.getString("name")+" Benefits</p>"));
+        String name = bundle.getString("name");
+        if(name.equals("CHAS for Pioneer Generation")){
+            ivImg.setImageResource(R.drawable.pioneercard);
+        }
+        else if(name.equals("CHAS Orange")){
+            ivImg.setImageResource(R.drawable.orangecard);
+        }
+        else if(name.equals("CHAS Blue")){
+            ivImg.setImageResource(R.drawable.bluecard);
+        }        tvTitle.setText(Html.fromHtml("<p>"+bundle.getString("name")+" Benefits</p>"));
         tvContent.setText(Html.fromHtml(bundle.getString("benefits")));
-        tvExtra.setText("*Age in 2014");
-
+        if(bundle.getString("name").equals("CHAS for Pioneer Generation")) {
+            tvExtra.setText("*Age in 2014");
+        }
+        else{
+            tvExtra.setVisibility(View.GONE);
+        }
 
         return rootView;
     }

@@ -73,7 +73,16 @@ public class EligibilityFragment extends Fragment {
 
         Bundle bundle = getArguments();
 
-        tvTitle.setText(Html.fromHtml("<p>Eligibility Criteria</p>"));
+        String name = bundle.getString("name");
+        if(name.equals("CHAS for Pioneer Generation")){
+            ivImg.setImageResource(R.drawable.pioneercard);
+        }
+        else if(name.equals("CHAS Orange")){
+            ivImg.setImageResource(R.drawable.orangecard);
+        }
+        else if(name.equals("CHAS Blue")){
+            ivImg.setImageResource(R.drawable.bluecard);
+        }        tvTitle.setText(Html.fromHtml("<p>Eligibility Criteria</p>"));
 
         tvContent.setText(Html.fromHtml(bundle.getString("eligible")));
 
