@@ -15,17 +15,21 @@ public class User {
     private Integer age;
     private String contactNo;
     private String address;
+    private Double houseHoldMonthlyIncome;
+    private Double annualValueOfResidence;
 
     public User() {
     }
 
-    public User(String nric, String name, String password, Integer age, String contactNo, String address) {
+    public User(String nric, String name, String password, Integer age, String contactNo, String address, Double houseHoldMonthlyIncome, Double annualValueOfResidence) {
         this.nric = nric;
         this.name = name;
         this.password = password;
         this.age = age;
         this.contactNo = contactNo;
         this.address = address;
+        this.houseHoldMonthlyIncome = houseHoldMonthlyIncome;
+        this.annualValueOfResidence = annualValueOfResidence;
     }
 
     public String getNric() {
@@ -74,5 +78,21 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Double getHouseHoldMonthlyIncome() {
+        return houseHoldMonthlyIncome;
+    }
+
+    public void setHouseHoldMonthlyIncome(Double houseHoldMonthlyIncome) {
+        this.houseHoldMonthlyIncome = houseHoldMonthlyIncome;
+    }
+
+    public Double getAnnualValueOfResidence() {
+        return annualValueOfResidence;
+    }
+
+    public void setAnnualValueOfResidence(Double annualValueOfResidence) {
+        this.annualValueOfResidence = annualValueOfResidence;
     }
 }

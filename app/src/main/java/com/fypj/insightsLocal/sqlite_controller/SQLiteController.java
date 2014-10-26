@@ -44,7 +44,7 @@ public class SQLiteController {
                     + "(eventID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, dateAndTime TEXT, guestOfHonour TEXT, desc TEXT, organizer TEXT, contactNo TEXT, location TEXT)");
             db.execSQL("CREATE TABLE "
                     + database_user
-                    + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, nric TEXT, name TEXT, password TEXT, age TEXT, contactNo TEXT, address TEXT, firstTimeSignIn INTEGER)");
+                    + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, nric TEXT, name TEXT, password TEXT, age TEXT, contactNo TEXT, address TEXT, firstTimeSignIn INTEGER, houseHoldMonthlyIncome REAL, annualValueOfResidence REAL)");
             db.execSQL("CREATE TABLE "
                     + database_user_medical_histories
                     + "(medicalHistoryID LONG PRIMARY KEY, clinicID LONG, nric TEXT, date TEXT, time TEXT, service TEXT, amt REAL)");

@@ -1,77 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ListView
+        android:id="@+id/lv_eligibility_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="You are eligible to apply for:"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textSize="20dp"
-            />
-
-        <ImageView
-            android:id="@+id/iv_pioneer_card"
-            android:layout_width="550dp"
-            android:layout_height="225dp"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:layout_gravity="center"
-            android:src="@drawable/pioneercard"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CHAS for Pioneer Generation"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:textSize="24dp"
-            />
-
-        <View
-            android:id="@+id/horizontal_line"
-            android:layout_width="fill_parent"
-            android:layout_height="0.1dip"
-            android:background="@android:color/darker_gray"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/tv_clin1_goh"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CHAS Subsidies"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="10dp"
-            android:textSize="24dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="For Pioneer Generation:"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="10dp"
-            android:textSize="24dp"
-            />
-
-        <TableLayout
-            android:id="@+id/tableLayout_subsidies"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_width="fill_parent"
-            android:textSize="24dp"
-            android:layout_height="fill_parent">
-        </TableLayout>
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

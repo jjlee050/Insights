@@ -29,6 +29,8 @@ public class UserSQLController {
         cv.put("contactNo", user.getContactNo());
         cv.put("address", user.getAddress());
         cv.put("firstTimeSignIn",0);
+        cv.put("houseHoldMonthlyIncome", user.getHouseHoldMonthlyIncome());
+        cv.put("annualValueOfResidence", user.getAnnualValueOfResidence());
         conn.getDB().insert(conn.getUserTable(), null, cv);
         conn.close();
     }
@@ -44,6 +46,8 @@ public class UserSQLController {
             user.setAge(cursor.getInt(cursor.getColumnIndex("age")));
             user.setContactNo(cursor.getString(cursor.getColumnIndex("contactNo")));
             user.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+            user.setHouseHoldMonthlyIncome(cursor.getDouble(cursor.getColumnIndex("houseHoldMonthlyIncome")));
+            user.setAnnualValueOfResidence(cursor.getDouble(cursor.getColumnIndex("annualValueOfResidence")));
         }
         else{
             user.setNric("");
