@@ -31,7 +31,7 @@ public class OfyService {
         ObjectifyService.register(Packages.class);
         ObjectifyService.register(Subsidies.class);
         ObjectifyService.register(User.class);
-        //ObjectifyService.register(User_Packages.class);
+        ObjectifyService.register(User_Packages.class);
         //ObjectifyService.register(User_Subsidies.class);
     }
 
