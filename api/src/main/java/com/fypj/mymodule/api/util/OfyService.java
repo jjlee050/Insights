@@ -7,6 +7,8 @@ import com.fypj.mymodule.api.model.MedicalHistory;
 import com.fypj.mymodule.api.model.Packages;
 import com.fypj.mymodule.api.model.Subsidies;
 import com.fypj.mymodule.api.model.User;
+import com.fypj.mymodule.api.model.User_Packages;
+import com.fypj.mymodule.api.model.User_Subsidies;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -29,6 +31,8 @@ public class OfyService {
         ObjectifyService.register(Packages.class);
         ObjectifyService.register(Subsidies.class);
         ObjectifyService.register(User.class);
+        //ObjectifyService.register(User_Packages.class);
+        //ObjectifyService.register(User_Subsidies.class);
     }
 
     public static Objectify ofy() {

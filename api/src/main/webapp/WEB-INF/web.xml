@@ -7,7 +7,8 @@
             <param-name>services</param-name>
             <param-value>com.fypj.mymodule.api.controller.AppointmentEndpoint,com.fypj.mymodule.api.controller.ClinicEndpoint,
                 com.fypj.mymodule.api.controller.EventEndpoint,com.fypj.mymodule.api.controller.MedicalHistoryEndpoint,com.fypj.mymodule.api.controller.PackageEndpoint,
-                com.fypj.mymodule.api.controller.SubsidiesEndpoint,com.fypj.mymodule.api.controller.UserEndpoint</param-value>
+                com.fypj.mymodule.api.controller.SubsidiesEndpoint,com.fypj.mymodule.api.controller.UserEndpoint,
+                com.fypj.mymodule.api.controller.UserPackagesEndpoint,com.fypj.mymodule.api.controller.UserSubsidiesEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

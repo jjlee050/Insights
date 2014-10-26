@@ -9,24 +9,24 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class User_Packages {
     @Id
-    private Long userID;
+    private String nric;
     @Id
     private Long packagesID;
 
     public User_Packages() {
     }
 
-    public User_Packages(Long userID, Long packagesID) {
-        this.userID = userID;
+    public User_Packages(String nric, Long packagesID) {
+        this.nric = nric;
         this.packagesID = packagesID;
     }
 
-    public Long getUserID() {
-        return userID;
+    public String getNric() {
+        return nric;
     }
 
-    public void setUserID(Long user) {
-        this.userID = userID;
+    public void setNric(String user) {
+        this.nric = nric;
     }
 
     public Long getPackagesID() {
