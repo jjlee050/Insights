@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
 
 import java.text.DecimalFormat;
@@ -36,8 +38,10 @@ public class ClinicHistoryListAdapter extends ArrayAdapter<MedicalHistory> {
 
         DecimalFormat formatter = new DecimalFormat("$00.00");
 
-        int clinicID = Integer.parseInt(String.valueOf(clinicHistoryArrayList.get(position).getClinicID()));
-        tvClinicName.setText(String.valueOf(clinicID));
+        Long clinicID = clinicHistoryArrayList.get(position).getClinicID();
+        ClinicSQLController controller = new ClinicSQLController(context);
+        Clinic clinic = controller.getClinic(clinicID);
+        tvClinicName.setText(clinicHistoryArrayList.get(position).getDate() + " at " + clinic.getName());
         tvService.setText(clinicHistoryArrayList.get(position).getService());
         tvAmt.setText(formatter.format(clinicHistoryArrayList.get(position).getAmt()));
 

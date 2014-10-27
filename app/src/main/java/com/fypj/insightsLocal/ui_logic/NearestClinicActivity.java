@@ -36,16 +36,10 @@ import java.util.ArrayList;
 
 public class NearestClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
 
-
-
-
-
     private ListView lvNearestClinic;
-    private ArrayList<Clinic> ClinicArrList;
+    private ArrayList<Clinic> clinicArrList;
     private ArrayList<Clinic> searchResultsArrList;
     private SwipeRefreshLayout swipeView;
-
-
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     /**
@@ -112,7 +106,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nearest_clinc, menu);
 
-        /*SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         if(searchView != null) {
@@ -130,28 +124,38 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
                     //System.out.println("Query: " + query);
 
                     ClinicSQLController controller = new ClinicSQLController(NearestClinicActivity.this);
-                    searchResultsArrList = controller.searchClinic(query);
+
+                    int choice = getActionBar().getSelectedNavigationIndex();
+                    if(choice == 0) {
+
+                        searchResultsArrList = controller.searchClinic(query,"Medical");
+                        lvNearestClinic = (ListView) findViewById(R.id.lv_nearest_clinic);
+                    }
+                    else{
+
+                        searchResultsArrList = controller.searchClinic(query,"Dental");
+                        lvNearestClinic = (ListView) findViewById(R.id.lv_nearest_dental);
+                    }
 
                     ClinicAdapter adapter = new ClinicAdapter(NearestClinicActivity.this, android.R.id.text1, searchResultsArrList);
                     lvNearestClinic.setAdapter(adapter);
-
                     lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                     @Override
-                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                         Intent intent = new Intent(NearestClinicActivity.this, NearestClinicActivity.class);
-                         intent.putExtra("clinicID", searchResultsArrList.get(position).getClinicID());
-                         intent.putExtra("name", searchResultsArrList.get(position).getName());
-                         intent.putExtra("address", searchResultsArrList.get(position).getAddress());
-                         intent.putExtra("operatingHours", searchResultsArrList.get(position).getOperatingHours());
-                         intent.putExtra("contactNo", searchResultsArrList.get(position).getContactNo());
+                         @Override
+                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                             Intent intent = new Intent(NearestClinicActivity.this, NearestClinicActivity.class);
+                             intent.putExtra("clinicID", searchResultsArrList.get(position).getClinicID());
+                             intent.putExtra("name", searchResultsArrList.get(position).getName());
+                             intent.putExtra("address", searchResultsArrList.get(position).getAddress());
+                             intent.putExtra("operatingHours", searchResultsArrList.get(position).getOperatingHours());
+                             intent.putExtra("contactNo", searchResultsArrList.get(position).getContactNo());
 
-                         startActivity(intent);
-                     }
-                 });
+                             startActivity(intent);
+                         }
+                    });
                     return false;
                 }
             });
-        }*/
+        }
         return true;
     }
 

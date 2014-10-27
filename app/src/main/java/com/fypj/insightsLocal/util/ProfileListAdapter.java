@@ -17,6 +17,7 @@ import com.fypj.mymodule.api.insightsUser.model.User;
 import com.fypj.mymodule.api.insightsUserPackages.model.UserPackages;
 import com.fypj.mymodule.api.insightsUserSubsidies.model.UserSubsidies;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -63,7 +64,8 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
                 ArrayList<Subsidies> subsidiesArrList = subsidiesSQLController.getSubsidiesByPackageID(packageID);
                 for(int j=0;j<subsidiesArrList.size();j++) {
                     UserSubsidies userSubsidies = userSubsidiesSQLController.getUserSubsidies(user.getNric(),subsidiesArrList.get(i).getSubsidiesID());
-                    tvInfo.setText(Html.fromHtml("<p>"+subsidiesArrList.get(i).getName()+": $"+userSubsidies.getBalance()+"</p>"));
+                    DecimalFormat formatter = new DecimalFormat("$00.00");
+                    tvInfo.setText(Html.fromHtml("<p>"+subsidiesArrList.get(i).getName()+": "+formatter.format(userSubsidies.getBalance())+"</p>"));
                 }
             }
 

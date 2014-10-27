@@ -52,7 +52,7 @@ public class SQLiteController {
                     + "(medicalHistoryID LONG PRIMARY KEY, clinicID LONG, nric TEXT, date TEXT, time TEXT, service TEXT, amt REAL)");
             db.execSQL("CREATE TABLE "
                     + database_clinic
-                    + "(ClinicID INTEGER PRIMARY KEY, ClinicName TEXT, ClinicAddress TEXT, ClinicOH TEXT, ClinicContactNo TEXT, Category TEXT)");
+                    + "(clinicID INTEGER PRIMARY KEY, name TEXT, address TEXT, operatingHours TEXT, contactNo TEXT, category TEXT)");
             db.execSQL("CREATE TABLE "
                     + database_packages
                     + "(packagesID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, overview TEXT, benefits TEXT, eligible TEXT)");
@@ -125,7 +125,7 @@ public class SQLiteController {
         return database_user_medical_histories;
     }
 
-    public String getClinicsTable(){ return database_clinic; }
+    public String getClinicTable(){ return database_clinic; }
 
     public String getPackagesTable(){ return database_packages; }
 

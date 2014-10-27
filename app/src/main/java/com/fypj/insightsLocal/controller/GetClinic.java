@@ -74,32 +74,33 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
                 if (e.getCategory().equals("Medical")) {
                     ClinicArrList.add(e);
                 }
-                ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
-                lvNearestClinic.setAdapter(adapter);
+            }
 
-                lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Intent intent = new Intent(context, ViewClinicActivity.class);
-                        intent.putExtra("clinicID", ClinicArrList.get(position).getClinicID());
-                        intent.putExtra("name", ClinicArrList.get(position).getName());
-                        intent.putExtra("address", ClinicArrList.get(position).getAddress());
-                        intent.putExtra("operatingHours", ClinicArrList.get(position).getOperatingHours());
-                        intent.putExtra("contactNo", ClinicArrList.get(position).getContactNo());
-                        intent.putExtra("category", ClinicArrList.get(position).getCategory());
+            ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
+            lvNearestClinic.setAdapter(adapter);
 
-                        context.startActivity(intent);
+            lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    Intent intent = new Intent(context, ViewClinicActivity.class);
+                    intent.putExtra("clinicID", ClinicArrList.get(position).getClinicID());
+                    intent.putExtra("name", ClinicArrList.get(position).getName());
+                    intent.putExtra("address", ClinicArrList.get(position).getAddress());
+                    intent.putExtra("operatingHours", ClinicArrList.get(position).getOperatingHours());
+                    intent.putExtra("contactNo", ClinicArrList.get(position).getContactNo());
+                    intent.putExtra("category", ClinicArrList.get(position).getCategory());
 
+                    context.startActivity(intent);
 
-                    }
-                });
-                ClinicSQLController controller = new ClinicSQLController(context);
-                if (controller.getAllClinic().size() > 0) {
 
                 }
-                for (int i = 0; i < ClinicArrList.size(); i++) {
-                    controller.insertClinic(ClinicArrList.get(i));
-                }
+            });
+            ClinicSQLController controller = new ClinicSQLController(context);
+            if (controller.getAllClinic().size() > 0) {
+                controller.deleteAllClinic();
+            }
+            for (int i = 0; i < ClinicArrList.size(); i++) {
+                controller.insertClinic(ClinicArrList.get(i));
             }
 
             dialog.dismiss();

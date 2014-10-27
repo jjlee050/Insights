@@ -79,10 +79,10 @@ public class ClinicSQLController {
         return clinic;
     }
 
-    public ArrayList<Clinic> searchClinic(String query){
+    public ArrayList<Clinic> searchClinic(String query, String category){
         ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
         conn.open();
-        Cursor cursor = conn.getDB().query(conn.getClinicTable(), null, "name LIKE '%" + query + "%'", null, null, null,null, null);
+        Cursor cursor = conn.getDB().query(conn.getClinicTable(), null, "name LIKE '%" + query + "%' AND category = '"+category+"'", null, null, null,null, null);
         if(cursor.moveToFirst()){
             do{
                 Clinic clinic = new Clinic();
