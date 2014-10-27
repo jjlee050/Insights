@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Clinic;
+//import com.fypj.insightsLocal.model.Clinic;
+import com.fypj.insightsLocal.model.Dental;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
+
 
 import java.util.ArrayList;
 
@@ -25,6 +28,8 @@ public class DentalAdapter extends ArrayAdapter {
         this.context = (Activity) context;
         this.DentalArrList = DentalArrList;
     }
+
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

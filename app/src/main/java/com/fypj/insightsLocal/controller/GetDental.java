@@ -15,12 +15,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.fypj.insightsLocal.model.Dental;
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.ui_logic.ViewClinicActivity;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-
+import com.fypj.insightsLocal.util.DentalAdapter;
 import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 
@@ -33,18 +33,18 @@ import java.util.List;
 /**
  * Created by L33525 on 13/10/2014.
  */
-public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
+public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
   private static InsightsClinics myApiService = null;
     private Activity context;
-    private ListView lvNearestClinic;
+    private ListView lvNearestDental;
     private SwipeRefreshLayout swipeView;
-    final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
+    final ArrayList<Clinic> DentalArrList = new ArrayList<Clinic>();
     private ProgressDialog dialog;
 
 
-    public GetClinic(Context context, ListView lvNearestClinic, SwipeRefreshLayout swipeView){
+    public GetDental(Context context, ListView lvNearestDental, SwipeRefreshLayout swipeView){
         this.context = (Activity) context;
-        this.lvNearestClinic = lvNearestClinic;
+        this.lvNearestDental = lvNearestDental;
         this.swipeView = swipeView;
     }
 
@@ -71,44 +71,44 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
     protected void onPostExecute(List<Clinic> result) {
         if (result != null) {
             for (Clinic e : result) {
-                if (e.getCategory().equals("Medical")) {
-                    ClinicArrList.add(e);
+                if (e.getCategory().equals("Dental")) {
+                    DentalArrList.add(e);
                 }
-                ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
-                lvNearestClinic.setAdapter(adapter);
 
-                lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                DentalAdapter adapter = new DentalAdapter(context, android.R.id.text1,DentalArrList);
+                lvNearestDental.setAdapter(adapter);
+
+                lvNearestDental.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                         Intent intent = new Intent(context, ViewClinicActivity.class);
-                        intent.putExtra("clinicID", ClinicArrList.get(position).getClinicID());
-                        intent.putExtra("name", ClinicArrList.get(position).getName());
-                        intent.putExtra("address", ClinicArrList.get(position).getAddress());
-                        intent.putExtra("operatingHours", ClinicArrList.get(position).getOperatingHours());
-                        intent.putExtra("contactNo", ClinicArrList.get(position).getContactNo());
-                        intent.putExtra("category", ClinicArrList.get(position).getCategory());
+                        intent.putExtra("clinicID", DentalArrList.get(position).getClinicID());
+                        intent.putExtra("name", DentalArrList.get(position).getName());
+                        intent.putExtra("address", DentalArrList.get(position).getAddress());
+                        intent.putExtra("operatingHours", DentalArrList.get(position).getOperatingHours());
+                        intent.putExtra("contactNo", DentalArrList.get(position).getContactNo());
+                        intent.putExtra("category", DentalArrList.get(position).getCategory());
 
                         context.startActivity(intent);
 
 
                     }
                 });
+
                 ClinicSQLController controller = new ClinicSQLController(context);
                 if (controller.getAllClinic().size() > 0) {
 
                 }
-                for (int i = 0; i < ClinicArrList.size(); i++) {
-                    controller.insertClinic(ClinicArrList.get(i));
+                for (int i = 0; i < DentalArrList.size(); i++) {
+                    controller.insertClinic(DentalArrList.get(i));
                 }
             }
 
-            dialog.dismiss();
-            swipeView.setRefreshing(false);
-        }
+            }
+
+        dialog.dismiss();
+        swipeView.setRefreshing(false);
     }
-
-
-
 
     private void errorOnExecuting(){
         this.cancel(true);

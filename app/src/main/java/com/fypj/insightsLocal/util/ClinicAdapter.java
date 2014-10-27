@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 //import com.fypj.insightsLocal.model.Clinic;
+import com.fypj.insightsLocal.ui_logic.NearestClinicActivity;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 
 
@@ -55,9 +56,7 @@ public class ClinicAdapter extends ArrayAdapter<Clinic> {
             }
 
         }
-      /*  else{
-            ivImg.getLayoutParams().width = 35;
-        }*/
+
 
 
         System.out.println("Position: " + position);

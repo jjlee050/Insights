@@ -32,11 +32,13 @@
         android:id="@+id/tv_Clinic_Address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textSize="14dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
+
 
     <View
         android:id="@+id/horizontal_line"
@@ -59,11 +61,11 @@
         android:layout_alignParentStart="true"/>
 
     <TextView
-        android:id="@+id/tv_Clinic_OH"
+        android:id="@+id/tv_ClinicOH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:layout_marginTop="15dp"
+        android:textSize="16dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>

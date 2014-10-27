@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.model.Clinic;
+import com.fypj.insightsLocal.util.ViewClinicDetailsAdapter;
 
 
 public class ViewClinicActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -21,12 +22,12 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+    ViewClinicDetailsAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -46,18 +47,23 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null){
-            int ClinicID = savedInstanceState.getInt("ClinicID");
-            String ClinicName = savedInstanceState.getString("ClinicName");
-            //String ClinicOH = savedInstanceState.getString("ClinicOH");
-           // String ClinicAddress = savedInstanceState.getString("ClinicAddress");
-           // String ClinicContactNo = savedInstanceState.getString("ClinicContactNo");
 
-            actionBar.setTitle(ClinicName);
+            Long id = savedInstanceState.getLong("clinicID");
+            String name = savedInstanceState.getString("name");
+            String address = savedInstanceState.getString("address");
+            String operatingHours = savedInstanceState.getString("operatingHours");
+            String contactNo = savedInstanceState.getString("contactNo");
+            String category = savedInstanceState.getString("category");
+
+            actionBar.setTitle(name);
+            clinic = new Clinic(id,name,address,operatingHours,contactNo,category);
+
         }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clinic);
+        mSectionsPagerAdapter = new ViewClinicDetailsAdapter(ViewClinicActivity.this,getSupportFragmentManager(),clinic);
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -135,12 +141,12 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
                 case 0:
                     fragment = new ViewClinicDetailsFragment();
                     break;
-                case 1:
-                    fragment = new ViewClinicDetailsFragment();
+               case 1:
+                    fragment = new ViewClinicLocationFragment();
                     break;
             }
             return fragment;
-            //return NearestClinicFragment.newInstance(position + 1);
+
         }
 
         @Override
@@ -151,13 +157,5 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
 
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-
-
-
-
 
 }
