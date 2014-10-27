@@ -61,11 +61,10 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
             for(int i=0;i<userPackagesArrList.size();i++){
                 Long packageID = userPackagesArrList.get(i).getPackagesID();
                 ArrayList<Subsidies> subsidiesArrList = subsidiesSQLController.getSubsidiesByPackageID(packageID);
-
-                tvInfo.setText(Html.fromHtml("" +
-                        "<p>Simple Choronic conditions under CDMP: $66</p>" +
-                        "<p>Complex Choronic conditions under CDMP: $100</p>" +
-                        "<p>Medi-save: $200</p>"));
+                for(int j=0;j<subsidiesArrList.size();j++) {
+                    UserSubsidies userSubsidies = userSubsidiesSQLController.getUserSubsidies(user.getNric(),subsidiesArrList.get(i).getSubsidiesID());
+                    tvInfo.setText(Html.fromHtml("<p>"+subsidiesArrList.get(i).getName()+": $"+userSubsidies.getBalance()+"</p>"));
+                }
             }
 
         }
