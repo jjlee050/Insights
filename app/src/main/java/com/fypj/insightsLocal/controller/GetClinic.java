@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.ui_logic.ViewClinicActivity;
 import com.fypj.insightsLocal.util.ClinicAdapter;
 
@@ -68,10 +69,11 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
 
     @Override
     protected void onPostExecute(List<Clinic> result) {
-        for (Clinic e : result) {
-            if (e.getCategory().equals("Medical")) {
-            ClinicArrList.add(e);
-
+        if (result != null) {
+            for (Clinic e : result) {
+                if (e.getCategory().equals("Medical")) {
+                    ClinicArrList.add(e);
+                }
                 ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
                 lvNearestClinic.setAdapter(adapter);
 
@@ -91,14 +93,22 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
 
                     }
                 });
+                ClinicSQLController controller = new ClinicSQLController(context);
+                if (controller.getAllClinic().size() > 0) {
+
+                }
+                for (int i = 0; i < ClinicArrList.size(); i++) {
+                    controller.insertClinic(ClinicArrList.get(i));
+                }
             }
 
-
+            dialog.dismiss();
+            swipeView.setRefreshing(false);
         }
-
-        dialog.dismiss();
-        swipeView.setRefreshing(false);
     }
+
+
+
 
     private void errorOnExecuting(){
         this.cancel(true);

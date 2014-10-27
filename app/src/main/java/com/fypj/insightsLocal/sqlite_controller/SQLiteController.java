@@ -48,7 +48,7 @@ public class SQLiteController {
                     + "(medicalHistoryID LONG PRIMARY KEY, clinicID LONG, nric TEXT, date TEXT, time TEXT, service TEXT, amt REAL)");
             db.execSQL("CREATE TABLE "
                     + database_clinic
-                    + "(ClinicID INTEGER PRIMARY KEY, ClinicName TEXT, ClinicAddress TEXT, ClinicOH TEXT, ClinicContactNo TEXT, Category TEXT)");
+                    + "(clinicID LONG PRIMARY KEY, name TEXT, address TEXT, operatingHours TEXT, contactNo TEXT, category TEXT)");
             /*db.execSQL("CREATE TABLE "
                     + database_user_saved_event
                     + "(eventID INTEGER PRIMARY KEY, eventAdminNRIC TEXT, eventName TEXT, eventCategory TEXT, eventDescription TEXT, eventDateTimeFrom DATETIME, eventDateTimeTo DATETIME, occurence TEXT, noOfParticipantsAllowed INTEGER, active INTEGER, eventFBPostID INTEGER)");

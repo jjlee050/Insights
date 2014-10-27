@@ -39,12 +39,12 @@ public class ViewClinicDetailsAdapter extends FragmentPagerAdapter {
                 fragment = new ViewClinicDetailsFragment();
 
                 Bundle args = new Bundle();
-                args.putLong("ClinicID", clinic.getClinicID());
-                args.putString("ClinicName", clinic.getName());
-                args.putString("ClinicAddress", clinic.getAddress());
-                args.putString("ClinicOH", clinic.getOperatingHours());
-                args.putString("ClinicContactNo", clinic.getContactNo());
-                args.putString("ClinicCategory", clinic.getCategory());
+                args.putLong("clinicID", clinic.getClinicID());
+                args.putString("name", clinic.getName());
+                args.putString("address", clinic.getAddress());
+                args.putString("operatingHours", clinic.getOperatingHours());
+                args.putString("contactNo", clinic.getContactNo());
+                args.putString("category", clinic.getCategory());
 
 
                 fragment.setArguments(args);
@@ -53,12 +53,12 @@ public class ViewClinicDetailsAdapter extends FragmentPagerAdapter {
                 fragment = new ViewClinicLocationFragment();
 
                 Bundle args1 = new Bundle();
-                args1.putLong("ClinicID", clinic.getClinicID());
-                args1.putString("ClinicName", clinic.getName());
-                args1.putString("ClinicAddress", clinic.getAddress());
-                args1.putString("ClinicOH", clinic.getOperatingHours());
-                args1.putString("ClinicContactNo", clinic.getContactNo());
-                args1.putString("ClinicCategory", clinic.getCategory());
+                args1.putLong("clinicID", clinic.getClinicID());
+                args1.putString("name", clinic.getName());
+                args1.putString("address", clinic.getAddress());
+                args1.putString("operatingHours", clinic.getOperatingHours());
+                args1.putString("contactNo", clinic.getContactNo());
+                args1.putString("category", clinic.getCategory());
 
                 fragment.setArguments(args1);
                 break;

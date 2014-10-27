@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.fypj.insightsLocal.model.Dental;
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.ui_logic.ViewClinicActivity;
 import com.fypj.insightsLocal.util.DentalAdapter;
 import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
@@ -68,14 +69,11 @@ public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Se
 
     @Override
     protected void onPostExecute(List<Clinic> result) {
-        for (Clinic e : result) {
-           if (e.getCategory().equals("Dental"))
-
-            DentalArrList.add(e);
-
-
-            {
-
+        if (result != null) {
+            for (Clinic e : result) {
+                if (e.getCategory().equals("Dental")) {
+                    DentalArrList.add(e);
+                }
 
                 DentalAdapter adapter = new DentalAdapter(context, android.R.id.text1,DentalArrList);
                 lvNearestDental.setAdapter(adapter);
@@ -84,22 +82,29 @@ public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Se
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                         Intent intent = new Intent(context, ViewClinicActivity.class);
-                        intent.putExtra("ClinicID", DentalArrList.get(position).getClinicID());
-                        intent.putExtra("ClinicName", DentalArrList.get(position).getName());
-                        intent.putExtra("ClinicAddress", DentalArrList.get(position).getAddress());
-                        intent.putExtra("ClinicOH", DentalArrList.get(position).getOperatingHours());
-                        intent.putExtra("ClinicContactNo", DentalArrList.get(position).getContactNo());
-                        intent.putExtra("ClinicCategory", DentalArrList.get(position).getCategory());
+                        intent.putExtra("clinicID", DentalArrList.get(position).getClinicID());
+                        intent.putExtra("name", DentalArrList.get(position).getName());
+                        intent.putExtra("address", DentalArrList.get(position).getAddress());
+                        intent.putExtra("operatingHours", DentalArrList.get(position).getOperatingHours());
+                        intent.putExtra("contactNo", DentalArrList.get(position).getContactNo());
+                        intent.putExtra("category", DentalArrList.get(position).getCategory());
 
                         context.startActivity(intent);
 
 
                     }
                 });
+
+                ClinicSQLController controller = new ClinicSQLController(context);
+                if (controller.getAllClinic().size() > 0) {
+
+                }
+                for (int i = 0; i < DentalArrList.size(); i++) {
+                    controller.insertClinic(DentalArrList.get(i));
+                }
             }
 
-
-        }
+            }
 
         dialog.dismiss();
         swipeView.setRefreshing(false);

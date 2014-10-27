@@ -15,6 +15,7 @@
         </option>
       </GradleProjectSettings>
     </option>
+    <option name="serviceDirectoryPath" value="$USER_HOME$/.gradle" />
   </component>
 </project>
 

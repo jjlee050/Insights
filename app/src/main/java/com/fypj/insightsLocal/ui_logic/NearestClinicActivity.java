@@ -38,54 +38,47 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
 
 
 
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    ViewPager mViewPager;
+
 
     private ListView lvNearestClinic;
     private ArrayList<Clinic> ClinicArrList;
     private ArrayList<Clinic> searchResultsArrList;
     private SwipeRefreshLayout swipeView;
 
+
+
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    /**
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearest_clinc);
-
-        lvNearestClinic = (ListView) findViewById(R.id.lv_nearest_clinic);
-        swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
-        swipeView.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        swipeView.setEnabled(false);
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        savedInstanceState = getIntent().getExtras();
+// Create the adapter that will return a fragment for each of the three
+// primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+// Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onRefresh() {
-                swipeView.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refresh(true);
-                    }
-                }, 1000);
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
             }
         });
-
-        lvNearestClinic.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeView.setEnabled(true);
-                else
-                    swipeView.setEnabled(false);
-            }
-        });
-
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_medic).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_tooth).setTabListener(this));
+        if(savedInstanceState != null){
+            int position = savedInstanceState.getInt("choice");
+            actionBar.setSelectedNavigationItem(position);
+        }
     }
-
-    private void refresh(boolean refresh) {
+   /* private void refresh(boolean refresh) {
 
         ClinicSQLController controller = new ClinicSQLController(NearestClinicActivity.this);
 
@@ -112,14 +105,14 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         }
 
     }
-
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nearest_clinc, menu);
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        /*SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         if(searchView != null) {
@@ -135,13 +128,14 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
                 @Override
                 public boolean onQueryTextChange(String query) {
                     //System.out.println("Query: " + query);
+
                     ClinicSQLController controller = new ClinicSQLController(NearestClinicActivity.this);
                     searchResultsArrList = controller.searchClinic(query);
 
                     ClinicAdapter adapter = new ClinicAdapter(NearestClinicActivity.this, android.R.id.text1, searchResultsArrList);
                     lvNearestClinic.setAdapter(adapter);
 
-                 lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                      @Override
                      public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                          Intent intent = new Intent(NearestClinicActivity.this, NearestClinicActivity.class);
@@ -157,7 +151,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
                     return false;
                 }
             });
-        }
+        }*/
         return true;
     }
 
