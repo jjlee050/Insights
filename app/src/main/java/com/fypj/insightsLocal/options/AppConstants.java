@@ -4,6 +4,8 @@ import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
 import com.fypj.mymodule.api.insightsMedicalHistory.InsightsMedicalHistory;
 import com.fypj.mymodule.api.insightsUser.InsightsUser;
+import com.fypj.mymodule.api.insightsUserPackages.InsightsUserPackages;
+import com.fypj.mymodule.api.insightsUserSubsidies.InsightsUserSubsidies;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -74,6 +76,32 @@ public class AppConstants implements Settings{
     public static InsightsMedicalHistory getInsightsMedicalHistoriesAPI() {
 
         InsightsMedicalHistory.Builder builder = new InsightsMedicalHistory.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+                .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    @Override
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        abstractGoogleClientRequest.setDisableGZipContent(true);
+                    }
+                });
+        return builder.build();
+
+    }
+
+    public static InsightsUserPackages getInsightUserPackagesAPI() {
+
+        InsightsUserPackages.Builder builder = new InsightsUserPackages.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+                .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    @Override
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        abstractGoogleClientRequest.setDisableGZipContent(true);
+                    }
+                });
+        return builder.build();
+
+    }
+
+    public static InsightsUserSubsidies getInsightsUserSubsidiesAPI() {
+
+        InsightsUserSubsidies.Builder builder = new InsightsUserSubsidies.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {

@@ -7,20 +7,29 @@ import com.googlecode.objectify.annotation.Id;
  * Created by L33525 on 8/10/2014.
  */
 @Entity
-public class User_Subsidies {
+public class UserSubsidies {
     @Id
+    private Long userSubsidiesID;
     private String nric;
-    @Id
     private Long subsidiesID;
     private Float balance;
 
-    public User_Subsidies() {
+    public UserSubsidies() {
     }
 
-    public User_Subsidies(String nric, Long subsidiesID, Float balance) {
+    public UserSubsidies(Long userSubsidiesID, String nric, Long subsidiesID, Float balance) {
+        this.userSubsidiesID = userSubsidiesID;
         this.nric = nric;
         this.subsidiesID = subsidiesID;
         this.balance = balance;
+    }
+
+    public Long getUserSubsidiesID() {
+        return userSubsidiesID;
+    }
+
+    public void setUserSubsidiesID(Long userSubsidiesID) {
+        this.userSubsidiesID = userSubsidiesID;
     }
 
     public String getNric() {
@@ -35,7 +44,7 @@ public class User_Subsidies {
         return subsidiesID;
     }
 
-    public void setSubsidiesID(Long subsidies) {
+    public void setSubsidiesID(Long subsidiesID) {
         this.subsidiesID = subsidiesID;
     }
 

@@ -16,6 +16,8 @@ public class SQLiteController {
     private static final String database_user_medical_histories = "user_medical_histories";
     private static final String database_packages = "packages";
     private static final String database_subsidies = "subsidies";
+    private static final String database_user_packages = "user_packages";
+    private static final String database_user_subsidies = "user_subsidies";
     private static final int database_version = 1;
     private DBHelper ourHelper;
     private final Context ourContext;
@@ -57,6 +59,12 @@ public class SQLiteController {
             db.execSQL("CREATE TABLE "
                     + database_subsidies
                     + "(subsidiesID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amt TEXT, packagesID INTEGER)");
+            db.execSQL("CREATE TABLE "
+                    + database_user_packages
+                    + "(userPackageID LONG PRIMARY KEY, nric TEXT, packagesID INTEGER)");
+            db.execSQL("CREATE TABLE "
+                    + database_user_subsidies
+                    + "(userSubsidiesID LONG PRIMARY KEY, nric TEXT, subsidiesID INTEGER, balance REAL)");
             /*db.execSQL("CREATE TABLE "
                     + database_particpants
                     + "(eventID INTEGER PRIMARY KEY, userNRIC TEXT, dateTImeJoined DATETIME , checkIn INTEGER)");
@@ -122,4 +130,8 @@ public class SQLiteController {
     public String getPackagesTable(){ return database_packages; }
 
     public String getSubsidiesTable(){ return database_subsidies; }
+
+    public String getUserPackagesTable(){ return database_user_packages; }
+
+    public String getUserSubsidiesTable(){ return database_user_subsidies; }
 }

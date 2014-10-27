@@ -93,7 +93,7 @@ public class LoginActivity extends ActionBarActivity {
                                 int status = controller.getUserSignInStatus(nric);
                                 if(status == 0) {
                                     goToMainPage();
-                                    goToSettingsPage();
+                                    goToSettingsPage(nric);
                                 }
                                 else if(status == 1){
                                     goToMainPage();
@@ -130,8 +130,10 @@ public class LoginActivity extends ActionBarActivity {
         finish();
     }
 
-    public void goToSettingsPage(){
-        writeData(etNric.getText().toString(),etPassword.getText().toString());
+    public void goToSettingsPage(String nric){
+        final UserSQLController controller = new UserSQLController(this);
+        User user = controller.getUser(nric);
+        controller.updateSignInStatus(user,1);
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }

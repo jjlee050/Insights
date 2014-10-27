@@ -1,7 +1,6 @@
 package com.fypj.mymodule.api.controller;
 
-import com.fypj.mymodule.api.model.User_Packages;
-import com.fypj.mymodule.api.model.User_Subsidies;
+import com.fypj.mymodule.api.model.UserSubsidies;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -43,17 +42,17 @@ public class UserSubsidiesEndpoint {
      * @return a list of User Subsidies
      */
     @ApiMethod(name = "listUserSubsidies")
-    public CollectionResponse<User_Subsidies> listUserSubsidies(@Nullable @Named("cursor") String cursorString,
+    public CollectionResponse<UserSubsidies> listUserSubsidies(@Nullable @Named("cursor") String cursorString,
                                              @Nullable @Named("count") Integer count) {
 
-        Query<User_Subsidies> query = ofy().load().type(User_Subsidies.class);
+        Query<UserSubsidies> query = ofy().load().type(UserSubsidies.class);
         if (count != null) query.limit(count);
         if (cursorString != null && cursorString != "") {
             query = query.startAt(Cursor.fromWebSafeString(cursorString));
         }
 
-        List<User_Subsidies> records = new ArrayList<User_Subsidies>();
-        QueryResultIterator<User_Subsidies> iterator = query.iterator();
+        List<UserSubsidies> records = new ArrayList<UserSubsidies>();
+        QueryResultIterator<UserSubsidies> iterator = query.iterator();
         int num = 0;
         while (iterator.hasNext()) {
             records.add(iterator.next());
@@ -70,7 +69,7 @@ public class UserSubsidiesEndpoint {
                 cursorString = cursor.toWebSafeString();
             }
         }
-        return CollectionResponse.<User_Subsidies>builder().setItems(records).setNextPageToken(cursorString).build();
+        return CollectionResponse.<UserSubsidies>builder().setItems(records).setNextPageToken(cursorString).build();
     }
 
     /**
@@ -79,42 +78,44 @@ public class UserSubsidiesEndpoint {
      * @return The object to be added.
      */
     @ApiMethod(name = "insertUserSubsidies")
-    public User_Subsidies insertUserSubsidies(User_Subsidies userSubsidies) throws ConflictException {
+    public UserSubsidies insertUserSubsidies(UserSubsidies userSubsidies) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
-        if (userSubsidies.getNric() != null) {
-            List<User_Subsidies> recordList = findRecord(userSubsidies.getNric());
-            User_Subsidies record = null;
-            for(int i=0;i<recordList.size();i++){
-                if(recordList.get(i).getSubsidiesID() == userSubsidies.getSubsidiesID()){
-                    record = recordList.get(i);
+        if (userSubsidies.getUserSubsidiesID() == null) {
+            Query<UserSubsidies> query = ofy().load().type(UserSubsidies.class);
+            List<UserSubsidies> records = new ArrayList<UserSubsidies>();
+            QueryResultIterator<UserSubsidies> iterator = query.iterator();
+            while (iterator.hasNext()) {
+                records.add(iterator.next());
+            }
+
+            UserSubsidies foundRecord = null;
+            for(int i=0;i<records.size();i++){
+                if((records.get(i).getNric().equals(userSubsidies.getNric()) && (records.get(i).getSubsidiesID() == userSubsidies.getSubsidiesID()))){
+                    foundRecord = records.get(i);
                     break;
                 }
             }
-            if (findRecord(userSubsidies.getNric()) != null) {
+            if (foundRecord != null) {
                 throw new ConflictException("Object already exists");
             }
+            else{
+                ofy().save().entity(userSubsidies).now();
+                return userSubsidies;
+            }
         }
-        //Since our @Id field is a Long, Objectify will generate a unique value for us
-        //when we use put
-        ofy().save().entity(userSubsidies).now();
-        return userSubsidies;
+        else{
+            return null;
+        }
     }
 
     /**
      * This deletes an existing <code>users</code> object.
      * @param id The id of the object to be deleted.
      */
-    @ApiMethod(name = "removeUserPackages")
-    public void removeUserSubsidies(@Named("nric") String nric,@Named("id") Long subsidiesID) throws NotFoundException {
-        List<User_Subsidies> recordList = findRecord(nric);
-        User_Subsidies record = null;
-        for(int i=0;i<recordList.size();i++){
-            if(recordList.get(i).getSubsidiesID() == subsidiesID){
-                record = recordList.get(i);
-                break;
-            }
-        }
+    @ApiMethod(name = "removeUserSubsidies")
+    public void removeUserSubsidies(@Named("id") Long userSubsidiesID) throws NotFoundException {
+        UserSubsidies record = findRecord(userSubsidiesID);
         if(record == null) {
             throw new NotFoundException("Quote Record does not exist");
         }
@@ -122,8 +123,8 @@ public class UserSubsidiesEndpoint {
     }
 
     //Private method to retrieve a <code>users</code> record
-    private List<User_Subsidies> findRecord(String nric) {
-        return ofy().load().type(User_Subsidies.class).filterKey("=",nric).list();
+    private UserSubsidies findRecord(Long userSubsidiesID) {
+        return ofy().load().type(UserSubsidies.class).id(userSubsidiesID).now();
         //or return ofy().load().type(Quote.class).filter("id",id).first.now();
     }
 }

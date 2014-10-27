@@ -7,25 +7,34 @@ import com.googlecode.objectify.annotation.Id;
  * Created by L33525 on 8/10/2014.
  */
 @Entity
-public class User_Packages {
+public class UserPackages {
     @Id
+    private Long userPackagesID;
     private String nric;
-    @Id
     private Long packagesID;
 
-    public User_Packages() {
+    public UserPackages() {
     }
 
-    public User_Packages(String nric, Long packagesID) {
+    public UserPackages(Long userPackagesID, String nric, Long packagesID) {
+        this.userPackagesID = userPackagesID;
         this.nric = nric;
         this.packagesID = packagesID;
+    }
+
+    public Long getUserPackagesID() {
+        return userPackagesID;
+    }
+
+    public void setUserPackagesID(Long userPackagesID) {
+        this.userPackagesID = userPackagesID;
     }
 
     public String getNric() {
         return nric;
     }
 
-    public void setNric(String user) {
+    public void setNric(String nric) {
         this.nric = nric;
     }
 

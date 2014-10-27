@@ -68,6 +68,8 @@ public class UserSQLController {
 
 
     public long updateSignInStatus(User user, int signInStatus) {
+
+        conn.open();
         ContentValues cv = new ContentValues();
         /**
          * Sign-in Status:
@@ -75,7 +77,9 @@ public class UserSQLController {
          * 1 = Already sign in before
          */
         cv.put("firstTimeSignIn", signInStatus);
-        return conn.getDB().update(conn.getUserTable(), cv, "nric = ?", new String[]{user.getNric()});
+        long status = conn.getDB().update(conn.getUserTable(), cv, "nric = ?", new String[]{user.getNric()});
+        conn.close();
+        return status;
     }
 
     public void deleteAllUsers(){

@@ -9,7 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
+import com.fypj.insightsLocal.sqlite_controller.UserPackagesSQLController;
+import com.fypj.insightsLocal.sqlite_controller.UserSubsidiesSQLController;
+import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
 import com.fypj.mymodule.api.insightsUser.model.User;
+import com.fypj.mymodule.api.insightsUserPackages.model.UserPackages;
+import com.fypj.mymodule.api.insightsUserSubsidies.model.UserSubsidies;
 
 import java.util.ArrayList;
 
@@ -45,10 +51,23 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
                     "<p>Address: "+user.getAddress()+" </p>"));
         }
         else{
-            tvInfo.setText(Html.fromHtml("" +
-                    "<p>Simple Choronic conditions under CDMP: $66</p>" +
-                    "<p>Complex Choronic conditions under CDMP: $100</p>" +
-                    "<p>Medi-save: $200</p>"));
+            UserPackagesSQLController userPackagesSQLController = new UserPackagesSQLController(context);
+            SubsidiesSQLController  subsidiesSQLController = new SubsidiesSQLController(context);
+            UserSubsidiesSQLController userSubsidiesSQLController = new UserSubsidiesSQLController(context);
+
+            ArrayList<UserPackages> userPackagesArrList = userPackagesSQLController.getUserPackagesByNRIC(user.getNric());
+            ArrayList<UserSubsidies> userSubsidiesArrList = userSubsidiesSQLController.getUserSubsidiesByNRIC(user.getNric());
+
+            for(int i=0;i<userPackagesArrList.size();i++){
+                Long packageID = userPackagesArrList.get(i).getPackagesID();
+                ArrayList<Subsidies> subsidiesArrList = subsidiesSQLController.getSubsidiesByPackageID(packageID);
+
+                tvInfo.setText(Html.fromHtml("" +
+                        "<p>Simple Choronic conditions under CDMP: $66</p>" +
+                        "<p>Complex Choronic conditions under CDMP: $100</p>" +
+                        "<p>Medi-save: $200</p>"));
+            }
+
         }
         return rowView;
     }

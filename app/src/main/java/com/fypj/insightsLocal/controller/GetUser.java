@@ -1,33 +1,14 @@
 package com.fypj.insightsLocal.controller;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
 
-import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.options.AppConstants;
-import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.insightsLocal.ui_logic.LoginActivity;
-import com.fypj.insightsLocal.ui_logic.MainPageActivity;
-import com.fypj.insightsLocal.ui_logic.ViewEventActivity;
-import com.fypj.insightsLocal.util.LatestEventsListAdapter;
-import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
-import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.fypj.mymodule.api.insightsUser.InsightsUser;
 import com.fypj.mymodule.api.insightsUser.model.User;
 
@@ -90,21 +71,13 @@ public class GetUser extends AsyncTask<Void,Void,List<User>>{
             if(recordExists){
                 final UserSQLController controller = new UserSQLController(context);
                 User user = controller.getUser(nric);
+                int status = controller.getUserSignInStatus(foundUser.getNric());
                 if(user.getNric().equals("")){
                     controller.insertUser(foundUser);
-                    int status = controller.getUserSignInStatus(foundUser.getNric());
                     System.out.println("Status: " + status);
-                    if(status == 0) {
-                        context.goToMainPage();
-                        context.goToSettingsPage();
-                    }
-                    else if(status == 1){
-                        context.goToMainPage();
-                    }
+                    new GetUserPackagesAndSubsidies(context,nric,status).execute();
                 }
-                else{
-                    context.goToMainPage();
-                }
+                new GetUserPackagesAndSubsidies(context,nric,status).execute();
             }
             else{
                 errorOnExecuting("There is no such user record.");
