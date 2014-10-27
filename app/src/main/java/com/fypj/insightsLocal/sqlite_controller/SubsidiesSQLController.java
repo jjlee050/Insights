@@ -53,6 +53,24 @@ public class SubsidiesSQLController {
         return subsidiesArrList;
     }
 
+    public ArrayList<Subsidies> getAllSubsidies(){
+        ArrayList<Subsidies> subsidiesArrList = new ArrayList<Subsidies>();
+        conn.open();
+        Cursor cursor = conn.getDB().query(conn.getSubsidiesTable(), null, null, null, null, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                Subsidies subsidies = new Subsidies();
+                subsidies.setSubsidiesID(cursor.getLong(cursor.getColumnIndex("subsidiesID")));
+                subsidies.setName(cursor.getString(cursor.getColumnIndex("name")));
+                subsidies.setAmt(cursor.getString(cursor.getColumnIndex("amt")));
+                subsidies.setPackagesID(cursor.getLong(cursor.getColumnIndex("packagesID")));
+                subsidiesArrList.add(subsidies);
+            }while(cursor.moveToNext());
+        }
+        conn.close();
+        return subsidiesArrList;
+    }
+
     public Subsidies getSubsidies(Long subsidiesID){
         Subsidies subsidies = new Subsidies();
         conn.open();

@@ -75,9 +75,8 @@ public class GetUser extends AsyncTask<Void,Void,List<User>>{
                 if(user.getNric().equals("")){
                     controller.insertUser(foundUser);
                     System.out.println("Status: " + status);
-                    new GetUserPackagesAndSubsidies(context,nric,status).execute();
                 }
-                new GetUserPackagesAndSubsidies(context,nric,status).execute();
+                new GetUserPackages(context,nric,status).execute();
             }
             else{
                 errorOnExecuting("There is no such user record.");

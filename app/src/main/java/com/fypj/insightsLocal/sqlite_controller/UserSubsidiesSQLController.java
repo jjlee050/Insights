@@ -33,7 +33,7 @@ public class UserSubsidiesSQLController {
     }
 
     public ArrayList<UserSubsidies> getUserSubsidiesByNRIC(String nric){
-        ArrayList<UserSubsidies> userPackagesArrList = new ArrayList<UserSubsidies>();
+        ArrayList<UserSubsidies> userSubsidiesArrList = new ArrayList<UserSubsidies>();
         conn.open();
         Cursor cursor = conn.getDB().query(conn.getUserSubsidiesTable(), null, "nric = '" + nric + "'", null, null, null, null, null);
         if(cursor.moveToFirst()){
@@ -43,11 +43,29 @@ public class UserSubsidiesSQLController {
                 userSubsidies.setNric(cursor.getString(cursor.getColumnIndex("nric")));
                 userSubsidies.setSubsidiesID(cursor.getLong(cursor.getColumnIndex("subsidiesID")));
                 userSubsidies.setBalance(cursor.getFloat(cursor.getColumnIndex("balance")));
-                userPackagesArrList.add(userSubsidies);
+                userSubsidiesArrList.add(userSubsidies);
             }while(cursor.moveToNext());
         }
         conn.close();
-        return userPackagesArrList;
+        return userSubsidiesArrList;
+    }
+
+    public ArrayList<UserSubsidies> getUserSubsidiesBySubsidiesID(Long subsidiesID){
+        ArrayList<UserSubsidies> userSubsidiesArrList = new ArrayList<UserSubsidies>();
+        conn.open();
+        Cursor cursor = conn.getDB().query(conn.getUserSubsidiesTable(), null, "subsidiesID = " + subsidiesID, null, null, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                UserSubsidies userSubsidies = new UserSubsidies();
+                userSubsidies.setUserSubsidiesID(cursor.getLong(cursor.getColumnIndex("userSubsidiesID")));
+                userSubsidies.setNric(cursor.getString(cursor.getColumnIndex("nric")));
+                userSubsidies.setSubsidiesID(cursor.getLong(cursor.getColumnIndex("subsidiesID")));
+                userSubsidies.setBalance(cursor.getFloat(cursor.getColumnIndex("balance")));
+                userSubsidiesArrList.add(userSubsidies);
+            }while(cursor.moveToNext());
+        }
+        conn.close();
+        return userSubsidiesArrList;
     }
 
     public UserSubsidies getUserSubsidies(String nric, Long subsidiesID){
