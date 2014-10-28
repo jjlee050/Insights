@@ -72,7 +72,7 @@ public class ViewClinicLocationFragment extends Fragment {
         Toast.makeText(this.getActivity(), clinic.getAddress(), Toast.LENGTH_LONG).show();
 
         // Get a handle to the Map Fragment
-        GoogleMap map = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
         map.getUiSettings().setScrollGesturesEnabled(false);
         map.getUiSettings().setZoomGesturesEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(false);

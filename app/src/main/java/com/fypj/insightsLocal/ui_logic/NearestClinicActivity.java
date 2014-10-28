@@ -52,6 +52,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         setContentView(R.layout.activity_nearest_clinc);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         savedInstanceState = getIntent().getExtras();
 // Create the adapter that will return a fragment for each of the three
 // primary sections of the activity.
@@ -60,15 +61,15 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        getSupportActionBar().setTitle("CHAS Clinics");
+        actionBar.setTitle("CHAS Clinics");
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if(position == 0){
-                    getSupportActionBar().setTitle("CHAS Clinics");
+                    actionBar.setTitle("CHAS Clinics");
                 }
                 else{
-                    getSupportActionBar().setTitle("CHAS Dental");
+                    actionBar.setTitle("CHAS Dental");
                 }
                 actionBar.setSelectedNavigationItem(position);
             }
