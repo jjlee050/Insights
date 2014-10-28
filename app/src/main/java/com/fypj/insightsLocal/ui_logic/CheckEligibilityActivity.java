@@ -27,13 +27,15 @@ import com.fypj.mymodule.api.insightsPackages.model.Packages;
 
 import java.util.ArrayList;
 
-public class CheckEligibilityActivity extends Activity {
+public class CheckEligibilityActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_eligibility);
         ListView packagesEligibileList = (ListView) findViewById(R.id.lv_eligibility_list);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         PackagesSQLController controller = new PackagesSQLController(this);
         ArrayList<Packages> packagesArrList = controller.getAllPackages();

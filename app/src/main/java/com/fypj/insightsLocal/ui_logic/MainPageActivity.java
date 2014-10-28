@@ -63,6 +63,8 @@ public class MainPageActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        getSupportActionBar().setTitle("Home");
+
         SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
         String nric = sharedPref.getString("nric","");
 

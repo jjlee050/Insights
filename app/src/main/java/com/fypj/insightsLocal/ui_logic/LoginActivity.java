@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -37,7 +38,7 @@ public class LoginActivity extends ActionBarActivity implements Settings {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getActionBar().hide();
+        getSupportActionBar().hide();
         getData();
         etNric = (EditText) findViewById(R.id.et_nric);
         etPassword = (EditText) findViewById(R.id.et_password);

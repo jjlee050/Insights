@@ -21,6 +21,7 @@ import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -71,7 +72,7 @@ public class ViewClinicLocationFragment extends Fragment {
         Toast.makeText(this.getActivity(), clinic.getAddress(), Toast.LENGTH_LONG).show();
 
         // Get a handle to the Map Fragment
-        GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
+        GoogleMap map = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
         map.getUiSettings().setScrollGesturesEnabled(false);
         map.getUiSettings().setZoomGesturesEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(false);

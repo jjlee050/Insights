@@ -59,9 +59,17 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
 // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        getSupportActionBar().setTitle("CHAS Clinics");
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                if(position == 0){
+                    getSupportActionBar().setTitle("CHAS Clinics");
+                }
+                else{
+                    getSupportActionBar().setTitle("CHAS Dental");
+                }
                 actionBar.setSelectedNavigationItem(position);
             }
         });

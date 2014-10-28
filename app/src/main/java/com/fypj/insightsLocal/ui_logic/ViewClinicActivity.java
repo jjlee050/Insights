@@ -103,6 +103,11 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
             Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
             startActivity(intent);
         }
+        else if( id == R.id.arView){
+            Intent intent = new Intent(ViewClinicActivity.this, ARViewActivity.class);
+            intent.putExtra("address", clinic.getAddress());
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

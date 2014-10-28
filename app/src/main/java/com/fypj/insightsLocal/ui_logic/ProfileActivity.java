@@ -127,7 +127,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         if(!nric.equals("")){
             UserSQLController controller = new UserSQLController(this);
             User user = controller.getUser(nric);
-            getActionBar().setTitle(user.getName());
+            getSupportActionBar().setTitle(user.getName());
             this.user = user;
         }
     }

@@ -41,4 +41,8 @@
         <item name="English">English</item>
         <item name="Chinese">Chinese</item>
     </string-array>
+
+    <string name="title_activity_arview">ARViewActivity</string>
+    <string name="arView">AR View</string>
+
 </resources>
