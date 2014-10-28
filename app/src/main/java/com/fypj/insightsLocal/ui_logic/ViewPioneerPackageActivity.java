@@ -3,17 +3,25 @@ package com.fypj.insightsLocal.ui_logic;
 import android.annotation.TargetApi;
 import android.app.FragmentManager;
 import android.os.Build;
+import android.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
+
+import java.util.ArrayList;
 
 public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener{
 
@@ -28,6 +36,12 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
+
+    private FrameLayout flContainer;
+    private ArrayList<Fragment> fragmentArrList = new ArrayList<Fragment>();
+    private GestureDetector gesturedetector = null;
+
+    private String action = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +79,27 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
             packages.setBenefits(benefits);
             packages.setEligible(eligible);
         }
+
+        fragmentArrList.add(new OverviewFragment().newInstance(this, 1, packages.getName(), packages.getOverview()));
+        fragmentArrList.add(new BenefitsFragment().newInstance(this, 1, packages.getName(), packages.getBenefits()));
+        fragmentArrList.add(new SubsidiesFragment().newInstance(this, 1, packages.getName(), packages.getPackageID()));
+        fragmentArrList.add(new EligibilityFragment().newInstance(this, 1, packages.getName(), packages.getEligible()));
+
+        gesturedetector = new GestureDetector(new MyGestureListener());
+
+        flContainer = (FrameLayout) findViewById(R.id.container);
+        flContainer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gesturedetector.onTouchEvent(event);
+                return true;
+            }
+        });
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        super.dispatchTouchEvent(ev);
+        return gesturedetector.onTouchEvent(ev);
     }
 
     @Override
@@ -114,7 +149,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
         switch(position) {
             case 0:
                 OverviewFragment overviewFragment = new OverviewFragment();
-                if (currentIndex < position){
+                if (action.equals("Plus")){
                     fragmentManager.beginTransaction()
                             .setCustomAnimations(
                                     R.animator.right_in, R.animator.right_out,
@@ -136,7 +171,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
                 break;
             case 1:
                 BenefitsFragment benefitsFragment = new BenefitsFragment();
-                if (currentIndex < position) {
+                if (action.equals("Plus")) {
                     fragmentManager.beginTransaction()
                             .setCustomAnimations(
                                     R.animator.right_in, R.animator.right_out,
@@ -158,7 +193,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
                 break;
             case 2:
                 SubsidiesFragment subsidiesFragment = new SubsidiesFragment();
-                if (currentIndex < position) {
+                if (action.equals("Plus")) {
                     fragmentManager.beginTransaction()
                             .setCustomAnimations(
                                     R.animator.right_in, R.animator.right_out,
@@ -180,7 +215,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
                 break;
             case 3:
                 EligibilityFragment eligibilityFragment = new EligibilityFragment();
-                if (currentIndex < position) {
+                if (action.equals("Plus")) {
                     fragmentManager.beginTransaction()
                             .setCustomAnimations(
                                     R.animator.right_in, R.animator.right_out,
@@ -204,6 +239,63 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
         }
 
         return false;
+
+    }
+
+
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final int SWIPE_MIN_DISTANCE = 20;
+        private static final int SWIPE_MAX_OFF_PATH = 100;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 100;
+
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+            float dX = e2.getX() - e1.getX();
+            float dY = e1.getY() - e2.getY();
+
+            if (Math.abs(dY) < SWIPE_MAX_OFF_PATH && Math.abs(velocityX) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dX) >= SWIPE_MIN_DISTANCE) {
+                if (dX > 0) {
+
+                    Toast.makeText(getApplicationContext(), "Right Swipe",
+                            Toast.LENGTH_SHORT).show();
+                    //Now Set your animation
+                    if(currentIndex > 0) {
+                        currentIndex -= 1;
+                        action = "Minus";
+                        getSupportActionBar().setSelectedNavigationItem(currentIndex);
+                    }
+                }
+                else {
+
+                    Toast.makeText(getApplicationContext(), "Left Swipe",
+                            Toast.LENGTH_SHORT).show();
+                    if(currentIndex < fragmentArrList.size() - 1) {
+                        currentIndex += 1;
+                        action = "Plus";
+                        getSupportActionBar().setSelectedNavigationItem(currentIndex);
+                    }
+
+                }
+                return true;
+            }
+            else if (Math.abs(dX) < SWIPE_MAX_OFF_PATH && Math.abs(velocityY) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dY) >= SWIPE_MIN_DISTANCE) {
+                if (dY > 0) {
+                    Toast.makeText(getApplicationContext(), "Up Swipe",
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Down Swipe",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+
+            }
+            return false;
+        }
 
     }
 }

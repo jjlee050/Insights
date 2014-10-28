@@ -7,9 +7,11 @@ import android.util.Log;
 
 import com.fypj.insightsLocal.controller.GetMedicalHistory;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.PackagesSQLController;
 import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
 import com.fypj.insightsLocal.util.HandleXML;
+import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
 import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
 
@@ -35,9 +37,19 @@ public class BackgroundService extends Service {
             getMedicalHistory.execute();
         }
         insertPackages();
+        notifyUser();
         return super.onStartCommand(intent, flags, startId);
     }
 
+    public void notifyUser(){
+        EventSQLController controller = new EventSQLController(this);
+        ArrayList<Event> eventArrList = controller.getAllEvent();
+        if((eventArrList != null) && (eventArrList.size() > 0)){
+            for(int i=0;i<eventArrList.size();i++){
+
+            }
+        }
+    }
 
     public void insertPackages(){
         PackagesSQLController packagesController = new PackagesSQLController(this);

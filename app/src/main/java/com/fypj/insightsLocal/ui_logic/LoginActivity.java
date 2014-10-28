@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetUser;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.service.BackgroundReceiver;
 import com.fypj.insightsLocal.service.BackgroundService;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
@@ -29,9 +30,8 @@ import com.fypj.mymodule.api.insightsUser.model.User;
 /**
  * Created by jess on 20-Oct-14.
  */
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity implements Settings {
     private EditText etNric, etPassword;
-    public static final String BROADCAST = "com.fypj.insightsLocal.android.action.broadcast";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

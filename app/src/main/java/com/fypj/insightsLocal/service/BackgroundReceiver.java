@@ -38,9 +38,10 @@ public class BackgroundReceiver extends BroadcastReceiver {
         // 360000 = 1hrs;
         int min = 60000;
         SharedPreferences sharedPref = context.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
-        int frequency = Integer.parseInt(sharedPref.getString("sync_frequency","1"));
-        System.out.println("Frequency: " + frequency);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), min * frequency, pendingIntent);
+        //int frequency = Integer.parseInt(sharedPref.getString("sync_frequency","1"));
+
+        //System.out.println("Frequency: " + frequency);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), min * 1, pendingIntent);
 
     }
 }

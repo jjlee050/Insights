@@ -4,4 +4,5 @@
     <color name="navigationalDrawerBackgroundColor">#CC0000</color>
     <color name="white">#FFFFFF</color>
     <color name="greenDarkColor">#669900</color>
+    <color name="mainPageListViewBackground">#000</color>
 </resources>

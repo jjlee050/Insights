@@ -1,7 +1,10 @@
 package com.fypj.insightsLocal.controller;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,17 +29,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GetUserSubsidies extends AsyncTask<Void, Void, List<UserSubsidies>> {
     private static InsightsUserSubsidies myApiService = null;
-    private LoginActivity context;
+    private Activity context;
     private ArrayList<UserSubsidies> userSubsidiesArrList = new ArrayList<UserSubsidies>();
     private ProgressDialog dialog;
     private String nric;
-    private int status;
 
 
-    public GetUserSubsidies(Context context, String nric, int status, ProgressDialog dialog){
-        this.context = (LoginActivity) context;
+    public GetUserSubsidies(Context context, String nric, ProgressDialog dialog){
+        this.context = (Activity) context;
         this.nric = nric;
-        this.status = status;
         this.dialog = dialog;
     }
 
@@ -83,14 +84,6 @@ public class GetUserSubsidies extends AsyncTask<Void, Void, List<UserSubsidies>>
         }
         dialog.dismiss();
 
-
-        if((status == 0) || (status == -1)) {
-            context.goToMainPage();
-            context.goToSettingsPage(nric);
-        }
-        else if(status == 1){
-            context.goToMainPage();
-        }
     }
 
     private void errorOnExecuting(final String message){
@@ -98,7 +91,16 @@ public class GetUserSubsidies extends AsyncTask<Void, Void, List<UserSubsidies>>
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
                 dialog.dismiss();
-                context.errorOnExecuting(message);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Error verifying user ");
+                builder.setMessage(message);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
             }
         });
     }
