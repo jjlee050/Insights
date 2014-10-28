@@ -86,9 +86,6 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
             ArrayList<UserPackages> userPackagesArrList = userPackagesSQLController.getUserPackagesByNRIC(user.getNric());
             ArrayList<UserSubsidies> userSubsidiesArrList = userSubsidiesSQLController.getUserSubsidiesByNRIC(user.getNric());
 
-            ArrayList<String> leftValuesArrList = new ArrayList<String>();
-            ArrayList<Float> rightValuesArrList = new ArrayList<Float>();
-
             DecimalFormat formatter = new DecimalFormat("$00.00");
 
             for(int i=0;i<userPackagesArrList.size();i++){
@@ -100,9 +97,26 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
                         UserSubsidies userSubsidies = userSubsidiesSQLController.getUserSubsidies(user.getNric(), subsidiesArrList.get(j).getSubsidiesID());
 
                         if (userSubsidies.getSubsidiesID() != 0) {
-                            leftValuesArrList.add(subsidiesArrList.get(j).getName());
-                            rightValuesArrList.add(userSubsidies.getBalance());
+                            if(subsidiesArrList.get(j).getPackagesID() == packageID) {
+                                TextView tvLeft = new TextView(context);
+                                TextView tvRight = new TextView(context);
 
+                                tvLeft.setText(subsidiesArrList.get(j).getName());
+                                tvRight.setText(formatter.format(userSubsidies.getBalance()));
+
+
+                                tvLeft.setTextSize(16);
+                                tvRight.setTextSize(16);
+                                TableRow tr = new TableRow(context);
+                                tr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                                tr.addView(tvLeft);
+                                tr.addView(tvRight);
+                                tvLeft.setPadding(16, 16, 16, 16);
+                                tvRight.setPadding(16, 16, 16, 16);
+                                tableLayoutInfo.addView(tr, ViewGroup.LayoutParams.MATCH_PARENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                            }
                         }
                     }
                 }
@@ -111,69 +125,7 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
                 }
             }
 
-            /*ArrayList<String> duplicatesValuesArrList = new ArrayList<String>();
 
-            Map<String, Integer> occurrencies = new HashMap<String, Integer>();
-            for (String word : leftValuesArrList) {
-                occurrencies.put(word, occurrencies.containsKey(word)
-                        ? occurrencies.get(word) + 1 : 1);
-            }
-            int size = leftValuesArrList.size()-1;
-            for (Map.Entry<String, Integer> entry : occurrencies.entrySet()) {
-                System.out.println("Word: "+entry.getKey()
-                        + ", occurences: "+entry.getValue());
-                if(entry.getValue() > 1){
-                    duplicatesValuesArrList.add(entry.getKey());
-                }
-            }
-
-            ArrayList<Integer> getArrList = new ArrayList<Integer>();
-            for(int i=0;i<duplicatesValuesArrList.size();i++){
-                for(int j=0;j<leftValuesArrList.size();j++){
-                    String duplicate = duplicatesValuesArrList.get(i);
-                    if(duplicate.equals(leftValuesArrList.get(j))){
-                        System.out.println("Position: " + j + ", " + leftValuesArrList.get(j));
-                        getArrList.add(j);
-                    }
-                }
-            }
-
-            float balance = 0;
-            int index = 0;
-            for(int i=0;i<getArrList.size();i++){
-                balance += rightValuesArrList.get(getArrList.get(i));
-                if(balance - rightValuesArrList.get(getArrList.get(i)) != 0){
-                    leftValuesArrList.remove(getArrList.get(i));
-                    rightValuesArrList.remove(getArrList.get(i));
-                }
-                else{
-                    index = getArrList.get(i);
-                }
-                System.out.println("Balance: " + balance);
-            }
-            rightValuesArrList.set(index,balance);*/
-
-
-            for(int i=0;i<leftValuesArrList.size();i++){
-
-                TextView tvLeft = new TextView(context);
-                TextView tvRight = new TextView(context);
-                tvLeft.setText(leftValuesArrList.get(i));
-                tvRight.setText(formatter.format(rightValuesArrList.get(i)));
-
-
-                tvLeft.setTextSize(16);
-                tvRight.setTextSize(16);
-                TableRow tr = new TableRow(context);
-                tr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                tr.addView(tvLeft);
-                tr.addView(tvRight);
-                tvLeft.setPadding(16, 16, 16, 16);
-                tvRight.setPadding(16, 16, 16, 16);
-                tableLayoutInfo.addView(tr, ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-            }
         }
         return rowView;
     }

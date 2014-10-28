@@ -72,6 +72,7 @@ public class GetUserSubsidies extends AsyncTask<Void, Void, List<UserSubsidies>>
             }
             if(recordExists){
                 final UserSubsidiesSQLController controller = new UserSubsidiesSQLController(context);
+                controller.deleteAllUserSubsidies();
                 for(int i=0;i<foundUserSubsidies.size();i++) {
                     UserSubsidies userSubsidies = controller.getUserSubsidies(nric, foundUserSubsidies.get(i).getSubsidiesID());
                     if(userSubsidies.getSubsidiesID() == 0){

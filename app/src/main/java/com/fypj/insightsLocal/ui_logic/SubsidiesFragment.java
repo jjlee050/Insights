@@ -2,20 +2,14 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,9 +19,8 @@ import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
 import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class SubsidesFragment extends Fragment {
+public class SubsidiesFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
     ViewPioneerPackageActivity activity;
 
@@ -36,8 +29,8 @@ public class SubsidesFragment extends Fragment {
      */
     ViewPager mViewPager;
 
-    public SubsidesFragment newInstance(ViewPioneerPackageActivity activity,int sectionNumber, String name, Long packagesID) {
-        SubsidesFragment fragment = new SubsidesFragment();
+    public SubsidiesFragment newInstance(ViewPioneerPackageActivity activity,int sectionNumber, String name, Long packagesID) {
+        SubsidiesFragment fragment = new SubsidiesFragment();
         Bundle args = new Bundle();
         args.putString("name", name);
         args.putLong("packagesID", packagesID);

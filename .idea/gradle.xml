@@ -5,17 +5,10 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/api" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/lib" />
-          </set>
-        </option>
       </GradleProjectSettings>
     </option>
     <option name="serviceDirectoryPath" value="$USER_HOME$/.gradle" />
+    <option name="gradleVmOptions" value="-XX:MaxHeapSize=256m -Xmx256m" />
   </component>
 </project>
 

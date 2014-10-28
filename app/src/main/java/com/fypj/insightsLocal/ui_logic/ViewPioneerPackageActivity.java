@@ -1,32 +1,19 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.annotation.TargetApi;
 import android.app.FragmentManager;
+import android.os.Build;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
-import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
-
-import java.util.ArrayList;
 
 public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener{
 
@@ -38,6 +25,9 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
     private String[] titles = new String[] {"Overview","Benefits","Subsidies","Eligibility"};
     private int currentIndex = 0;
     private Packages packages = new Packages();
+
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +104,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
         return super.onOptionsItemSelected(item);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
@@ -122,100 +113,97 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
 
         switch(position) {
             case 0:
-                PlaceholderFragment placeholderFragment = new PlaceholderFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, placeholderFragment.newInstance(this, position + 1, packages.getName(), packages.getOverview()))
-                        .commit();
+                OverviewFragment overviewFragment = new OverviewFragment();
+                if (currentIndex < position){
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, overviewFragment.newInstance(this, position + 1, packages.getName(), packages.getOverview()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_out,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, overviewFragment.newInstance(this, position + 1, packages.getName(), packages.getOverview()))
+                            .addToBackStack(null)
+                            .commit();
+                }
                 currentIndex = 0;
                 break;
             case 1:
                 BenefitsFragment benefitsFragment = new BenefitsFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, benefitsFragment.newInstance(this, position + 1, packages.getName(), packages.getBenefits()))
-                        .commit();
+                if (currentIndex < position) {
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, benefitsFragment.newInstance(this, position + 1, packages.getName(), packages.getBenefits()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_out,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, benefitsFragment.newInstance(this, position + 1, packages.getName(), packages.getBenefits()))
+                            .addToBackStack(null)
+                            .commit();
+                }
                 currentIndex = 1;
                 break;
             case 2:
-                SubsidesFragment subsidiesFragment = new SubsidesFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1, packages.getName(),packages.getPackageID()))
-                        .commit();
+                SubsidiesFragment subsidiesFragment = new SubsidiesFragment();
+                if (currentIndex < position) {
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1, packages.getName(), packages.getPackageID()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_out,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1, packages.getName(), packages.getPackageID()))
+                            .addToBackStack(null)
+                            .commit();
+                }
                 currentIndex = 2;
                 break;
             case 3:
                 EligibilityFragment eligibilityFragment = new EligibilityFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, eligibilityFragment.newInstance(this, position + 1, packages.getName(), packages.getEligible()))
-                        .commit();
+                if (currentIndex < position) {
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, eligibilityFragment.newInstance(this, position + 1, packages.getName(), packages.getEligible()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_in,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, eligibilityFragment.newInstance(this, position + 1, packages.getName(), packages.getEligible()))
+                            .addToBackStack(null)
+                            .commit();
+                }
                 currentIndex = 3;
                 break;
 
         }
 
-        return true;
+        return false;
 
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        ViewPioneerPackageActivity activity;
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public PlaceholderFragment newInstance(ViewPioneerPackageActivity activity, int sectionNumber, String name, String overview) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            PlaceholderFragment.this.activity = activity;
-            args.putString("name",name);
-            args.putString("overview",overview);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_view_pioneer_package, container, false);
-            TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
-            TextView tvHeader = (TextView) rootView.findViewById(R.id.tv_header);
-            View horizontalLine = rootView.findViewById(R.id.horizontal_line);
-            TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
-            ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
-            Bundle bundle = getArguments();
-
-            String name = bundle.getString("name");
-            if(name.equals("CHAS for Pioneer Generation")){
-                ivImg.setImageResource(R.drawable.pioneercard);
-            }
-            else if(name.equals("CHAS Orange")){
-                ivImg.setImageResource(R.drawable.orangecard);
-            }
-            else if(name.equals("CHAS Blue")){
-                ivImg.setImageResource(R.drawable.bluecard);
-            }
-            tvTitle.setText(bundle.getString("name"));
-            tvHeader.setText("The package will help Pioneers with their healthcare costs for life. The benefits are as below: ");
-
-            tvContent.setText(Html.fromHtml(bundle.getString("overview")));
-
-            horizontalLine.setVisibility(View.GONE);
-            tvTitle.setVisibility(View.VISIBLE);
-            tvHeader.setVisibility(View.GONE);
-            tvContent.setVisibility(View.VISIBLE);
-            ivImg.setVisibility(View.VISIBLE);
-
-            return rootView;
-        }
     }
 }

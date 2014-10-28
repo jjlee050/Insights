@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
@@ -36,7 +37,10 @@ public class BackgroundReceiver extends BroadcastReceiver {
         // 60000 = 1mins;
         // 360000 = 1hrs;
         int min = 60000;
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), min * 1, pendingIntent);
+        SharedPreferences sharedPref = context.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        int frequency = Integer.parseInt(sharedPref.getString("sync_frequency","1"));
+        System.out.println("Frequency: " + frequency);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), min * frequency, pendingIntent);
 
     }
 }

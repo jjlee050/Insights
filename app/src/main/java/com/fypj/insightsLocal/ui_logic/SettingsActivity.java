@@ -2,6 +2,8 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -20,6 +22,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.service.BackgroundReceiver;
 
 import java.util.List;
 
@@ -43,6 +46,8 @@ public class SettingsActivity extends PreferenceActivity {
      */
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
     private static Context context;
+
+    public static final String BROADCAST = "com.fypj.insightsLocal.android.action.broadcast";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +124,6 @@ public class SettingsActivity extends PreferenceActivity {
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
         // their values. When their values change, their summaries are updated
         // to reflect the new value, per the Android Design guidelines.
-        bindPreferenceSummaryToValue(findPreference("example_text"));
         bindPreferenceSummaryToValue(findPreference("preferred_language"));
         bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         bindPreferenceSummaryToValue(findPreference("sync_frequency"));
@@ -176,6 +180,19 @@ public class SettingsActivity extends PreferenceActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("preferred_language", stringValue);
                 editor.commit();
+            }
+            if(preference.getKey().equals("sync_frequency")){
+                SharedPreferences sharedPref = context.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("sync_frequency", stringValue);
+                System.out.println("Sync Frequency: " + stringValue);
+                editor.commit();
+
+                BackgroundReceiver br = new BackgroundReceiver();
+                IntentFilter intentFilter = new IntentFilter(BROADCAST);
+                context.registerReceiver(br , intentFilter);
+                Intent intent = new Intent(BROADCAST);
+                context.sendBroadcast(intent);
             }
 
             if (preference instanceof ListPreference) {
@@ -259,7 +276,6 @@ public class SettingsActivity extends PreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             SettingsActivity activity = new SettingsActivity();
-            activity.bindPreferenceSummaryToValue(findPreference("example_text"));
             activity.bindPreferenceSummaryToValue(findPreference("preferred_language"));
         }
     }
