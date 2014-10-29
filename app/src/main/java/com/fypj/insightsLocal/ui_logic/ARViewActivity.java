@@ -81,19 +81,13 @@ public class ARViewActivity extends ActionBarActivity implements
         world.setGeoPosition(mlocListener.latitude, mlocListener.longitude);
 
 // Create an object with an image in the app resources.
-        GeoObject go1 = new GeoObject(1l);
-        go1.setGeoPosition(41.26523339794433d, 1.926036406654116d);
-        go1.setName("Creature 1");
-
-// Create an object with an image in the app resources.
         GeoObject go2 = new GeoObject(12);
 
-        go2.setGeoPosition(latLng.longitude,latLng.latitude);
+        //go2.setGeoPosition(latLng.longitude,latLng.latitude);
+        go2.setGeoPosition(mlocListener.latitude,mlocListener.longitude);
         Log.i("Coordinate", go2.getLatitude() + "," + go2.getLongitude());
         go2.setName(clinic.getAddress());
 
-
-        world.addBeyondarObject(go1);
         world.addBeyondarObject(go2);
 
         mBeyondarFragment.setOnTouchBeyondarViewListener(this);

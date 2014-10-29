@@ -259,8 +259,8 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
             if (Math.abs(dY) < SWIPE_MAX_OFF_PATH && Math.abs(velocityX) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dX) >= SWIPE_MIN_DISTANCE) {
                 if (dX > 0) {
 
-                    Toast.makeText(getApplicationContext(), "Right Swipe",
-                            Toast.LENGTH_SHORT).show();
+                    /*Toast.makeText(getApplicationContext(), "Right Swipe",
+                            Toast.LENGTH_SHORT).show();*/
                     //Now Set your animation
                     if(currentIndex > 0) {
                         currentIndex -= 1;
@@ -270,8 +270,8 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
                 }
                 else {
 
-                    Toast.makeText(getApplicationContext(), "Left Swipe",
-                            Toast.LENGTH_SHORT).show();
+                    /*Toast.makeText(getApplicationContext(), "Left Swipe",
+                            Toast.LENGTH_SHORT).show();*/
                     if(currentIndex < fragmentArrList.size() - 1) {
                         currentIndex += 1;
                         action = "Plus";
@@ -283,12 +283,12 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
             }
             else if (Math.abs(dX) < SWIPE_MAX_OFF_PATH && Math.abs(velocityY) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dY) >= SWIPE_MIN_DISTANCE) {
                 if (dY > 0) {
-                    Toast.makeText(getApplicationContext(), "Up Swipe",
-                            Toast.LENGTH_SHORT).show();
+                    /*Toast.makeText(getApplicationContext(), "Up Swipe",
+                            Toast.LENGTH_SHORT).show();*/
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Down Swipe",
-                            Toast.LENGTH_SHORT).show();
+                    /*Toast.makeText(getApplicationContext(), "Down Swipe",
+                            Toast.LENGTH_SHORT).show();*/
                 }
 
                 return true;

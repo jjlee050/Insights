@@ -87,7 +87,7 @@ public class ViewEventLocationFragment extends Fragment {
             event.setContactNo(bundle.getString("contactNo"));
             event.setLocation(bundle.getString("location"));
         }
-        Toast.makeText(this.getActivity(),event.getLocation(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(this.getActivity(),event.getLocation(),Toast.LENGTH_LONG).show();
 
         // Get a handle to the Map Fragment
         GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
