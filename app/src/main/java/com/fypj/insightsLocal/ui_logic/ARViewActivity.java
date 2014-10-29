@@ -1,18 +1,27 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.beyondar.android.fragment.BeyondarFragmentSupport;
+import com.beyondar.android.view.BeyondarGLSurfaceView;
+import com.beyondar.android.view.OnClickBeyondarObjectListener;
+import com.beyondar.android.view.OnTouchBeyondarViewListener;
+import com.beyondar.android.world.BeyondarObject;
 import com.beyondar.android.world.GeoObject;
 import com.beyondar.android.world.World;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.util.MyLocationListener;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,9 +29,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class ARViewActivity extends ActionBarActivity {
+public class ARViewActivity extends ActionBarActivity implements
+        OnTouchBeyondarViewListener, OnClickBeyondarObjectListener {
     private BeyondarFragmentSupport mBeyondarFragment;
     private Clinic clinic = new Clinic();
     @Override
@@ -35,6 +47,8 @@ public class ARViewActivity extends ActionBarActivity {
         if(savedInstanceState != null){
             clinic.setAddress(savedInstanceState.getString("address"));
         }
+
+        getSupportActionBar().hide();
 
         List<Address> addressList = geocoding(clinic.getAddress());
 
@@ -53,29 +67,37 @@ public class ARViewActivity extends ActionBarActivity {
 // loading images form Internet and the connection get lost
         world.setDefaultImage(R.drawable.beyondar_default_unknow_icon);
 
-// User position (you can change it using the GPS listeners form Android
-// API)
-        //world.setGeoPosition(103.8021433,1.4417591);
-// User position (you can change it using the GPS listeners form Android
-// API)
-        world.setGeoPosition(41.26533734214473d, 1.925848038959814d);
+        /* Use the LocationManager class to obtain GPS locations */
+
+        LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        MyLocationListener mlocListener = new MyLocationListener();
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+
+        // User position (you can change it using the GPS listeners form Android
+        // API)
+                //world.setGeoPosition(103.8021433,1.4417591);
+        // User position (you can change it using the GPS listeners form Android
+        // API)
+        world.setGeoPosition(mlocListener.latitude, mlocListener.longitude);
 
 // Create an object with an image in the app resources.
         GeoObject go1 = new GeoObject(1l);
         go1.setGeoPosition(41.26523339794433d, 1.926036406654116d);
-        go1.setImageResource(R.drawable.medic);
         go1.setName("Creature 1");
 
 // Create an object with an image in the app resources.
         GeoObject go2 = new GeoObject(12);
 
         go2.setGeoPosition(latLng.longitude,latLng.latitude);
-        Toast.makeText(this,go2.getLatitude() + "," + go2.getLongitude(),Toast.LENGTH_LONG);
-        go2.setImageResource(R.drawable.medic);
-        go2.setName("Creature 2");
+        Log.i("Coordinate", go2.getLatitude() + "," + go2.getLongitude());
+        go2.setName(clinic.getAddress());
+
 
         world.addBeyondarObject(go1);
         world.addBeyondarObject(go2);
+
+        mBeyondarFragment.setOnTouchBeyondarViewListener(this);
+        mBeyondarFragment.setOnClickBeyondarObjectListener(this);
 
         mBeyondarFragment.setWorld(world);
     }
@@ -113,4 +135,48 @@ public class ARViewActivity extends ActionBarActivity {
         }
         return addressList;
     }
+
+    @Override
+    public void onTouchBeyondarView(MotionEvent event, BeyondarGLSurfaceView beyondarView) {
+
+        float x = event.getX();
+        float y = event.getY();
+
+        ArrayList<BeyondarObject> geoObjects = new ArrayList<BeyondarObject>();
+
+        // This method call is better to don't do it in the UI thread!
+        beyondarView.getBeyondarObjectsOnScreenCoordinates(x, y, geoObjects);
+
+        String textEvent = "";
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                textEvent = "Event type ACTION_DOWN: ";
+                break;
+            case MotionEvent.ACTION_UP:
+                textEvent = "Event type ACTION_UP: ";
+                break;
+            case MotionEvent.ACTION_MOVE:
+                textEvent = "Event type ACTION_MOVE: ";
+                break;
+            default:
+                break;
+        }
+
+        Iterator<BeyondarObject> iterator = geoObjects.iterator();
+        while (iterator.hasNext()) {
+            BeyondarObject geoObject = iterator.next();
+            textEvent = textEvent + " " + geoObject.getName();
+
+        }
+    }
+
+    @Override
+    public void onClickBeyondarObject(ArrayList<BeyondarObject> beyondarObjects) {
+        if (beyondarObjects.size() > 0) {
+            Toast.makeText(this, "Clicked on: " + beyondarObjects.get(0).getName(),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

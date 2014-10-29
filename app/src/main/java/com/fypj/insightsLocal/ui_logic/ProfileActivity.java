@@ -77,8 +77,8 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         mJazzy.setAdapter(mSectionsPagerAdapter);
 
 
-        actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Medical History").setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_collection).setTabListener(this));
     }
 
 
