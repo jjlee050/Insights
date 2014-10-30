@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import com.fypj.insightsLocal.controller.GetUserPackages;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.service.BackgroundReceiver;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
+import com.fypj.insightsLocal.util.MyLocationListener;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
 
@@ -79,6 +82,12 @@ public class MainPageActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        MyLocationListener mlocListener = new MyLocationListener();
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+
+
+        Log.i("Current Position", mlocListener.latitude + "," + mlocListener.longitude);
     }
 
     @Override

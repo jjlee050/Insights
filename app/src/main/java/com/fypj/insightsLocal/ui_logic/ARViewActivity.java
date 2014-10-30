@@ -3,6 +3,7 @@ package com.fypj.insightsLocal.ui_logic;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.util.MyLocationListener;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -37,6 +39,12 @@ public class ARViewActivity extends ActionBarActivity implements
         OnTouchBeyondarViewListener, OnClickBeyondarObjectListener {
     private BeyondarFragmentSupport mBeyondarFragment;
     private Clinic clinic = new Clinic();
+
+    private static final String PROVIDER = "flp";
+    private static final double LAT = 1.379032;
+    private static final double LNG = 103.849789;
+    private static final float ACCURACY = 5.0f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,23 +77,37 @@ public class ARViewActivity extends ActionBarActivity implements
 
         /* Use the LocationManager class to obtain GPS locations */
 
-        LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        /*LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         MyLocationListener mlocListener = new MyLocationListener();
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);*/
 
         // User position (you can change it using the GPS listeners form Android
         // API)
-                //world.setGeoPosition(103.8021433,1.4417591);
+        //world.setGeoPosition(103.8021433,1.4417591);
         // User position (you can change it using the GPS listeners form Android
         // API)
-        world.setGeoPosition(mlocListener.latitude, mlocListener.longitude);
+        //world.setGeoPosition(mlocListener.latitude, mlocListener.longitude);
 
-// Create an object with an image in the app resources.
+        // Example of creating a new Location from test data
+        Location testLocation = createLocation(LAT, LNG, ACCURACY);
+
+        //Location testLocation = createLocation(latLng.latitude,latLng.longitude, ACCURACY);
+        //world.setGeoPosition(LAT,LNG);
+        world.setGeoPosition(1.3786117d, 103.8458455d);
+
+
+        // Create an object with an image in the app resources.
         GeoObject go2 = new GeoObject(12);
+        // Define a LocationClient object
 
-        //go2.setGeoPosition(latLng.longitude,latLng.latitude);
-        go2.setGeoPosition(mlocListener.latitude,mlocListener.longitude);
+
+        go2.setGeoPosition(1.3786117d, 103.8458455d);
+        //go2.setGeoPosition(LAT, LNG);
+        //go2.setGeoPosition(1.3799775, 103.848772);
+        //go2.setGeoPosition(latLng.latitude,latLng.longitude);
         Log.i("Coordinate", go2.getLatitude() + "," + go2.getLongitude());
+        Toast.makeText(this,go2.getLatitude() + "," + go2.getLongitude(),Toast.LENGTH_LONG);
+
         go2.setName(clinic.getAddress());
 
         world.addBeyondarObject(go2);
@@ -93,6 +115,7 @@ public class ARViewActivity extends ActionBarActivity implements
         mBeyondarFragment.setOnTouchBeyondarViewListener(this);
         mBeyondarFragment.setOnClickBeyondarObjectListener(this);
 
+        mBeyondarFragment.setMaxDistanceToRender(50000);
         mBeyondarFragment.setWorld(world);
     }
 
@@ -171,6 +194,20 @@ public class ARViewActivity extends ActionBarActivity implements
             Toast.makeText(this, "Clicked on: " + beyondarObjects.get(0).getName(),
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    /*
+     * From input arguments, create a single Location with provider set to
+     * "flp"
+     */
+    public Location createLocation(double lat, double lng, float accuracy) {
+        // Create a new Location
+        Location newLocation = new Location(PROVIDER);
+        newLocation.setLatitude(lat);
+        newLocation.setLongitude(lng);
+        newLocation.setAccuracy(accuracy);
+        return newLocation;
     }
 
 }

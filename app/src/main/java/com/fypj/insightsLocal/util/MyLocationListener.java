@@ -15,6 +15,7 @@ public class MyLocationListener implements LocationListener {
     public static double longitude = 0;
     @Override
     public void onLocationChanged(Location loc){
+
         latitude = loc.getLatitude();
         longitude = loc.getLongitude();
         /*String Text = “My current location is: “ +
