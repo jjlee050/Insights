@@ -152,6 +152,6 @@ public class BackgroundService extends Service {
                 subsidiesController.insertSubsidy(subsidies);
             }
         }
-    }
 
+    }
 }

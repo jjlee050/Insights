@@ -40,11 +40,13 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
     private SwipeRefreshLayout swipeView;
     final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
     private ProgressDialog dialog;
+    private String name;
 
 
-    public GetClinic(Context context, ListView lvNearestClinic, SwipeRefreshLayout swipeView){
+    public GetClinic(Context context, String name, SwipeRefreshLayout swipeView){
         this.context = (Activity) context;
         this.lvNearestClinic = lvNearestClinic;
+        this.name = name;
         this.swipeView = swipeView;
     }
 
@@ -75,8 +77,28 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
                     ClinicArrList.add(e);
                 }
             }
+            boolean recordExists = false;
+            ArrayList<Clinic> foundClinics = new ArrayList<Clinic>();
 
-            ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
+            for(int i=0;i<ClinicArrList.size();i++){
+                if((ClinicArrList.get(i).getName().equals(name))){
+                    recordExists = true;
+                    foundClinics.add(ClinicArrList.get(i));
+                }
+            }
+
+           /* if(recordExists){
+                final ClinicSQLController controller = new ClinicSQLController(context);
+                for(int i=0;i<foundClinics.size();i++) {
+                   Clinic clinic = controller.getClinic(id, foundClinics.get(i).getClinicID());
+                    if(clinic.getClinicID() == 0){
+                        controller.insertClinic(foundClinics.get(i));
+                    }
+                }
+            }*/
+        }
+        dialog.dismiss();
+          /*  ClinicAdapter adapter = new ClinicAdapter(context, android.R.id.text1, ClinicArrList);
             lvNearestClinic.setAdapter(adapter);
 
             lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,7 +127,7 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
 
             dialog.dismiss();
             swipeView.setRefreshing(false);
-        }
+        }*/
     }
 
 
