@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ import com.beyondar.android.world.GeoObject;
 import com.beyondar.android.world.World;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
-import com.fypj.insightsLocal.util.MyLocationListener;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,10 +40,8 @@ public class ARViewActivity extends ActionBarActivity implements
     private BeyondarFragmentSupport mBeyondarFragment;
     private Clinic clinic = new Clinic();
 
-    private static final String PROVIDER = "flp";
-    private static final double LAT = 1.379032;
-    private static final double LNG = 103.849789;
-    private static final float ACCURACY = 5.0f;
+    private static String latitude = "";
+    private static String longitude = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,7 @@ public class ARViewActivity extends ActionBarActivity implements
         mBeyondarFragment = (BeyondarFragmentSupport) getSupportFragmentManager().findFragmentById(R.id.beyondarFragment);
 
         savedInstanceState = getIntent().getExtras();
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             clinic.setAddress(savedInstanceState.getString("address"));
         }
 
@@ -61,7 +59,7 @@ public class ARViewActivity extends ActionBarActivity implements
         List<Address> addressList = geocoding(clinic.getAddress());
 
         LatLng latLng = null;
-        if(addressList != null) {
+        if (addressList != null) {
             for (int i = 0; i < addressList.size(); i++) {
                 latLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
             }
@@ -77,9 +75,63 @@ public class ARViewActivity extends ActionBarActivity implements
 
         /* Use the LocationManager class to obtain GPS locations */
 
-        /*LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        MyLocationListener mlocListener = new MyLocationListener();
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);*/
+        LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationListener mlocListener = new LocationListener(){
+            @Override
+            public void onLocationChanged (Location loc){
+
+                latitude = String.valueOf(loc.getLatitude());
+                longitude = String.valueOf(loc.getLongitude());
+                Toast.makeText( getApplicationContext(), latitude + "," + longitude, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+            @Override
+            public void onProviderDisabled (String provider){
+                //Toast.makeText( getApplicationContext(),“Gps Disabled”, Toast.LENGTH_SHORT ).show();
+            }
+
+
+            @Override
+            public void onProviderEnabled (String provider){
+                //Toast.makeText( getApplicationContext(),“Gps Enabled”,Toast.LENGTH_SHORT).show();
+            }
+
+
+            @Override
+            public void onStatusChanged (String provider,int status, Bundle extras){
+
+
+            }
+        };
+
+        // getting GPS status
+        boolean isGPSEnabled = mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+// check if GPS enabled
+        if (isGPSEnabled) {
+
+            Location location = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if (location != null) {
+                longitude = String.valueOf(location.getLongitude());
+                latitude = String.valueOf(location.getLatitude());
+                mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+            } else {
+                location = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                if (location != null) {
+                    longitude = String.valueOf(location.getLongitude());
+                    latitude = String.valueOf(location.getLatitude());
+                    mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+                } else {
+                    longitude = "0.00";
+                    latitude = "0.00";
+                }
+            }
+        }
+
 
         // User position (you can change it using the GPS listeners form Android
         // API)
@@ -89,34 +141,22 @@ public class ARViewActivity extends ActionBarActivity implements
         //world.setGeoPosition(mlocListener.latitude, mlocListener.longitude);
 
         // Example of creating a new Location from test data
-        Location testLocation = createLocation(LAT, LNG, ACCURACY);
-
         //Location testLocation = createLocation(latLng.latitude,latLng.longitude, ACCURACY);
         //world.setGeoPosition(LAT,LNG);
-        world.setGeoPosition(1.3786117d, 103.8458455d);
+        world.setGeoPosition(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
 
         // Create an object with an image in the app resources.
         GeoObject go2 = new GeoObject(12);
-        // Define a LocationClient object
-
-
-        go2.setGeoPosition(1.3786117d, 103.8458455d);
-        //go2.setGeoPosition(LAT, LNG);
-        //go2.setGeoPosition(1.3799775, 103.848772);
-        //go2.setGeoPosition(latLng.latitude,latLng.longitude);
-        Log.i("Coordinate", go2.getLatitude() + "," + go2.getLongitude());
-        Toast.makeText(this,go2.getLatitude() + "," + go2.getLongitude(),Toast.LENGTH_LONG);
-
+        go2.setGeoPosition(1.440493, 103.801801);
+        Toast.makeText(this, "GO: " + go2.getLatitude() + "," + go2.getLongitude(),Toast.LENGTH_LONG);
         go2.setName(clinic.getAddress());
 
         world.addBeyondarObject(go2);
 
+        mBeyondarFragment.setWorld(world);
         mBeyondarFragment.setOnTouchBeyondarViewListener(this);
         mBeyondarFragment.setOnClickBeyondarObjectListener(this);
-
-        mBeyondarFragment.setMaxDistanceToRender(50000);
-        mBeyondarFragment.setWorld(world);
     }
 
 
@@ -196,18 +236,5 @@ public class ARViewActivity extends ActionBarActivity implements
         }
     }
 
-
-    /*
-     * From input arguments, create a single Location with provider set to
-     * "flp"
-     */
-    public Location createLocation(double lat, double lng, float accuracy) {
-        // Create a new Location
-        Location newLocation = new Location(PROVIDER);
-        newLocation.setLatitude(lat);
-        newLocation.setLongitude(lng);
-        newLocation.setAccuracy(accuracy);
-        return newLocation;
-    }
 
 }

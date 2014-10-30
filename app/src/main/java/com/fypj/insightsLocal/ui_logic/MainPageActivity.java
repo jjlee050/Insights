@@ -25,7 +25,6 @@ import com.fypj.insightsLocal.controller.GetUserPackages;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.service.BackgroundReceiver;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
-import com.fypj.insightsLocal.util.MyLocationListener;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
 
@@ -82,12 +81,6 @@ public class MainPageActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        MyLocationListener mlocListener = new MyLocationListener();
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
-
-
-        Log.i("Current Position", mlocListener.latitude + "," + mlocListener.longitude);
     }
 
     @Override
