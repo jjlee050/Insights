@@ -5,8 +5,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -29,6 +31,11 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 import android.os.Bundle;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.controller.CreateAppointment;
+import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
+import com.fypj.mymodule.api.insightsAppointment.model.Appointment;
+import com.fypj.mymodule.api.insightsUser.model.User;
+
 import android.view.View.OnClickListener;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -62,6 +69,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
 
     private Button pickTime;
+    private Appointment appointment;
 
 
     @Override
@@ -78,7 +86,13 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         clinicname = (TextView) findViewById(R.id.clinicname);
 
 
-        //clinicname.setText(bundle.getString("name"));
+        savedInstanceState = getIntent().getExtras();
+        if(savedInstanceState != null) {
+            String name = savedInstanceState.getString("name");
+            Long id = savedInstanceState.getLong("clinicID");
+
+            clinicname.setText("Clinic Name : " + name);
+        }
 
 
         cal = Calendar.getInstance();
@@ -89,7 +103,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         hours = cal.get(Calendar.HOUR_OF_DAY);
         minutes = cal.get(Calendar.MINUTE);
 
-
+       getData();
 
         //ed = (EditText) findViewById(R.id.editDate);
         //editTime = (EditText) findViewById(R.id.editTime);
@@ -131,7 +145,16 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.Submit) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
+
+
+            CreateAppointment createAppointment = new CreateAppointment(this , appointment);
+            createAppointment.execute();
+
+
+            Toast.makeText(this ,"Booking of Appointment Successfully", Toast.LENGTH_LONG ).show();
+
+
+          /*  AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
             builder1.setMessage("Booking of Appointment Successful ");
             builder1.setCancelable(true);
             builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -143,7 +166,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
             });
 
             AlertDialog alert11 = builder1.create();
-            alert11.show();
+            alert11.show();*/
 
 
         }
@@ -224,6 +247,26 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         String aTime = new StringBuilder().append(hours).append(':').append(minutes).append(" ").append(timeSet).toString();
 
         pickTime.setText(aTime);
+    }
+
+    public void getData(){
+        SharedPreferences sharedPref= getSharedPreferences("insightsPreferences", 0);
+        String nric = sharedPref.getString("nric", "");
+        if(!nric.equals("")){
+            UserSQLController controller = new UserSQLController(this);
+            User user = controller.getUser(nric);
+
+
+            EditText name = (EditText) findViewById(R.id.name);
+            EditText NRIC = (EditText) findViewById(R.id.nric);
+            EditText ContactNo = (EditText) findViewById(R.id.ContactNo);
+
+            name.setText(user.getName());
+            NRIC.setText(user.getNric());
+            ContactNo.setText(user.getContactNo());
+
+
+        }
     }
 
 

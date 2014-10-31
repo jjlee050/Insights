@@ -18,6 +18,7 @@ public class SQLiteController {
     private static final String database_subsidies = "subsidies";
     private static final String database_user_packages = "user_packages";
     private static final String database_user_subsidies = "user_subsidies";
+    private static final String database_appointment = "Appointment";
     private static final int database_version = 1;
     private DBHelper ourHelper;
     private final Context ourContext;
@@ -65,10 +66,10 @@ public class SQLiteController {
             db.execSQL("CREATE TABLE "
                     + database_user_subsidies
                     + "(userSubsidiesID LONG PRIMARY KEY, nric TEXT, subsidiesID INTEGER, balance REAL)");
-            /*db.execSQL("CREATE TABLE "
-                    + database_particpants
-                    + "(eventID INTEGER PRIMARY KEY, userNRIC TEXT, dateTImeJoined DATETIME , checkIn INTEGER)");
             db.execSQL("CREATE TABLE "
+                    + database_appointment
+                    + "(appointmentID INTEGER PRIMARY KEY, nric TEXT, name TEXT , contactNo Text, Date Text , Time Text)");
+           /* db.execSQL("CREATE TABLE "
                     + database_fb_comments
                     + "(fbPostID TEXT PRIMARY KEY, name TEXT, comment TEXT, time DATETIME)");
             db.execSQL("CREATE TABLE "
@@ -134,4 +135,6 @@ public class SQLiteController {
     public String getUserPackagesTable(){ return database_user_packages; }
 
     public String getUserSubsidiesTable(){ return database_user_subsidies; }
+
+    public String getAppointmentTable(){ return database_appointment; }
 }

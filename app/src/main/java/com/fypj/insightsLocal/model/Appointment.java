@@ -8,21 +8,24 @@ import com.fypj.insightsLocal.model.Clinic;
  * Created by L33525 on 8/10/2014.
  */
 public class Appointment {
+
     private Long appointmentID;
-    private User user;
-    private Date date;
-    private Time time;
-    private Clinic clinic;
+    private String nric;
+    private String name;
+    private String date;
+    private String time;
+    private String clinicname;
 
     public Appointment() {
     }
 
-    public Appointment(Long appointmentID, User user, Date date, Time time, Clinic clinic) {
+    public Appointment(Long appointmentID, String nric, String name , String date, String time, String clinicname) {
         this.appointmentID = appointmentID;
-        this.user = user;
+        this.nric = nric;
+        this.name = name;
         this.date = date;
         this.time = time;
-        this.clinic = clinic;
+        this.clinicname = clinicname;
     }
 
     public Long getAppointmentID() {
@@ -33,35 +36,35 @@ public class Appointment {
         this.appointmentID = appointmentID;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public String getNric() { return nric;}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public void setNric(String nric) {this.nric = nric;}
 
-    public Date getDate() {
+    public String name(){return name ;}
+
+    public void setName(String name){this.name = name;}
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public Clinic getClinic() {
-        return clinic;
+    public String getClinic() {
+        return clinicname;
     }
 
-    public void setClinic(Clinic clinic) {
-        this.clinic = clinic;
+    public void setClinic(String clinicname) {
+        this.clinicname = clinicname;
     }
 }
