@@ -14,6 +14,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,6 +46,9 @@ import com.fypj.insightsLocal.ar.ui.Marker;
 import com.fypj.insightsLocal.ar.widgets.VerticalTextView;
 import com.fypj.insightsLocal.ar.widgets.VerticalTextView;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
+import com.fypj.insightsLocal.ui_logic.ViewClinicActivity;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -61,6 +65,7 @@ public class Demo extends AugmentedReality {
     private static Toast myToast = null;
     private static VerticalTextView text = null;
 
+    private ArrayList<String> clinicIDStringList = new ArrayList<String>();
     private ArrayList<String> nameStringList = new ArrayList<String>();
     private ArrayList<String> categoryStringList = new ArrayList<String>();
     private ArrayList<String> addressStringList = new ArrayList<String>();
@@ -72,6 +77,8 @@ public class Demo extends AugmentedReality {
 
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null){
+            clinicIDStringList = savedInstanceState.getStringArrayList("clinicIDList");
+
             nameStringList = savedInstanceState.getStringArrayList("nameList");
             categoryStringList = savedInstanceState.getStringArrayList("categoryList");
 
@@ -189,8 +196,28 @@ public class Demo extends AugmentedReality {
      */
     @Override
     protected void markerTouched(Marker marker) {
-        text.setText(marker.getName());
-        myToast.show();
+        /*text.setText(marker.getName());
+        myToast.show();*/
+
+        ClinicSQLController controller = new ClinicSQLController(this);
+        ArrayList<Clinic> clinicArrList = controller.getAllClinic();
+        Clinic clinic = null;
+        for(int i=0;i<clinicArrList.size();i++){
+            if(clinicArrList.get(i).getName().equals(marker.getName())){
+                clinic = clinicArrList.get(i);
+                break;
+            }
+        }
+
+        Intent intent = new Intent(this, ViewClinicActivity.class);
+        intent.putExtra("clinicID", clinic.getClinicID());
+        intent.putExtra("name", clinic.getName());
+        intent.putExtra("address", clinic.getAddress());
+        intent.putExtra("operatingHours", clinic.getOperatingHours());
+        intent.putExtra("contactNo", clinic.getContactNo());
+        intent.putExtra("category", clinic.getCategory());
+
+        this.startActivity(intent);
     }
 
     /**

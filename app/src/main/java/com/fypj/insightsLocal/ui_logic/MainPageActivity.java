@@ -1,10 +1,14 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
@@ -24,9 +28,13 @@ import android.widget.Toast;
 import com.fypj.insightsLocal.controller.GetUserPackages;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.service.BackgroundReceiver;
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
+import com.fypj.mymodule.api.insightsEvent.model.Event;
+
+import java.util.ArrayList;
 
 /**
  * This is the activity class to show the screen with navigational drawer

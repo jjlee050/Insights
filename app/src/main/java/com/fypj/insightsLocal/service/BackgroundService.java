@@ -1,15 +1,21 @@
 package com.fypj.insightsLocal.service;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetMedicalHistory;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.PackagesSQLController;
 import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
+import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsActivity;
 import com.fypj.insightsLocal.util.HandleXML;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
@@ -30,13 +36,13 @@ public class BackgroundService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("ConnectionChecker", "Connection Checker started");
+        insertPackages();
         if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
-            HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
-            obj.fetchXML();
             GetMedicalHistory getMedicalHistory = new GetMedicalHistory(this);
             getMedicalHistory.execute();
+            HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
+            obj.fetchXML();
         }
-        insertPackages();
         notifyUser();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -46,7 +52,45 @@ public class BackgroundService extends Service {
         ArrayList<Event> eventArrList = controller.getAllEvent();
         if((eventArrList != null) && (eventArrList.size() > 0)){
             for(int i=0;i<eventArrList.size();i++){
+// Instantiate a Builder object.
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                        .setContentTitle("Upcoming Events")
+                        .setContentText("There are 4 upcoming events.")
+                        .setSmallIcon(R.drawable.hearts_logo);
+                NotificationCompat.InboxStyle inboxStyle =
+                        new NotificationCompat.InboxStyle();
+                String[] events = new String[6];
+// Sets a title for the Inbox in expanded layout
+                inboxStyle.setBigContentTitle("Event Details:");
 
+                // Moves events into the expanded layout
+                inboxStyle.addLine(eventArrList.get(i).getName());
+// Moves the expanded layout object into the notification object.
+                builder.setStyle(inboxStyle);
+// Creates an Intent for the Activity
+                Intent notifyIntent =
+                        new Intent(this, ViewAllLatestEventsActivity.class);
+// Sets the Activity to start in a new, empty task
+                notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+// Creates the PendingIntent
+                PendingIntent notifyingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                0,
+                                notifyIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+
+// Puts the PendingIntent into the notification builder
+                builder.setContentIntent(notifyingIntent);
+// Notifications are issued by sending them to the
+// NotificationManager system service.
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// Builds an anonymous Notification object from the builder, and
+// passes it to the NotificationManager
+
+                mNotificationManager.notify(0, builder.build());
             }
         }
     }
