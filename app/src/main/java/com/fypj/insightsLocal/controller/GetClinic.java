@@ -97,7 +97,7 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
             });
             ClinicSQLController controller = new ClinicSQLController(context);
             if (controller.getAllClinic().size() > 0) {
-                controller.deleteAllClinic();
+                controller.deleteAllClinic("Medical");
             }
             for (int i = 0; i < ClinicArrList.size(); i++) {
                 controller.insertClinic(ClinicArrList.get(i));

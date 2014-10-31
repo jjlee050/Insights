@@ -203,7 +203,9 @@ public class Demo extends AugmentedReality {
         ArrayList<Clinic> clinicArrList = controller.getAllClinic();
         Clinic clinic = null;
         for(int i=0;i<clinicArrList.size();i++){
-            if(clinicArrList.get(i).getName().equals(marker.getName())){
+            String markerName = clinicArrList.get(i).getName() + "\n" + clinicArrList.get(i).getOperatingHours();
+            System.out.println(markerName.equals(marker.getName()));
+            if(markerName.equals(marker.getName())){
                 clinic = clinicArrList.get(i);
                 break;
             }

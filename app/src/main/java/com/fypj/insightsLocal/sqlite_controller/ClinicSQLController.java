@@ -100,9 +100,9 @@ public class ClinicSQLController {
         return ClinicArrList;
     }
 
-    public void deleteAllClinic(){
+    public void deleteAllClinic(String category){
         conn.open();
-        conn.getDB().delete(conn.getClinicTable(), null, null);
+        conn.getDB().delete(conn.getClinicTable(), "category = ? ", new String[]{category});
         conn.close();
     }
 }

@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainPageActivity$PlaceholderFragment">
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="170dp"
+        android:id="@+id/imgBtn_latest_events"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/latest_events"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lifestyle_events"
+        android:id="@+id/tv_latest_event_name"
+        android:textSize="32dp"
+        android:textColor="@color/white"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_alignBottom="@+id/imgBtn_latest_events"
+        android:layout_alignRight="@+id/imgBtn_latest_events"
+        android:layout_alignEnd="@+id/imgBtn_latest_events" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imgBtn_latest_events"
+        android:layout_alignLeft="@+id/imgBtn_latest_events"
+        android:layout_alignStart="@+id/imgBtn_latest_events"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:id="@+id/swipe">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_latest_events"
+            android:dividerHeight="@dimen/activity_vertical_margin"
+            android:divider="@android:color/transparent"
+            android:paddingTop="@dimen/activity_vertical_margin"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>
