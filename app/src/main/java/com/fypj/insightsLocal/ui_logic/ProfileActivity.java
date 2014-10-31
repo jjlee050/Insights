@@ -27,7 +27,8 @@ import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
 import com.fypj.mymodule.api.insightsUser.model.User;
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
-public class ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
+public class
+        ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

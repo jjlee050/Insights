@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.ar.activity.Demo;
 import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.util.ViewClinicDetailsAdapter;
 
@@ -101,11 +102,6 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
         }
         else if( id == R.id.Appointment){
             Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
-            startActivity(intent);
-        }
-        else if( id == R.id.arView){
-            Intent intent = new Intent(ViewClinicActivity.this, ARViewActivity.class);
-            intent.putExtra("address", clinic.getAddress());
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

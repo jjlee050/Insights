@@ -44,5 +44,5 @@
 
     <string name="title_activity_arview">ARViewActivity</string>
     <string name="arView">AR View</string>
-
+    <string name="google_places_api_key">AIzaSyC5mTsDhjayzCqXH87ggEYsfswR1cStfX8</string>
 </resources>

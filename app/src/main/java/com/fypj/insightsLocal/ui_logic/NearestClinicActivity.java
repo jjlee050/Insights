@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 //import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.ar.activity.Demo;
 import com.fypj.insightsLocal.model.Dental;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
@@ -177,8 +178,29 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         if (id == R.id.action_settings) {
             return true;
         }
-
-
+        else if( id == R.id.arView){
+            /*Intent intent = new Intent(ViewClinicActivity.this, ARViewActivity.class);
+            intent.putExtra("address", clinic.getAddress());
+            startActivity(intent);*/
+            ClinicSQLController controller = new ClinicSQLController(NearestClinicActivity.this);
+            ArrayList<Clinic> clinicArrList = controller.getAllClinic();
+            ArrayList<String> nameList = new ArrayList<String>();
+            ArrayList<String> categoryList = new ArrayList<String>();
+            ArrayList<String> addressList = new ArrayList<String>();
+            ArrayList<String> operatingHoursList = new ArrayList<String>();
+            for(int i=0;i<clinicArrList.size();i++){
+                nameList.add(clinicArrList.get(i).getName());
+                categoryList.add(clinicArrList.get(i).getCategory());
+                addressList.add(clinicArrList.get(i).getAddress());
+                operatingHoursList.add(clinicArrList.get(i).getOperatingHours());
+            }
+            Intent intent = new Intent(this, Demo.class);
+            intent.putStringArrayListExtra("nameList",nameList);
+            intent.putStringArrayListExtra("categoryList",categoryList);
+            intent.putStringArrayListExtra("addressList",addressList);
+            intent.putStringArrayListExtra("operatingHoursList",operatingHoursList);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

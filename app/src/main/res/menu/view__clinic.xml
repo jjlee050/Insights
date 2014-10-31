@@ -8,11 +8,4 @@
         app:showAsAction="always"
         android:icon="@drawable/iappointment"
         />
-
-    <item android:id="@+id/arView"
-        android:title="@string/arView"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_directions"
-        />
 </menu>

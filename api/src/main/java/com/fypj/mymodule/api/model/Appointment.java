@@ -13,20 +13,20 @@ import java.sql.Time;
 public class Appointment {
     @Id
     private Long appointmentID;
-    private Long userID;
+    private Long clinicID;
     private String date;
     private String time;
-    private Long clinicID;
+    private String nric;
 
     public Appointment() {
     }
 
-    public Appointment(Long appointmentID, Long userID, String date, String time, Long clinicID) {
+    public Appointment(Long appointmentID, Long clinicID, String date, String time, String nric) {
         this.appointmentID = appointmentID;
-        this.userID = userID;
+        this.clinicID = clinicID;
         this.date = date;
         this.time = time;
-        this.clinicID = clinicID;
+        this.nric = nric;
     }
 
     public Long getAppointmentID() {
@@ -37,12 +37,12 @@ public class Appointment {
         this.appointmentID = appointmentID;
     }
 
-    public Long getUserID() {
-        return userID;
+    public Long getClinicID() {
+        return clinicID;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setClinicID(Long clinicID) {
+        this.clinicID = clinicID;
     }
 
     public String getDate() {
@@ -61,11 +61,11 @@ public class Appointment {
         this.time = time;
     }
 
-    public Long getClinicID() {
-        return clinicID;
+    public String getNric() {
+        return nric;
     }
 
-    public void setClinicID(Long clinicID) {
-        this.clinicID = clinicID;
+    public void setNric(String nric) {
+        this.nric = nric;
     }
 }
