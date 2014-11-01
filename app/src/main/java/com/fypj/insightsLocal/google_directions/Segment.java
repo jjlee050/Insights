@@ -17,10 +17,18 @@ public class Segment {
      */
     private int length;
     /**
+     * duration for the segment in seconds
+     */
+    private int duration;
+    /**
      * Distance covered. *
      */
     private double distance;
+    /**
+     * the mode of the segments
 
+     */
+    private String mode;
     /**
      * Create an empty segment.
      */
@@ -82,6 +90,8 @@ public class Segment {
         copy.instruction = instruction;
         copy.length = length;
         copy.distance = distance;
+        copy.mode = mode;
+        copy.duration = duration;
         return copy;
     }
 
@@ -113,4 +123,33 @@ public class Segment {
         return distance;
     }
 
+    /**
+     * @return mode
+     */
+    public String getMode() {
+        return mode;
+    }
+
+    /**
+     * @param mode set mode
+     */
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    /**
+     *
+     * @return duration
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     *
+     * @param duration set duration
+     */
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }

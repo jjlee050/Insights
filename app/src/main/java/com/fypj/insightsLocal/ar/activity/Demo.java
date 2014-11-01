@@ -92,6 +92,7 @@ public class Demo extends AugmentedReality {
         // Creating our custom text view, and setting text/rotation
         text = new VerticalTextView(getApplicationContext());
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.width = 350;
         text.setLayoutParams(params);
         text.setBackgroundResource(android.R.drawable.toast_frame);
         text.setTextAppearance(getApplicationContext(), android.R.style.TextAppearance_Small);

@@ -28,7 +28,7 @@
         android:allowBackup="true"
         android:icon="@drawable/hearts_logo"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBBhQjmi8onbM5X5akIeDv-QfDopWjQzzg" />
@@ -39,7 +39,7 @@
         <activity
             android:name=".ui_logic.LoginActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,14 +49,13 @@
         <activity
             android:name=".ui_logic.MainPageActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ui_logic.ViewAllLatestEventsActivity"
             android:label="@string/title_activity_view_event"
             android:parentActivityName=".ui_logic.MainPageActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.MainPageActivity" />
@@ -65,8 +64,7 @@
             android:name=".ui_logic.ViewEventActivity"
             android:label="@string/title_activity_view_event"
             android:parentActivityName=".ui_logic.ViewAllLatestEventsActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.ViewAllLatestEventsFragmentActivity" />
@@ -75,8 +73,7 @@
             android:name=".ui_logic.NearestClinicActivity"
             android:label="@string/title_activity_nearest_clinc"
             android:parentActivityName=".ui_logic.MainPageActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.MainPageActivity" />
@@ -90,8 +87,7 @@
             android:label="@string/title_activity_view__clinic"
             android:launchMode="singleTask"
             android:parentActivityName=".ui_logic.NearestClinicActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.NearestClinicActivity" />
@@ -99,15 +95,13 @@
         <activity
             android:name=".ui_logic.BookingAppt"
             android:label="@string/title_activity_booking_appt"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ui_logic.CheckEligibilityActivity"
             android:label="@string/title_activity_check_eligibilty"
             android:parentActivityName=".ui_logic.ProfileActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.ProfileActivity" />
@@ -116,8 +110,7 @@
             android:name=".ui_logic.ViewAllPioneerPackagesActivity"
             android:label="@string/title_activity_view_pioneer_package"
             android:parentActivityName=".ui_logic.MainPageActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
@@ -126,8 +119,7 @@
             android:name=".ui_logic.ViewPioneerPackageActivity"
             android:label="@string/title_activity_view_pioneer_package"
             android:parentActivityName=".ui_logic.ViewAllPioneerPackagesActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui_logic.ViewAllPioneerPackagesActivity" />
@@ -136,8 +128,7 @@
             android:name=".ui_logic.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:parentActivityName=".ui_logic.MainPageActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
@@ -146,8 +137,7 @@
             android:name=".ui_logic.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".ui_logic.MainPageActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fypj.insightsLocal.ui_logic.MainPageActivity" />
@@ -170,6 +160,14 @@
             android:name=".ar.activity.Demo"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".ui_logic.GetDirectionsActivity"
+            android:label="@string/title_activity_get_directions"
+            android:parentActivityName=".ui_logic.ViewClinicActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fypj.insightsLocal.ui_logic.ViewClinicActivity" />
         </activity>
     </application>
 

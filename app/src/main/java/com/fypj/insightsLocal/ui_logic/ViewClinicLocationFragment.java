@@ -4,7 +4,10 @@ package com.fypj.insightsLocal.ui_logic;
  * Created by L33525 on 22/9/2014.
  */
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,6 +16,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -42,7 +48,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ViewClinicLocationFragment extends Fragment implements RoutingListener {
+public class ViewClinicLocationFragment extends Fragment{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -50,6 +56,7 @@ public class ViewClinicLocationFragment extends Fragment implements RoutingListe
     private static final String ARG_SECTION_NUMBER = "section_number";
     private Clinic clinic = new Clinic();
     private GoogleMap map;
+    private LatLng destLatLng;
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -64,6 +71,56 @@ public class ViewClinicLocationFragment extends Fragment implements RoutingListe
 
     public ViewClinicLocationFragment() {
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if(last != null) {
+            setHasOptionsMenu(true);
+        }
+        else{
+            setHasOptionsMenu(false);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.view_clinic_location,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        else if( id == R.id.directions){
+            if(destLatLng != null) {
+                Intent intent = new Intent(this.getActivity(), GetDirectionsActivity.class);
+                intent.putExtra("lat", destLatLng.latitude);
+                intent.putExtra("lng", destLatLng.longitude);
+                intent.putExtra("address", clinic.getAddress());
+                startActivity(intent);
+            }
+            else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+                builder.setTitle("Error in retrieving destination");
+                builder.setMessage("Unable to retrieve destination. Please try again.");
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                    }
+                });
+                builder.create().show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,9 +140,9 @@ public class ViewClinicLocationFragment extends Fragment implements RoutingListe
         // Get a handle to the Map Fragment
         map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
 
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        //LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        //Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         List<Address> addressList = geocoding(clinic.getAddress());
 
@@ -93,25 +150,12 @@ public class ViewClinicLocationFragment extends Fragment implements RoutingListe
         LatLng latLng = null;
         if (addressList != null) {
             for (int i = 0; i < addressList.size(); i++) {
-                latLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
+                destLatLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
             }
             if (latLng != null) {
                 Marker marker = map.addMarker(new MarkerOptions().title(clinic.getAddress()).position(latLng));
-
-                if(last != null) {
-                    startLatLng = new LatLng(last.getLatitude(),last.getLongitude());
-
-                    //startLatLng = new LatLng(1.441338,103.802331);
-                    System.out.println("LatLng: " + last.getLatitude() + "," + last.getLongitude());
-
-                    Routing routing = new Routing(Routing.TravelMode.TRANSIT);
-                    routing.registerListener(this);
-                    routing.execute(startLatLng, latLng);
-                }
-                else{
-                    Toast.makeText(this.getActivity(), "Location Services is not turned on.", Toast.LENGTH_LONG).show();
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-                }
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                marker.showInfoWindow();
             } else {
                 showSingapore(map);
             }
@@ -157,35 +201,5 @@ public class ViewClinicLocationFragment extends Fragment implements RoutingListe
 
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(singapore, 10));
-    }
-
-
-
-    @Override
-    public void onRoutingFailure() {
-
-    }
-
-    @Override
-    public void onRoutingStart() {
-
-    }
-
-    @Override
-    public void onRoutingSuccess(PolylineOptions mPolyOptions, Route route) {
-        PolylineOptions polyoptions = new PolylineOptions();
-        polyoptions.color(Color.BLUE);
-        polyoptions.width(10);
-        polyoptions.addAll(mPolyOptions.getPoints());
-        map.addPolyline(polyoptions);
-
-        List<Segment> segmentsArrList = route.getSegments();
-        for(int i=0;i<segmentsArrList.size();i++) {
-            Marker marker = map.addMarker(
-                new MarkerOptions().position(segmentsArrList.get(i).startPoint()).title(segmentsArrList.get(i).getInstruction() + "\n" + segmentsArrList.get(i).getLength())
-            );
-        }
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(segmentsArrList.get(0).startPoint(), 16));
-
     }
 }

@@ -122,33 +122,9 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
         });
 
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setIcon(android.R.drawable.ic_menu_directions).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_place).setTabListener(this));
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.view__clinic, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if( id == R.id.Appointment){
-            Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());
