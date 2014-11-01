@@ -29,16 +29,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GetUserSubsidies extends AsyncTask<Void, Void, List<UserSubsidies>> {
     private static InsightsUserSubsidies myApiService = null;
-    private Activity context;
+    private Context context;
     private ArrayList<UserSubsidies> userSubsidiesArrList = new ArrayList<UserSubsidies>();
-    private ProgressDialog dialog;
     private String nric;
 
 
-    public GetUserSubsidies(Context context, String nric, ProgressDialog dialog){
-        this.context = (Activity) context;
+    public GetUserSubsidies(Context context, String nric){
+        this.context = context;
         this.nric = nric;
-        this.dialog = dialog;
     }
 
 
@@ -82,27 +80,11 @@ public class GetUserSubsidies extends AsyncTask<Void, Void, List<UserSubsidies>>
                 }
             }
         }
-        dialog.dismiss();
 
     }
 
     private void errorOnExecuting(final String message){
         this.cancel(true);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Error verifying user ");
-                builder.setMessage(message);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
-            }
-        });
     }
 
 }

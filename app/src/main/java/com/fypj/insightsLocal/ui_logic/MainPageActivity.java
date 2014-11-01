@@ -76,11 +76,6 @@ public class MainPageActivity extends ActionBarActivity
 
         getSupportActionBar().setTitle("Home");
 
-        SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
-        String nric = sharedPref.getString("nric","");
-
-        new GetUserPackages(this,nric).execute();
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 

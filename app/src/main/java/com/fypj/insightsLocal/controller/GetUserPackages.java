@@ -30,22 +30,14 @@ import java.util.List;
  */
 public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
     private static InsightsUserPackages myApiService = null;
-    private Activity context;
+    private Context context;
     private List<UserPackages> userPackagesArrList = new ArrayList<UserPackages>();
-    private ProgressDialog dialog;
     private String nric;
 
     public GetUserPackages(Context context, String nric){
-        this.context = (Activity) context;
+        this.context = context;
         this.nric = nric;
     }
-
-    @Override
-    protected void onPreExecute() {
-        dialog = ProgressDialog.show(context,
-                "Retrieving user information.", "Please wait...", true);
-    }
-
     @Override
     protected List<UserPackages> doInBackground(Void... voids) {
         if(myApiService == null) {  // Only do this once
@@ -88,26 +80,11 @@ public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
             }
         }
 
-        new GetUserSubsidies(context,nric,dialog).execute();
+        new GetUserSubsidies(context,nric).execute();
     }
 
     private void errorOnExecuting(final String message){
         this.cancel(true);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Error verifying user ");
-                builder.setMessage(message);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
-            }
-        });
     }
 
 }

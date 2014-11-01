@@ -5,12 +5,14 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetMedicalHistory;
+import com.fypj.insightsLocal.controller.GetUserPackages;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.PackagesSQLController;
@@ -37,7 +39,16 @@ public class BackgroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("ConnectionChecker", "Connection Checker started");
         insertPackages();
+
+        SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        String nric = sharedPref.getString("nric", "");
+
         if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
+
+            if (!nric.equals("")){
+                new GetUserPackages(this, nric).execute();
+            }
+
             GetMedicalHistory getMedicalHistory = new GetMedicalHistory(this);
             getMedicalHistory.execute();
             HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
