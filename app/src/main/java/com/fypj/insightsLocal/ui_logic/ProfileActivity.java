@@ -78,8 +78,8 @@ public class
         mJazzy.setAdapter(mSectionsPagerAdapter);
 
 
-        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_collection).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_info_outline_white_24dp).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_folder_open_white_24dp).setTabListener(this));
     }
 
 
