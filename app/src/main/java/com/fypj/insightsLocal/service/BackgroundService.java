@@ -24,7 +24,11 @@ import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
 import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class BackgroundService extends Service {
     public BackgroundService() {
@@ -77,11 +81,28 @@ public class BackgroundService extends Service {
                     new NotificationCompat.InboxStyle();
             String[] events = new String[6];
 // Sets a title for the Inbox in expanded layout
-            inboxStyle.setBigContentTitle("Event Details:");
+            inboxStyle.setBigContentTitle("Today's Event:");
+            boolean hasEvent = false;
             for(int i=0;i<eventArrList.size();i++){
-
-                // Moves events into the expanded layout
-                inboxStyle.addLine(eventArrList.get(i).getName());
+                DateFormat df = new SimpleDateFormat("dd MMMM yyyy h:mma");
+                try {
+                    Date dt = df.parse(eventArrList.get(0).getDateAndTime().substring(0, eventArrList.get(0).getDateAndTime().lastIndexOf("to") - 1));
+                    Date dnow = new Date();
+                    Calendar ca = Calendar.getInstance();
+                    Calendar cnow = Calendar.getInstance();
+                    ca.setTime(dt);
+                    cnow.setTime(dnow);
+                    int differenceInDays = (int) Math.floor((ca.getTimeInMillis()-cnow.getTimeInMillis())/-86400000);
+                    int days = -86400000 * differenceInDays;
+                    if (cnow.getTimeInMillis() - ca.getTimeInMillis() < 0) {
+                        // Moves events into the expanded layout
+                        inboxStyle.addLine(eventArrList.get(i).getName());
+                        hasEvent = true;
+                    }
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
             }
 
 // Moves the expanded layout object into the notification object.
@@ -108,8 +129,9 @@ public class BackgroundService extends Service {
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 // Builds an anonymous Notification object from the builder, and
 // passes it to the NotificationManager
-
-            mNotificationManager.notify(0, builder.build());
+            if(hasEvent) {
+                mNotificationManager.notify(0, builder.build());
+            }
         }
     }
 
