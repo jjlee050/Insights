@@ -85,7 +85,7 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
         if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_info_outline_white_24dp).setTabListener(this));
-            actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_place).setTabListener(this));
+            actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_place_white_24dp).setTabListener(this));
 
         }
         else{

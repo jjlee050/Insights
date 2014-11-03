@@ -82,7 +82,7 @@ public class AppointmentEndpoint {
     public Appointment insertAppointment(Appointment appointment) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
-        if (appointment.getAppointmentID() != null) {
+        if (appointment.getAppointmentID() == null) {
             if (findRecord(appointment.getAppointmentID()) != null) {
                 throw new ConflictException("Object already exists");
             }
