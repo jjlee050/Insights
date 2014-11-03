@@ -73,7 +73,10 @@ public class GetEvent extends AsyncTask<Void, Void, List<Event>> implements Sett
                 controller.deleteAllEvents();
             }
             for(int i=0;i<latestEventArrList.size();i++) {
-                controller.insertEvent(latestEventArrList.get(i));
+                Event event = controller.getEvent(latestEventArrList.get(i).getEventID());
+                if(event.getEventID().equals(Long.parseLong("0"))) {
+                    controller.insertEvent(latestEventArrList.get(i));
+                }
             }
         }
     }

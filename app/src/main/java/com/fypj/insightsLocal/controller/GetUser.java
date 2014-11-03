@@ -1,10 +1,12 @@
 package com.fypj.insightsLocal.controller;
 
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
@@ -101,6 +103,16 @@ public class GetUser extends AsyncTask<Void,Void,List<User>>{
                 context.errorOnExecuting(message);
             }
         });
+    }
+
+    private boolean isMyServiceRunning() {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if ("com.fypj.insightsLocal.service.BackgroundService".equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

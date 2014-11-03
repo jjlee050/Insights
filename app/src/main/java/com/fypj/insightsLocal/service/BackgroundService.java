@@ -15,6 +15,7 @@ import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetEvent;
 import com.fypj.insightsLocal.controller.GetMedicalHistory;
 import com.fypj.insightsLocal.controller.GetUserPackages;
+import com.fypj.insightsLocal.controller.GetUserSubsidies;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.PackagesSQLController;
@@ -53,6 +54,7 @@ public class BackgroundService extends Service {
 
             if (!nric.equals("")){
                 new GetUserPackages(this, nric).execute();
+                new GetUserSubsidies(this, nric).execute();
             }
 
             GetMedicalHistory getMedicalHistory = new GetMedicalHistory(this);

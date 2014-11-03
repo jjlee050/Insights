@@ -70,17 +70,16 @@ public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
             Log.i("Size", String.valueOf(foundUserPackages.size()));
             if(recordExists){
                 final UserPackagesSQLController controller = new UserPackagesSQLController(context);
-                controller.deleteAllUserPackages();
+                //controller.deleteAllUserPackages();
                 for(int i=0;i<foundUserPackages.size();i++) {
                     UserPackages userPackages = controller.getUserPackages(nric, foundUserPackages.get(i).getPackagesID());
-                    if(userPackages.getPackagesID() == 0){
+                    if(userPackages.getPackagesID().equals(Long.parseLong("0"))){
                         controller.insertUserPackage(foundUserPackages.get(i));
                     }
                 }
             }
         }
 
-        new GetUserSubsidies(context,nric).execute();
     }
 
     private void errorOnExecuting(final String message){

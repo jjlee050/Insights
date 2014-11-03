@@ -40,8 +40,6 @@ public class LoginActivity extends ActionBarActivity implements Settings {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         BackgroundReceiver br = new BackgroundReceiver();
         IntentFilter intentFilter = new IntentFilter(BROADCAST);
         registerReceiver(br , intentFilter);
