@@ -44,7 +44,7 @@ public class BackgroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.v("ConnectionChecker", "Connection Checker started");
+        Log.v("Connection Checker", "Connection Checker started");
         insertPackages();
 
         SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
