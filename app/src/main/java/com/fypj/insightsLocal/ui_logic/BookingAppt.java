@@ -34,6 +34,7 @@ import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.CreateAppointment;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.mymodule.api.insightsAppointment.model.Appointment;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.fypj.mymodule.api.insightsUser.model.User;
 
 import android.view.View.OnClickListener;
@@ -72,6 +73,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
     private Button pickTime;
     private Appointment appointment = new Appointment();
+    private Clinic clinic = new Clinic();
     private Long clinicID;
     private String address;
 
@@ -90,11 +92,14 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         clinicname = (TextView) findViewById(R.id.clinicname);
 
 
+
+
+
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null) {
             String name = savedInstanceState.getString("name");
             clinicID = savedInstanceState.getLong("clinicID");
-            address = savedInstanceState.getString("Address");
+            address = savedInstanceState.getString("address");
 
             clinicname.setText("Clinic Name : " + name);
 
@@ -183,7 +188,6 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
 
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -1,6 +1,7 @@
 package com.fypj.insightsLocal.util;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class DentalAdapter extends ArrayAdapter {
         TextView tvClinicOH = (TextView) rowView.findViewById(R.id.tv_Clinic_OH);
         ImageView ivImg = (ImageView) rowView.findViewById(R.id.iv_img);
 
-        if(position != 3){
+        if(position != 4){
             ivImg.setVisibility(View.VISIBLE);
             if(position == 0){
                 ivImg.setImageResource(R.drawable.teeth);
@@ -51,6 +52,11 @@ public class DentalAdapter extends ArrayAdapter {
 
             }
             else if(position == 2){
+                ivImg.setImageResource(R.drawable.teeth);
+
+        }
+
+            else if(position == 3){
                 ivImg.setImageResource(R.drawable.teeth);
 
             }

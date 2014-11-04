@@ -76,7 +76,6 @@ public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     protected void onPostExecute(Boolean result){
         dialog.dismiss();
-        Toast.makeText(context, "Booking of Appointment Successfully", Toast.LENGTH_LONG).show();
 
 
       //  Intent intent = new Intent(context, NearestClinicActivity.class);
@@ -105,6 +104,8 @@ public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
         calIntent.putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
 
         context.startActivity(calIntent);
+        Toast.makeText(context, "Booking of Appointment Successfully", Toast.LENGTH_LONG).show();
+
 
     }
 

@@ -40,18 +40,22 @@ public class ClinicAdapter extends ArrayAdapter<Clinic> {
         TextView tvClinicOH = (TextView) rowView.findViewById(R.id.tv_Clinic_OH);
         ImageView ivImg = (ImageView) rowView.findViewById(R.id.iv_img);
 
-        if(position != 3){
+        if(position != 4){
             ivImg.setVisibility(View.VISIBLE);
             if(position == 0){
-                ivImg.setImageResource(R.drawable.familyclinic);
+                ivImg.setImageResource(R.drawable.pic_medical);
 
             }
             else if(position == 1){
-                ivImg.setImageResource(R.drawable.medical_clinic);
+                ivImg.setImageResource(R.drawable.pic_medical);
 
             }
             else if(position == 2){
-                ivImg.setImageResource(R.drawable.amk_family);
+                ivImg.setImageResource(R.drawable.pic_medical);
+
+            }
+            else if(position == 3){
+                ivImg.setImageResource(R.drawable.pic_medical);
 
             }
 

@@ -62,7 +62,7 @@ public class ClinicSQLController {
     public Clinic getClinic (Long clinicID){
         Clinic clinic = new Clinic();
         conn.open();
-        Cursor cursor = conn.getDB().query(conn.getClinicTable(),null,"clinicID = ?", new String[]{ String.valueOf(clinicID) }, null, null, null, null);
+        Cursor cursor = conn.getDB().query(conn.getClinicTable(),null,"category = ?", new String[]{ String.valueOf(clinicID) }, null, null, null, null);
         if(cursor.moveToFirst()){
             clinic.setClinicID(cursor.getLong(cursor.getColumnIndex("clinicID")));
             clinic.setName(cursor.getString(cursor.getColumnIndex("name")));
@@ -83,6 +83,27 @@ public class ClinicSQLController {
         ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
         conn.open();
         Cursor cursor = conn.getDB().query(conn.getClinicTable(), null, "name LIKE '%" + query + "%' AND category = '"+category+"'", null, null, null,null, null);
+        if(cursor.moveToFirst()){
+            do{
+                Clinic clinic = new Clinic();
+                clinic.setClinicID(cursor.getLong(cursor.getColumnIndex("clinicID")));
+                clinic.setName(cursor.getString(cursor.getColumnIndex("name")));
+                clinic.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+                clinic.setOperatingHours(cursor.getString(cursor.getColumnIndex("operatingHours")));
+                clinic.setContactNo(cursor.getString(cursor.getColumnIndex("contactNo")));
+                clinic.setCategory(cursor.getString(cursor.getColumnIndex("category")));
+
+                ClinicArrList.add(clinic);
+            }while(cursor.moveToNext());
+        }
+        conn.close();
+        return ClinicArrList;
+    }
+
+    public ArrayList<Clinic> getAllCategoryClinic(String category){
+        ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
+        conn.open();
+        Cursor cursor = conn.getDB().query(conn.getClinicTable(), null, "category = '"+category+"'", null, null, null,null, null);
         if(cursor.moveToFirst()){
             do{
                 Clinic clinic = new Clinic();

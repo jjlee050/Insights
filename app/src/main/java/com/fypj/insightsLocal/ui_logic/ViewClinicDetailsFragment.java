@@ -12,9 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 
 /**
  * Created by L33524 on 22/9/2014.
@@ -23,11 +25,15 @@ public class ViewClinicDetailsFragment extends Fragment{
 
     private final String ARG_SECTION_NUMBER = "section_number";
     ViewClinicActivity activity;
-
+    private Clinic clinic = new Clinic();
     private TextView tvClinicName;
     private TextView tvClinicAddress;
     private TextView tvClinicOH;
     private TextView tvClinicContactNo;
+    private Long ClinicID;
+    private ImageButton imgBtn_;
+    private String category;
+
 
     public ViewClinicDetailsFragment newInstance(ViewClinicActivity activity,int sectionNumber) {
         ViewClinicDetailsFragment fragment = new ViewClinicDetailsFragment();
@@ -40,6 +46,8 @@ public class ViewClinicDetailsFragment extends Fragment{
 
     public ViewClinicDetailsFragment() {
     }
+
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +69,12 @@ public class ViewClinicDetailsFragment extends Fragment{
         }
         else if( id == R.id.Appointment){
             Intent intent = new Intent(this.getActivity(), BookingAppt.class);
+
+            intent.putExtra("clinicID",ClinicID);
+            intent.putExtra("name", tvClinicName.getText().toString());
+            intent.putExtra("address",tvClinicAddress.getText().toString());
             startActivity(intent);
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -77,6 +90,7 @@ public class ViewClinicDetailsFragment extends Fragment{
         tvClinicAddress = (TextView) rootView.findViewById(R.id.tv_Clinic_Address);
         tvClinicOH = (TextView) rootView.findViewById(R.id.tv_ClinicOH);
         tvClinicContactNo = (TextView) rootView.findViewById(R.id.tv_Clinic_Contact);
+        imgBtn_ = (ImageButton) rootView.findViewById(R.id.imgBtn_latest_events);
 
 
         tvClinicName.setText(bundle.getString("name"));
@@ -84,7 +98,16 @@ public class ViewClinicDetailsFragment extends Fragment{
         tvClinicOH.setText(bundle.getString("operatingHours"));
         tvClinicContactNo.setText(bundle.getString("contactNo"));
 
-
+        ClinicID = bundle.getLong("clinicID");
+        category = bundle.getString("category");
+        if (category.equals("Medical"))
+        {
+         imgBtn_.setImageResource(R.drawable.pic_medical);
+        }
+        else if (category.equals("Dental"))
+        {
+            imgBtn_.setImageResource(R.drawable.teeth);
+        }
 
         return rootView;
     }

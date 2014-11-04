@@ -22,6 +22,7 @@ import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetClinic;
 import com.fypj.insightsLocal.controller.GetDental;
 import com.fypj.insightsLocal.model.Clinic;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.util.DentalAdapter;
 
 import java.util.ArrayList;
@@ -85,24 +86,7 @@ public class NearestDentalFragment extends Fragment {
 
         final ListView lvNearestDental = (ListView) rootView.findViewById(R.id.lv_nearest_dental);
 
-        /*final ArrayList<Clinic> DentalArrList = new ArrayList<Clinic>();
-        DentalArrList.add(new Clinic(1, "A St*R Dental Surgery", "Mon - Fri: 9.00am - 9.00pm\n\nSat: 9.00am - 5.00pm\n\nSun: 9.00am -1.00pm\n\n(Closed on Public Holidays)"));
-        DentalArrList.add(new Clinic(2, "Ace Dental Centre", "Mon - Fri: 9.00am - 8.00pm\n\nSat-Sun: 9.00am - 1.00pm\n\n(Closed on Public Holidays)"));
-        DentalArrList.add(new Clinic(3, "Amk Central Dental Surgery", "Mon - Fri: 9.00am - 12.30pm,\n2.00pm - 4.30pm\n\nSat-Sun:9.00am - 12.30pm"));
-
-
-        DentalAdapter adapter = new DentalAdapter(this.getActivity(), android.R.id.text1, DentalArrList);
-        lvNearestClinic.setAdapter(adapter);
-
-        lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(NearestDentalFragment.this.getActivity(),ViewClinicActivity.class);
-                intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",DentalArrList.get(position).getClinicName());
-                intent.putExtra("ClinicOH",DentalArrList.get(position).getClinicOH());
-                startActivity(intent);
-            }
+        /*
         });*/
         swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 
@@ -152,11 +136,33 @@ public class NearestDentalFragment extends Fragment {
 
 
     private void getAllClinic(ListView lvNearestDental){
-        new GetDental(NearestDentalFragment.this.getActivity(),lvNearestDental,swipeView).execute();
+
+        ClinicSQLController clinicSQLController = new ClinicSQLController(this.getActivity());
+
+        final ArrayList<com.fypj.mymodule.api.insightsClinics.model.Clinic> ClinicArrList = clinicSQLController.getAllCategoryClinic("Dental");
+
+        DentalAdapter adapter = new DentalAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
+        lvNearestDental.setAdapter(adapter);
+
+        lvNearestDental.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(NearestDentalFragment.this.getActivity(), ViewClinicActivity.class);
+                intent.putExtra("clinicID", ClinicArrList.get(position).getClinicID());
+                intent.putExtra("name", ClinicArrList.get(position).getName());
+                intent.putExtra("address", ClinicArrList.get(position).getAddress());
+                intent.putExtra("operatingHours", ClinicArrList.get(position).getOperatingHours());
+                intent.putExtra("contactNo", ClinicArrList.get(position).getContactNo());
+                intent.putExtra("category", ClinicArrList.get(position).getCategory());;
+
+                startActivity(intent);
+            }
+        });
+        }
 
     }
 
 
 
 
-}
+
