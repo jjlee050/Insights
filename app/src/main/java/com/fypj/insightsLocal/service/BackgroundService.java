@@ -82,7 +82,6 @@ public class BackgroundService extends Service {
                     .setSmallIcon(R.drawable.hearts_logo);
             NotificationCompat.InboxStyle inboxStyle =
                     new NotificationCompat.InboxStyle();
-            String[] events = new String[6];
 // Sets a title for the Inbox in expanded layout
             inboxStyle.setBigContentTitle("Today's Event:");
             boolean hasEvent = false;
