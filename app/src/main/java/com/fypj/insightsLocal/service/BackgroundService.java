@@ -1,22 +1,36 @@
 package com.fypj.insightsLocal.service;
 
+import android.app.ActivityManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.controller.GetEvent;
 import com.fypj.insightsLocal.controller.GetMedicalHistory;
-import com.fypj.insightsLocal.controller.GetUser;
+import com.fypj.insightsLocal.controller.GetUserPackages;
+import com.fypj.insightsLocal.controller.GetUserSubsidies;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.PackagesSQLController;
 import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
+import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsActivity;
 import com.fypj.insightsLocal.util.HandleXML;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
 import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class BackgroundService extends Service {
     public BackgroundService() {
@@ -31,14 +45,26 @@ public class BackgroundService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("ConnectionChecker", "Connection Checker started");
+        insertPackages();
+
+        SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        String nric = sharedPref.getString("nric", "");
+
         if(CheckNetworkConnection.isNetworkConnectionAvailable(this)) {
-            HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
-            obj.fetchXML();
+
+            if (!nric.equals("")){
+                new GetUserPackages(this, nric).execute();
+                new GetUserSubsidies(this, nric).execute();
+            }
+
             GetMedicalHistory getMedicalHistory = new GetMedicalHistory(this);
             getMedicalHistory.execute();
+            GetEvent getEvent = new GetEvent(this);
+            getEvent.execute();
 
+            /*HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
+            obj.fetchXML();*/
         }
-        insertPackages();
         notifyUser();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -47,8 +73,67 @@ public class BackgroundService extends Service {
         EventSQLController controller = new EventSQLController(this);
         ArrayList<Event> eventArrList = controller.getAllEvent();
         if((eventArrList != null) && (eventArrList.size() > 0)){
-            for(int i=0;i<eventArrList.size();i++){
 
+// Instantiate a Builder object.
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setContentTitle("Today's Events")
+                    .setContentText("Scroll down to view today's events.")
+                    .setTicker("Today's events")
+                    .setSmallIcon(R.drawable.hearts_logo);
+            NotificationCompat.InboxStyle inboxStyle =
+                    new NotificationCompat.InboxStyle();
+            String[] events = new String[6];
+// Sets a title for the Inbox in expanded layout
+            inboxStyle.setBigContentTitle("Today's Event:");
+            boolean hasEvent = false;
+            for(int i=0;i<eventArrList.size();i++){
+                DateFormat df = new SimpleDateFormat("dd MMMM yyyy h:mma");
+                try {
+                    Date dt = df.parse(eventArrList.get(0).getDateAndTime().substring(0, eventArrList.get(0).getDateAndTime().lastIndexOf("to") - 1));
+                    Date dnow = new Date();
+                    Calendar ca = Calendar.getInstance();
+                    Calendar cnow = Calendar.getInstance();
+                    ca.setTime(dt);
+                    cnow.setTime(dnow);
+                    int differenceInDays = (int) Math.floor((ca.getTimeInMillis()-cnow.getTimeInMillis())/-86400000);
+                    int days = -86400000 * differenceInDays;
+                    if (cnow.getTimeInMillis() - ca.getTimeInMillis() < 0) {
+                        // Moves events into the expanded layout
+                        inboxStyle.addLine(eventArrList.get(i).getName());
+                        hasEvent = true;
+                    }
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+// Moves the expanded layout object into the notification object.
+            builder.setStyle(inboxStyle);
+// Creates an Intent for the Activity
+            Intent notifyIntent =
+                    new Intent(this, ViewAllLatestEventsActivity.class);
+// Sets the Activity to start in a new, empty task
+            notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+// Creates the PendingIntent
+            PendingIntent notifyingIntent =
+                    PendingIntent.getActivity(
+                            this,
+                            0,
+                            notifyIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+
+// Puts the PendingIntent into the notification builder
+            builder.setContentIntent(notifyingIntent);
+// Notifications are issued by sending them to the
+// NotificationManager system service.
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// Builds an anonymous Notification object from the builder, and
+// passes it to the NotificationManager
+            if(hasEvent) {
+                mNotificationManager.notify(0, builder.build());
             }
         }
     }
@@ -166,6 +251,15 @@ public class BackgroundService extends Service {
                 subsidiesController.insertSubsidy(subsidies);
             }
         }
+    }
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

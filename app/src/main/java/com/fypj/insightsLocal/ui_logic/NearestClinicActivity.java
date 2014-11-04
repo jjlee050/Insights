@@ -184,17 +184,20 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
             startActivity(intent);*/
             ClinicSQLController controller = new ClinicSQLController(NearestClinicActivity.this);
             ArrayList<Clinic> clinicArrList = controller.getAllClinic();
+            ArrayList<String> clinicIDList = new ArrayList<String>();
             ArrayList<String> nameList = new ArrayList<String>();
             ArrayList<String> categoryList = new ArrayList<String>();
             ArrayList<String> addressList = new ArrayList<String>();
             ArrayList<String> operatingHoursList = new ArrayList<String>();
             for(int i=0;i<clinicArrList.size();i++){
+                clinicIDList.add(String.valueOf(clinicArrList.get(i).getClinicID()));
                 nameList.add(clinicArrList.get(i).getName());
                 categoryList.add(clinicArrList.get(i).getCategory());
                 addressList.add(clinicArrList.get(i).getAddress());
                 operatingHoursList.add(clinicArrList.get(i).getOperatingHours());
             }
             Intent intent = new Intent(this, Demo.class);
+            intent.putStringArrayListExtra("clinicIDList",clinicIDList);
             intent.putStringArrayListExtra("nameList",nameList);
             intent.putStringArrayListExtra("categoryList",categoryList);
             intent.putStringArrayListExtra("addressList",addressList);

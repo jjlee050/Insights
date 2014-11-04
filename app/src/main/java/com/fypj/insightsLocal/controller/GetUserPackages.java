@@ -30,22 +30,14 @@ import java.util.List;
  */
 public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
     private static InsightsUserPackages myApiService = null;
-    private Activity context;
+    private Context context;
     private List<UserPackages> userPackagesArrList = new ArrayList<UserPackages>();
-    private ProgressDialog dialog;
     private String nric;
 
     public GetUserPackages(Context context, String nric){
-        this.context = (Activity) context;
+        this.context = context;
         this.nric = nric;
     }
-
-    @Override
-    protected void onPreExecute() {
-        dialog = ProgressDialog.show(context,
-                "Retrieving user information.", "Please wait...", true);
-    }
-
     @Override
     protected List<UserPackages> doInBackground(Void... voids) {
         if(myApiService == null) {  // Only do this once
@@ -78,36 +70,20 @@ public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
             Log.i("Size", String.valueOf(foundUserPackages.size()));
             if(recordExists){
                 final UserPackagesSQLController controller = new UserPackagesSQLController(context);
-                controller.deleteAllUserPackages();
+                //controller.deleteAllUserPackages();
                 for(int i=0;i<foundUserPackages.size();i++) {
                     UserPackages userPackages = controller.getUserPackages(nric, foundUserPackages.get(i).getPackagesID());
-                    if(userPackages.getPackagesID() == 0){
+                    if(userPackages.getPackagesID().equals(Long.parseLong("0"))){
                         controller.insertUserPackage(foundUserPackages.get(i));
                     }
                 }
             }
         }
 
-        new GetUserSubsidies(context,nric,dialog).execute();
     }
 
     private void errorOnExecuting(final String message){
         this.cancel(true);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Error verifying user ");
-                builder.setMessage(message);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
-            }
-        });
     }
 
 }

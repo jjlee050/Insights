@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.util.LatestEventsListAdapter;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
@@ -82,6 +83,9 @@ public class ViewAllLatestEventsActivity extends ActionBarActivity {
                     swipeView.setEnabled(false);
             }
         });
+        if(CheckNetworkConnection.isNetworkConnectionAvailable(this)){
+
+        }
         refresh(false);
     }
 

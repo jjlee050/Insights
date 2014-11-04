@@ -39,6 +39,13 @@ public class LoginActivity extends ActionBarActivity implements Settings {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        BackgroundReceiver br = new BackgroundReceiver();
+        IntentFilter intentFilter = new IntentFilter(BROADCAST);
+        registerReceiver(br , intentFilter);
+        Intent intent = new Intent(BROADCAST);
+        sendBroadcast(intent);
+
         setContentView(R.layout.activity_login);
 
         getSupportActionBar().hide();
@@ -46,12 +53,6 @@ public class LoginActivity extends ActionBarActivity implements Settings {
         getData();
         etNric = (EditText) findViewById(R.id.et_nric);
         etPassword = (EditText) findViewById(R.id.et_password);
-
-        BackgroundReceiver br = new BackgroundReceiver();
-        IntentFilter intentFilter = new IntentFilter(BROADCAST);
-        registerReceiver(br , intentFilter);
-        Intent intent = new Intent(BROADCAST);
-        sendBroadcast(intent);
     }
 
 

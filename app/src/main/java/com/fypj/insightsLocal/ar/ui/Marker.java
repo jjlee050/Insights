@@ -104,7 +104,6 @@ public class Marker implements Comparable<Marker> {
     public void set(String name, double latitude, double longitude, double altitude, int color) {
         if (name == null)
             throw new NullPointerException();
-
         this.name = name;
         this.physicalLocation.set(latitude, longitude, altitude);
         this.color = color;

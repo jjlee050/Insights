@@ -6,7 +6,7 @@
         android:title="@string/share"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_share"></item>
+        android:icon="@drawable/ic_share_white_48dp"></item>
     <item android:id="@+id/translate"
         android:title="@string/translate"
         android:orderInCategory="100"
@@ -17,5 +17,5 @@
         android:title="@string/read_aloud"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_mic"/>
+        android:icon="@drawable/ic_mic_white_48dp"/>
 </menu>

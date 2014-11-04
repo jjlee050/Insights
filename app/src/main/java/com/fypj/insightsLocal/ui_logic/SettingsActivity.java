@@ -49,6 +49,7 @@ public class SettingsActivity extends ActionBarActivity {
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new GeneralPreferenceFragment())
                 .commit();
+
     }
 
     /**
@@ -125,19 +126,6 @@ public class SettingsActivity extends ActionBarActivity {
                 editor.putString("preferred_language", stringValue);
                 editor.commit();
             }
-            if(preference.getKey().equals("sync_frequency")){
-                SharedPreferences sharedPref = context.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("sync_frequency", stringValue);
-                System.out.println("Sync Frequency: " + stringValue);
-                editor.commit();
-
-                BackgroundReceiver br = new BackgroundReceiver();
-                IntentFilter intentFilter = new IntentFilter(BROADCAST);
-                context.registerReceiver(br , intentFilter);
-                Intent intent = new Intent(BROADCAST);
-                context.sendBroadcast(intent);
-            }
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -194,7 +182,6 @@ public class SettingsActivity extends ActionBarActivity {
             addPreferencesFromResource(R.xml.pref_general);
 
             bindValue(findPreference("preferred_language"));
-            bindValue(findPreference("sync_frequency"));
 
         }
 

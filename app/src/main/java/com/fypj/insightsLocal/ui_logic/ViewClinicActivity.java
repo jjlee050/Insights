@@ -47,7 +47,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
 
         savedInstanceState = getIntent().getExtras();
-            if(savedInstanceState != null){
+        if(savedInstanceState != null){
 
             Long id = savedInstanceState.getLong("clinicID");
             String name = savedInstanceState.getString("name");
@@ -102,11 +102,6 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
         }
         else if( id == R.id.Appointment){
             Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
-            intent.putExtra("name", clinic.getName());
-            intent.putExtra("clinicID" , clinic.getClinicID());
-            intent.putExtra("Address" , clinic.getAddress());
-
-
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

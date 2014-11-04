@@ -79,7 +79,8 @@ public class AugmentedReality extends SensorsActivity implements OnTouchListener
         addContentView(augmentedView, augLayout);
 
         zoomLayout = new LinearLayout(this);
-        zoomLayout.setVisibility((showZoomBar) ? LinearLayout.VISIBLE : LinearLayout.GONE);
+        //zoomLayout.setVisibility((showZoomBar) ? LinearLayout.VISIBLE : LinearLayout.GONE);
+        zoomLayout.setVisibility(View.GONE);
         zoomLayout.setOrientation(LinearLayout.VERTICAL);
         zoomLayout.setPadding(5, 5, 5, 5);
         zoomLayout.setBackgroundColor(ZOOMBAR_BACKGROUND_COLOR);
@@ -93,7 +94,9 @@ public class AugmentedReality extends SensorsActivity implements OnTouchListener
 
         myZoomBar = new VerticalSeekBar(this);
         myZoomBar.setMax(100);
-        myZoomBar.setProgress(50);
+        //Change Distance Boundary to 5km
+        myZoomBar.setProgress(35);
+        myZoomBar.setVisibility(View.GONE);
         myZoomBar.setOnSeekBarChangeListener(myZoomBarOnSeekBarChangeListener);
         LinearLayout.LayoutParams zoomBarParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
         zoomBarParams.gravity = Gravity.CENTER_HORIZONTAL;
@@ -175,7 +178,7 @@ public class AugmentedReality extends SensorsActivity implements OnTouchListener
             percent = (myZoomLevel - 75f) / 25f;
             myout = TWENTY_PERCENT + (EIGHTY_PERCENTY * percent);
         }
-
+        Log.i("MyOut",String.valueOf(myout));
         return myout;
     }
 

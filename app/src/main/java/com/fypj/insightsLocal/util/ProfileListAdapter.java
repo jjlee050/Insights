@@ -96,8 +96,8 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
                     for (int j = 0; j < subsidiesArrList.size(); j++) {
                         UserSubsidies userSubsidies = userSubsidiesSQLController.getUserSubsidies(user.getNric(), subsidiesArrList.get(j).getSubsidiesID());
 
-                        if (userSubsidies.getSubsidiesID() != 0) {
-                            if(subsidiesArrList.get(j).getPackagesID() == packageID) {
+                        if (!userSubsidies.getSubsidiesID().equals(Long.parseLong("0"))) {
+                            if(subsidiesArrList.get(j).getPackagesID().equals(packageID)) {
                                 TextView tvLeft = new TextView(context);
                                 TextView tvRight = new TextView(context);
 

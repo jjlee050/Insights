@@ -42,7 +42,8 @@
             android:id="@+id/lv_latest_events"
             android:dividerHeight="@dimen/activity_vertical_margin"
             android:divider="@android:color/transparent"
-            android:paddingTop="@dimen/activity_vertical_margin"/>
+            android:paddingTop="@dimen/activity_vertical_margin"
+        />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

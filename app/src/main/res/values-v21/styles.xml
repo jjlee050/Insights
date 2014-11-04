@@ -13,7 +13,8 @@
         <item name="android:colorPrimaryDark">@color/navigationalDrawerBackgroundColor</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@android:color/holo_blue_light</item>
-        <item name="windowActionBar">false</item>
+        <item name="android:typeface">sans</item>
+
 
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
