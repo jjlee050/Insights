@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.ClinicHistory;
+import com.fypj.insightsLocal.controller.GetMedicalHistory;
+import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.UserMedicalHistoriesSQLController;
 import com.fypj.insightsLocal.util.ClinicHistoryListAdapter;
-import com.fypj.insightsLocal.util.ProfileListAdapter;
+import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
 
 import java.util.ArrayList;
 
@@ -44,11 +47,16 @@ public class ViewClinicHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_clinic_history, container, false);
         ListView lvClinicHistoryList = (ListView) rootView.findViewById(R.id.lv_clinic_history_list);
-        ArrayList<ClinicHistory> clinicHistoryArrayList = new ArrayList<ClinicHistory>();
-        clinicHistoryArrayList.add(new ClinicHistory("9/5/14 at 338 Family Clinic","Flu",24));
-        clinicHistoryArrayList.add(new ClinicHistory("26/9/14 at 338 Family Clinic","Fever",28));
-        ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(ViewClinicHistoryFragment.this.getActivity(),android.R.id.text1,clinicHistoryArrayList);
+
+        SharedPreferences sharedPref= ViewClinicHistoryFragment.this.getActivity().getSharedPreferences("insightsPreferences", 0);
+        String nric = sharedPref.getString("nric", "");
+
+        UserMedicalHistoriesSQLController controller = new UserMedicalHistoriesSQLController(ViewClinicHistoryFragment.this.getActivity());
+        ArrayList<MedicalHistory> myMedicalHistoriesArrList = controller.getMedicalHistoryByNRIC(nric);
+
+        ClinicHistoryListAdapter adapter = new ClinicHistoryListAdapter(ViewClinicHistoryFragment.this.getActivity(),android.R.id.text1,myMedicalHistoriesArrList);
         lvClinicHistoryList.setAdapter(adapter);
+
         return rootView;
     }
 }

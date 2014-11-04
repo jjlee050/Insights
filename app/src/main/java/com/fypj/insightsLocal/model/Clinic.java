@@ -1,54 +1,65 @@
 package com.fypj.insightsLocal.model;
 
-/**
- * Created by L33524 on 22/9/2014.
- */
-public class Clinic {
-    public String getClinicName() {
-        return ClinicName;
+public class Clinic{
+    private Long clinicID;
+    private String name;
+    private String address;
+    private String operatingHours;
+    private String contactNo;
+    private String category;
+
+
+
+    public Clinic(Long clinicID, String name, String address , String operatingHours ,String contactNo,String category ) {
+        this.clinicID = clinicID;
+        this.name = name;
+        this.address = address;
+        this.operatingHours = operatingHours;
+        this.contactNo = contactNo;
+        this.category = category;
     }
 
-    public void setClinicName(String clinicName) {
-        ClinicName = clinicName;
+    public Long getClinicID() {
+        return clinicID;
     }
 
-    private String ClinicName;
-
-    public String getClinicAddress() {
-        return ClinicAddress;
+    public void setClinicID(Long clinicID) {
+        this.clinicID = clinicID;
     }
 
-    public void setClinicAddress(String clinicAddress) {
-        ClinicAddress = clinicAddress;
+    public String getName() {
+        return name;
     }
 
-    private String ClinicAddress;
-
-    public String getClinicPostalCode() {
-        return ClinicPostalCode;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setClinicPostalCode(String clinicPostalCode) {
-        ClinicPostalCode = clinicPostalCode;
+    public String getAddress() {
+        return address;
     }
 
-    private String ClinicPostalCode;
-
-    public int getClinicID() {
-        return ClinicID;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setClinicID(int clinicID) {
-        ClinicID = clinicID;
+    public String getOperatingHours() {
+        return operatingHours;
     }
 
-    private int ClinicID;
-
-    public Clinic (int ClinicID , String ClinicName , String ClinicAddress , String ClinicPostalCode)
-    {
-        this.ClinicID = ClinicID;
-        this.ClinicName = ClinicName;
-        this.ClinicAddress = ClinicAddress;
-        this.ClinicPostalCode = ClinicPostalCode;
+    public void setOperatingHours(String operatingHours) {
+        this.operatingHours = operatingHours;
     }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public String getCategory() {return category;}
+
+    public void setCategory(String category) {this.category = category;}
 }

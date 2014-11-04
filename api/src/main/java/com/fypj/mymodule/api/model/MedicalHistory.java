@@ -14,19 +14,20 @@ import java.sql.Time;
 public class MedicalHistory {
     @Id
     private Long medicalHistoryID;
-    @Parent
-    private Clinic clinic;
-    private Date date;
-    private Time time;
+    private Long clinicID;
+    private String nric;
+    private String date;
+    private String time;
     private String service;
-    private int amt;
+    private Float amt;
 
     public MedicalHistory() {
     }
 
-    public MedicalHistory(Long medicalHistoryID, Clinic clinic, Date date, Time time, String service, int amt) {
+    public MedicalHistory(Long medicalHistoryID, Long clinicID, String nric, String date, String time, String service, Float amt) {
         this.medicalHistoryID = medicalHistoryID;
-        this.clinic = clinic;
+        this.clinicID = clinicID;
+        this.nric = nric;
         this.date = date;
         this.time = time;
         this.service = service;
@@ -41,27 +42,35 @@ public class MedicalHistory {
         this.medicalHistoryID = medicalHistoryID;
     }
 
-    public Clinic getClinic() {
-        return clinic;
+    public Long getClinicID() {
+        return clinicID;
     }
 
-    public void setClinic(Clinic clinic) {
-        this.clinic = clinic;
+    public void setClinicID(Long clinicID) {
+        this.clinicID = clinicID;
     }
 
-    public Date getDate() {
+    public String getNric() {
+        return nric;
+    }
+
+    public void setNric(String nric) {
+        this.nric = nric;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -73,11 +82,11 @@ public class MedicalHistory {
         this.service = service;
     }
 
-    public int getAmt() {
+    public Float getAmt() {
         return amt;
     }
 
-    public void setAmt(int amt) {
+    public void setAmt(Float amt) {
         this.amt = amt;
     }
 }

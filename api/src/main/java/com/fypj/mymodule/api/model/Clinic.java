@@ -1,21 +1,31 @@
 package com.fypj.mymodule.api.model;
 
+import com.google.appengine.api.images.Image;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-
 /**
  * Created by L33525 on 7/10/2014.
  */
 @Entity
-public class Clinic {
+public class Clinic{
     @Id
     private Long clinicID;
     private String name;
+    private String category;
     private String address;
     private String operatingHours;
     private String contactNo;
 
-    public Clinic() {
+public Clinic(){}
+
+    public Clinic(Long clinicID, String name, String category, String address, String operatingHours, String contactNo) {
+        this.clinicID = clinicID;
+        this.name = name;
+        this.category = category;
+        this.address = address;
+        this.operatingHours = operatingHours;
+        this.contactNo = contactNo;
+
     }
 
     public Long getClinicID() {
@@ -32,6 +42,14 @@ public class Clinic {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getAddress() {
@@ -57,4 +75,6 @@ public class Clinic {
     public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
+
+
 }

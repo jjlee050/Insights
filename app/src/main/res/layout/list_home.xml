@@ -2,13 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_clinic_img"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_vertical_margin"
         android:layout_below="@+id/horizontal_line"/>
@@ -17,7 +16,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:textSize="24dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="28dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_clinic_img"/>
 
@@ -25,7 +24,7 @@
         android:id="@+id/iv_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:padding="@dimen/activity_horizontal_margin"
         android:background="@drawable/ic_action_next_item"
         android:layout_alignParentTop="true"

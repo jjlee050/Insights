@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_id">1448892845363751</string>
     <string name="app_name">Insights</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -27,5 +28,23 @@
     <string name="title_activity_view_pioneer_package">View Pioneer Package </string>
     <string name="title_activity_view_pioneer_packages">ViewPioneerPackagesActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="search">Search</string>
+    <string name="title_activity_view_event_search_results">Event Results Found</string>
+    <string name="title_activity_login">Login</string>
+    <string name="nric">Enter your NRIC</string>
+    <string name="password">Enter your password</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget password</string>
+    <string name="sign_up">Sign Up</string>
+
+    <string-array name="language">
+        <item name="English">English</item>
+        <item name="Chinese">Chinese</item>
+    </string-array>
+
+    <string name="title_activity_arview">ARViewActivity</string>
+    <string name="arView">AR View</string>
+    <string name="google_places_api_key">AIzaSyC5mTsDhjayzCqXH87ggEYsfswR1cStfX8</string>
+    <string name="title_activity_get_directions">Get Directions</string>
 
 </resources>

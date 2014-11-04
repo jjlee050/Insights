@@ -1,32 +1,47 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.annotation.TargetApi;
+import android.app.FragmentManager;
+import android.os.Build;
+import android.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
 import com.fypj.insightsLocal.R;
+import com.fypj.mymodule.api.insightsPackages.model.Packages;
 
 import java.util.ArrayList;
 
-public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+public class ViewPioneerPackageActivity extends ActionBarActivity implements ActionBar.OnNavigationListener{
 
     /**
      * The serialization (saved instance state) Bundle key representing the
      * current dropdown position.
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+    private String[] titles = new String[] {"Overview","Benefits","Subsidies","Eligibility"};
+    private int currentIndex = 0;
+    private Packages packages = new Packages();
+
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
+
+    private FrameLayout flContainer;
+    private ArrayList<Fragment> fragmentArrList = new ArrayList<Fragment>();
+    private GestureDetector gesturedetector = null;
+
+    private String action = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +62,44 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
                         actionBar.getThemedContext(),
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
-                        new String[] {
-                                "Cover Page",
-                                "Overview",
-                                "Benefits",
-                                "Subsidies",
-                                "Eligibility",
-                        }),
+                        titles),
                 this);
+
+        savedInstanceState = getIntent().getExtras();
+        if(savedInstanceState != null){
+            Long packagesID = savedInstanceState.getLong("packagesID");
+            String name = savedInstanceState.getString("name");
+            String overview = savedInstanceState.getString("overview");
+            String benefits = savedInstanceState.getString("benefits");
+            String eligible = savedInstanceState.getString("eligible");
+
+            packages.setPackageID(packagesID);
+            packages.setName(name);
+            packages.setOverview(overview);
+            packages.setBenefits(benefits);
+            packages.setEligible(eligible);
+        }
+
+        fragmentArrList.add(new OverviewFragment().newInstance(this, 1, packages.getName(), packages.getOverview()));
+        fragmentArrList.add(new BenefitsFragment().newInstance(this, 1, packages.getName(), packages.getBenefits()));
+        fragmentArrList.add(new SubsidiesFragment().newInstance(this, 1, packages.getName(), packages.getPackageID()));
+        fragmentArrList.add(new EligibilityFragment().newInstance(this, 1, packages.getName(), packages.getEligible()));
+
+        gesturedetector = new GestureDetector(new MyGestureListener());
+
+        flContainer = (FrameLayout) findViewById(R.id.container);
+        flContainer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gesturedetector.onTouchEvent(event);
+                return true;
+            }
+        });
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        super.dispatchTouchEvent(ev);
+        return gesturedetector.onTouchEvent(ev);
     }
 
     @Override
@@ -81,6 +126,7 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -93,107 +139,163 @@ public class ViewPioneerPackageActivity extends ActionBarActivity implements Act
         return super.onOptionsItemSelected(item);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
         // container view.
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
-        return true;
+        FragmentManager fragmentManager = getFragmentManager();
+
+        switch(position) {
+            case 0:
+                OverviewFragment overviewFragment = new OverviewFragment();
+                if (action.equals("Plus")){
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, overviewFragment.newInstance(this, position + 1, packages.getName(), packages.getOverview()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_out,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, overviewFragment.newInstance(this, position + 1, packages.getName(), packages.getOverview()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                currentIndex = 0;
+                break;
+            case 1:
+                BenefitsFragment benefitsFragment = new BenefitsFragment();
+                if (action.equals("Plus")) {
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, benefitsFragment.newInstance(this, position + 1, packages.getName(), packages.getBenefits()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_out,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, benefitsFragment.newInstance(this, position + 1, packages.getName(), packages.getBenefits()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                currentIndex = 1;
+                break;
+            case 2:
+                SubsidiesFragment subsidiesFragment = new SubsidiesFragment();
+                if (action.equals("Plus")) {
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1, packages.getName(), packages.getPackageID()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_out,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, subsidiesFragment.newInstance(this, position + 1, packages.getName(), packages.getPackageID()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                currentIndex = 2;
+                break;
+            case 3:
+                EligibilityFragment eligibilityFragment = new EligibilityFragment();
+                if (action.equals("Plus")) {
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.right_in, R.animator.right_out,
+                                    R.animator.left_in, R.animator.left_out)
+                            .replace(R.id.container, eligibilityFragment.newInstance(this, position + 1, packages.getName(), packages.getEligible()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else{
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                    R.animator.left_in, R.animator.left_in,
+                                    R.animator.right_in, R.animator.right_out)
+                            .replace(R.id.container, eligibilityFragment.newInstance(this, position + 1, packages.getName(), packages.getEligible()))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                currentIndex = 3;
+                break;
+
+        }
+
+        return false;
+
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
 
-        public PlaceholderFragment() {
-        }
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final int SWIPE_MIN_DISTANCE = 20;
+        private static final int SWIPE_MAX_OFF_PATH = 100;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 100;
 
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_view_pioneer_package, container, false);
-            TextView tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
-            TextView tvHeader = (TextView) rootView.findViewById(R.id.tv_header);
-            View horizontalLine = rootView.findViewById(R.id.horizontal_line);
-            TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
-            ImageView ivImg = (ImageView) rootView.findViewById(R.id.iv_image);
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
-            tvTitle.setText("CHAS for Pioneer Generation");
-            tvHeader.setText("The package will help Pioneers with their healthcare costs for life. The benefits are as below: ");
-            /*tvContent.setText(
-                        "Additional 50% off subsidised services at polyclinics and Specialist Outpatient Clinics (Sep 2014).\n\n" +
-                        "Additional 50% off subsidised medications at polyclinics and Specialist Outpatient Clinics (Jan 2015).\n\n" +
-                        "Additional 50% off the bill on Subsidy for Pioneers for SOC & Polyclinic services(From 1 Sep 2014)\n" +"and\n" + "subsidised medication at SOC and Polyclinic (From 1 Jan 2015).\n\n" +
-                        "Pioneers from lower- to middle-income households can also enjoy these higher subsidies, plus the additional Pioneer benefits of \"50% off\" their subsidised bill.\n\n" +
-                        "Enjoy subsidies at participating GP and dental clinics under the Community Health Assist Scheme (CHAS). Do remember to bring your Pioneer Generation card along when visiting a CHAS clinic.\n\n" +
-                        "Cash of $1,200 a year for those with moderate to severe functional disabilities under the Pioneer Generation Disability Assistance Scheme. \n\n" +
-                        "$200 to $800 annually for life. \n\n" +
-                        "Support for all Pioneers’ MediShield Life Premiums with special premium subsidies and Medisave top-ups.\n" +
-                        " -  Aged 80 and above in 2014: Premiums fully covered\n" +
-                        " -  Aged 65 to 79 and fully insured under MediShield today: Pay half of current premiums.\n\n"+
-                        "All Pioneers will pay less for MediShield Life premiums than today. "
-                        );*/
+            float dX = e2.getX() - e1.getX();
+            float dY = e1.getY() - e2.getY();
 
-            /*tvContent.setText(
-                    "Common illnesses (e.g. cough and cold):\n\n$28.50\n\n" +
-                            "\n\n" +
-                    "Simple Chronic conditions" +
-                            "under CDMP:\n\n$90 per visit, capped at $360 per year\n\n" +
-                            "\n\n" +
-                    "Complex Chronic conditions" +
-                            "under CDMP:\n" +
-                            "\n$135 per visit, capped at $540 per year\n\n\n" +
-                            "\n" +
-                    "Selected dental services:\n" +
-                            "\n$21 to $266.50 per procedure (dependent on procedure)\n\n" +
-                            "\n\n" +
-                    "Health screening under " +
-                            "HPB’s ISP4:\n" +
-                            "\nScreening tests: Free with HPB's invitation letter; and Doctor's consultation: $28.50 per visit (up to 2 times per year)");*/
+            if (Math.abs(dY) < SWIPE_MAX_OFF_PATH && Math.abs(velocityX) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dX) >= SWIPE_MIN_DISTANCE) {
+                if (dX > 0) {
 
-            /*tvContent.setText("In order to apply CHAS for Pioneer Generation, Living Singapore Citizens who meet 2 criteria:\n" +
-                    "\n\n" +
-                    "Aged 16 and above in 1965 - this means:\n" +
-                    "1a. Born on or before 31 December 1949\n" +
-                    "1b. Aged 65 and above in 2014\n\n" +
-                    "and\n" +
-                    "\n" +
-                    "2. Obtained citizenship on or before 31 December 1986.\n\n\n" +
-                    "Those eligible for the Pioneer Generation Package would have received a notification letter in June 2014. Please keep your NRIC address updated.\n\n\n\n\n" +
-                    "For more information: visit http://www.cpf.gov.sg/pioneers/pgp_Faq.asp");*/
+                    /*Toast.makeText(getApplicationContext(), "Right Swipe",
+                            Toast.LENGTH_SHORT).show();*/
+                    //Now Set your animation
+                    if(currentIndex > 0) {
+                        currentIndex -= 1;
+                        action = "Minus";
+                        getSupportActionBar().setSelectedNavigationItem(currentIndex);
+                    }
+                }
+                else {
 
-            tvContent.setText("The Government has introduced the Pioneer Generation Package to honour and thank our pioneers for their hard work and dedication. They have made Singapore what it is today.\n" +
-                    "\n" +
-                    "About 450,000 Singaporeans will benefit from the Pioneer Generation Package.");
+                    /*Toast.makeText(getApplicationContext(), "Left Swipe",
+                            Toast.LENGTH_SHORT).show();*/
+                    if(currentIndex < fragmentArrList.size() - 1) {
+                        currentIndex += 1;
+                        action = "Plus";
+                        getSupportActionBar().setSelectedNavigationItem(currentIndex);
+                    }
 
-            horizontalLine.setVisibility(View.GONE);
-            tvTitle.setVisibility(View.VISIBLE);
-            tvHeader.setVisibility(View.GONE);
-            tvContent.setVisibility(View.VISIBLE);
-            ivImg.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+            else if (Math.abs(dX) < SWIPE_MAX_OFF_PATH && Math.abs(velocityY) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dY) >= SWIPE_MIN_DISTANCE) {
+                if (dY > 0) {
+                    /*Toast.makeText(getApplicationContext(), "Up Swipe",
+                            Toast.LENGTH_SHORT).show();*/
 
-            return rootView;
+                } else {
+                    /*Toast.makeText(getApplicationContext(), "Down Swipe",
+                            Toast.LENGTH_SHORT).show();*/
+                }
+
+                return true;
+
+            }
+            return false;
         }
-    }
 
+    }
 }

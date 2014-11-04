@@ -1,40 +1,28 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Clinic;
-import com.fypj.insightsLocal.model.Event;
-import com.fypj.insightsLocal.util.ClinicAdapter;
-import com.fypj.insightsLocal.util.LatestEventsListAdapter;
-import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
+import com.fypj.insightsLocal.controller.GetClinic;
 
 public class NearestClinicFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
     MainPageActivity activity;
+
+    private SwipeRefreshLayout swipeView;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -43,7 +31,7 @@ public class NearestClinicFragment extends Fragment {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+   // SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -88,13 +76,12 @@ public class NearestClinicFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nearest_clinc, container, false);
 
-        getActivity().getActionBar().setTitle("CHAS Clinics");
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
 
-        final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"338 Family Clinic","338 Ang Mo Kio Avenue 1, #01 - 1615,","Singapore - 560338"));
-        ClinicArrList.add(new Clinic(2,"Accord Medical Clinic ","157 Ang Mo Kio Avenue 4, #01 - 578, Mayflower Shopping & Food Centre, ","Singapore - 560157"));
-        ClinicArrList.add(new Clinic(3,"Ang Mo Kio Family Medicine Clinic Pte Ltd","4190 Ang Mo Kio Avenue 6, #03 - 01, Broadway Plaza,","Singapore - 569841"));
+       /*final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
+        ClinicArrList.add(new Clinic(1,"338 Family Clinic","Mon - Thurs: \n8.30am - 12.30pm,\n2.00pm- 4.30pm,\n7.00pm - 9.00pm\nFri-Sun: 8.30am - 12.30pm\n(Closed on Public Holidays)"));
+        ClinicArrList.add(new Clinic(2, "Accord Medical Clinic", "Mon - Fri: 8.30am - 10.00pm \n\nSat, Sun & PH :\n9.00am - 12.30pm,\n7.00pm - 10.00pm"));
+        ClinicArrList.add(new Clinic(3, "Ang Mo Kio Family Medicine Clinic Pte Ltd", "Mon - Fri:\n8.30am - 3pm,\n6.00pm - 10.00pm\n\nSat: 9.00am - 10.00pm\nSun: 2.00pm - 9.00pm\n(Closed on Public Holidays)"));
 
 
         ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
@@ -105,82 +92,70 @@ public class NearestClinicFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(NearestClinicFragment.this.getActivity(),ViewClinicActivity.class);
                 intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getClinicName());
-                intent.putExtra("ClinicAddress",ClinicArrList.get(position).getClinicAddress());
-                intent.putExtra("ClinicPostalCode",ClinicArrList.get(position).getClinicPostalCode());
+                intent.putExtra("ClinicName",ClinicArrList.get(position).getName());
+                intent.putExtra("ClinicOH ",ClinicArrList.get(position).getOperatingHours());
 
                 startActivity(intent);
             }
+        });*/
+
+
+        swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+
+        swipeView.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeView.setEnabled(false);
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeView.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getAllClinic(lvNearestClinic);
+                    }
+                }, 1000);
+            }
         });
+
+        lvNearestClinic.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0)
+                    swipeView.setEnabled(true);
+                else
+                    swipeView.setEnabled(false);
+            }
+        });
+        getAllClinic(lvNearestClinic);
+
+
         return rootView;
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        public SwipeRefreshLayout getSwipeView() {
+            return swipeView;
         }
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
+        public void setSwipeView(SwipeRefreshLayout swipeView) {
+            this.swipeView = swipeView;
         }
 
 
+
+        private void getAllClinic(ListView lvNearestClinic){
+            new GetClinic(NearestClinicFragment.this.getActivity(),lvNearestClinic,swipeView).execute();
+
+        }
 
 
     }
 
-}
+
+
+

@@ -10,10 +10,12 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/lib" />
           </set>
         </option>
       </GradleProjectSettings>
     </option>
+    <option name="gradleVmOptions" value="-Xmx512m" />
   </component>
 </project>
 

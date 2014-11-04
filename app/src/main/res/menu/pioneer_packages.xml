@@ -4,6 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fypj.insightsLocal.ui_logic.ViewAllPioneerPackagesFragment" >
+    tools:context="com.fypj.insightsLocal.ui_logic.ViewAllPioneerPackagesActivity" >
 
 </menu>

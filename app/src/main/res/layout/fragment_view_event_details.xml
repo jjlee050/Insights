@@ -13,88 +13,97 @@
         android:layout_alignParentStart="true"
         android:background="@drawable/monthly_brisk_walk"/>
 
-    <TextView
-        android:id="@+id/tv_event_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Monthly Brisk Walk"
-        android:layout_below="@+id/imgBtn_latest_events"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:textSize="24dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imgBtn_latest_events">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_event_date_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Saturday, September 20, 2014 7:00 AM"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:textSize="20dp"
-        android:layout_below="@+id/tv_event_name"
-        android:layout_alignLeft="@+id/tv_event_name"
-        android:layout_alignStart="@+id/tv_event_name" />
+            <TextView
+                android:id="@+id/tv_event_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monthly Brisk Walk"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:textSize="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/tv_event_goh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nil"
-        android:textSize="20dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_below="@+id/tv_event_date_time"
-        android:layout_alignLeft="@+id/tv_event_date_time"
-        android:layout_alignStart="@+id/tv_event_date_time" />
+            <TextView
+                android:id="@+id/tv_event_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saturday, September 20, 2014 7:00 AM"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:textSize="20dp"
+                android:layout_below="@+id/tv_event_name"
+                android:layout_alignLeft="@+id/tv_event_name"
+                android:layout_alignStart="@+id/tv_event_name" />
 
-    <View
-        android:id="@+id/horizontal_line"
-        android:layout_width="fill_parent"
-        android:layout_height="0.1dip"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/tv_event_goh"/>
+            <TextView
+                android:id="@+id/tv_event_goh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nil"
+                android:textSize="20dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_below="@+id/tv_event_date_time"
+                android:layout_alignLeft="@+id/tv_event_date_time"
+                android:layout_alignStart="@+id/tv_event_date_time" />
 
-    <TextView
-        android:id="@+id/tv_event_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Brisk Walk for elderly residents"
-        android:textSize="20dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/horizontal_line" />
+            <View
+                android:id="@+id/horizontal_line"
+                android:layout_width="fill_parent"
+                android:layout_height="0.1dip"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/tv_event_goh"/>
 
-    <View
-        android:id="@+id/horizontal_line2"
-        android:layout_width="fill_parent"
-        android:layout_height="0.1dip"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/tv_event_desc"/>
+            <TextView
+                android:id="@+id/tv_event_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brisk Walk for elderly residents"
+                android:textSize="20dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/horizontal_line" />
 
-    <TextView
-        android:id="@+id/tv_event_organiser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Organized by: Ang Mo Kio Community Centre"
-        android:textSize="20dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/horizontal_line2" />
+            <View
+                android:id="@+id/horizontal_line2"
+                android:layout_width="fill_parent"
+                android:layout_height="0.1dip"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/tv_event_desc"/>
 
-    <TextView
-        android:id="@+id/tv_event_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Contact Fazlina at 64425317"
-        android:textSize="20dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_below="@+id/tv_event_organiser"
-        android:layout_alignLeft="@+id/tv_event_organiser"
-        android:layout_alignStart="@+id/tv_event_organiser" />
+            <TextView
+                android:id="@+id/tv_event_organiser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Organized by: Ang Mo Kio Community Centre"
+                android:textSize="20dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/horizontal_line2" />
+
+            <TextView
+                android:id="@+id/tv_event_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Fazlina at 64425317"
+                android:textSize="20dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_below="@+id/tv_event_organiser"
+                android:layout_alignLeft="@+id/tv_event_organiser"
+                android:layout_alignStart="@+id/tv_event_organiser" />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

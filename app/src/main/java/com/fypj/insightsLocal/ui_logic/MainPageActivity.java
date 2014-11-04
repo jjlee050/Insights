@@ -1,31 +1,46 @@
 package com.fypj.insightsLocal.ui_logic;
 
-import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.location.LocationManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Pair;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.fypj.insightsLocal.controller.TestAsyncTask;
+import com.fypj.insightsLocal.controller.GetUserPackages;
+import com.fypj.insightsLocal.options.Settings;
+import com.fypj.insightsLocal.service.BackgroundReceiver;
+import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
+import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.insightsLocal.util.NavigationDrawerFragment;
 import com.fypj.insightsLocal.R;
+import com.fypj.mymodule.api.insightsEvent.model.Event;
+
+import java.util.ArrayList;
 
 /**
  * This is the activity class to show the screen with navigational drawer
  */
 public class MainPageActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, Settings {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -59,7 +74,8 @@ public class MainPageActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
-        //new TestAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+        getSupportActionBar().setTitle("Home");
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -74,6 +90,8 @@ public class MainPageActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
+        Intent i = null;
         switch(position){
             case 0:
                 HomeFragment homeFragment = new HomeFragment();
@@ -82,24 +100,18 @@ public class MainPageActivity extends ActionBarActivity
                         .commit();
                 break;
             case 1:
-                Intent i = new Intent(this,ProfileActivity.class);
+                i = new Intent(this,ProfileActivity.class);
                 startActivity(i);
+                break;
             case 2:
-                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
-                        .commit();
+                i = new Intent(this,SettingsActivity.class);
+                startActivity(i);
                 break;
             case 3:
-                ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
-                        .commit();
-                break;
-            case 4:
-                Intent intent = new Intent(this,NearestClinicActivity.class);
-                intent.putExtra("choice",0);
-                startActivity(intent);
+                removeData();
+                i = new Intent(this,LoginActivity.class);
+                startActivity(i);
+                finish();
                 break;
         }
         currentPosition = position;
@@ -119,23 +131,13 @@ public class MainPageActivity extends ActionBarActivity
                 mTitle = "My Profile";
                 break;
             case 3:
-                ViewAllPioneerPackagesFragment viewAllPioneerPackagesFragment = new ViewAllPioneerPackagesFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllPioneerPackagesFragment.newInstance(this,position + 1))
-                        .commit();
+                mTitle = "Settings";
                 break;
             case 4:
-                ViewAllLatestEventsFragment viewAllLatestEventsFragment = new ViewAllLatestEventsFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllLatestEventsFragment.newInstance(position + 1))
-                        .commit();
-                break;
-            case 5:
-                mTitle = "CHAS Clinic";
+                mTitle = "Log out";
                 break;
         }
         System.out.println("Title: " + mTitle);
-        Toast.makeText(this,mTitle,Toast.LENGTH_LONG);
     }
 
     /**
@@ -149,6 +151,7 @@ public class MainPageActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
@@ -163,18 +166,15 @@ public class MainPageActivity extends ActionBarActivity
                     restoreActionBar();
                     break;
                 case 2:
-                    getMenuInflater().inflate(R.menu.pioneer_packages, menu);
-                    restoreActionBar();
+                    /*getMenuInflater().inflate(R.menu.pioneer_packages, menu);
+                    restoreActionBar();*/
                     break;
                 case 3:
-                    getMenuInflater().inflate(R.menu.latest_events, menu);
-                    restoreActionBar();
-                    break;
-                case 4:
-                    getMenuInflater().inflate(R.menu.nearest_clinc, menu);
+                    getMenuInflater().inflate(R.menu.login, menu);
                     restoreActionBar();
                     break;
             }
+
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -196,4 +196,10 @@ public class MainPageActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void removeData(){
+        SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();      //its clear all data.
+        editor.commit();  //Don't forgot to commit  SharedPreferences.
+    }
 }

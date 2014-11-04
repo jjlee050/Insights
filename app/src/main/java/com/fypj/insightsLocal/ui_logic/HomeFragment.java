@@ -4,22 +4,18 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Pair;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.util.HomeListAdapter;
-import com.fypj.insightsLocal.controller.*;
 
 import java.util.ArrayList;
 
@@ -60,13 +56,16 @@ public class HomeFragment extends Fragment {
         lvHomeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Activity activity = HomeFragment.this.getActivity();
+                FragmentManager fragmentManager = HomeFragment.this.getActivity().getSupportFragmentManager();
+
                 if(position == 0){
-                    HomeFragment.this.position = 3;
-                    onAttach(getActivity());
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllPioneerPackagesActivity.class);
+                    startActivity(intent);
                 }
                 if(position == 1){
-                    HomeFragment.this.position = 4;
-                    onAttach(getActivity());
+                    Intent intent = new Intent(HomeFragment.this.getActivity(),ViewAllLatestEventsActivity.class);
+                    startActivity(intent);
                 }
                 if(position == 2){
                     Intent intent = new Intent(HomeFragment.this.getActivity(),NearestClinicActivity.class);
@@ -75,7 +74,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-        getActivity().getActionBar().setTitle("Home");
         return rootView;
     }
 

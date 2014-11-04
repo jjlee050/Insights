@@ -3,6 +3,7 @@ package com.fypj.insightsLocal.ui_logic;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -20,9 +21,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.insightsLocal.util.ProfilePagerAdapter;
+import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
+import com.fypj.mymodule.api.insightsUser.model.User;
+import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
-public class ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
+public class
+        ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -33,7 +39,8 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     ProfilePagerAdapter mSectionsPagerAdapter;
-
+    JazzyViewPager mJazzy;
+    User user;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -48,23 +55,31 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mJazzy = (JazzyViewPager) findViewById(R.id.jazzy_pager);
 
-        getActionBar().setTitle("John Tan");
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mJazzy.setTransitionEffect(JazzyViewPager.TransitionEffect.Accordion);
+        // When swiping between different sections, select the corresponding
+        // tab. We can also use ActionBar.Tab#select() to do this if we have
+        // a reference to the Tab.
+        mJazzy.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
             }
         });
-        actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Medical History").setTabListener(this));
+
+        getData();
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager(),mJazzy,user);
+
+        mJazzy.setAdapter(mSectionsPagerAdapter);
+
+
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_info_outline_white_24dp).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_folder_open_white_24dp).setTabListener(this));
     }
 
 
@@ -96,7 +111,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
+        mJazzy.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -105,5 +120,16 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    public void getData(){
+        SharedPreferences sharedPref= getSharedPreferences("insightsPreferences", 0);
+        String nric = sharedPref.getString("nric", "");
+        if(!nric.equals("")){
+            UserSQLController controller = new UserSQLController(this);
+            User user = controller.getUser(nric);
+            getSupportActionBar().setTitle(user.getName());
+            this.user = user;
+        }
     }
 }

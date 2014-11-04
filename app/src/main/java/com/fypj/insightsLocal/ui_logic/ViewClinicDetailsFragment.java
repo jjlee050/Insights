@@ -1,9 +1,15 @@
 package com.fypj.insightsLocal.ui_logic;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,6 +24,11 @@ public class ViewClinicDetailsFragment extends Fragment{
     private final String ARG_SECTION_NUMBER = "section_number";
     ViewClinicActivity activity;
 
+    private TextView tvClinicName;
+    private TextView tvClinicAddress;
+    private TextView tvClinicOH;
+    private TextView tvClinicContactNo;
+
     public ViewClinicDetailsFragment newInstance(ViewClinicActivity activity,int sectionNumber) {
         ViewClinicDetailsFragment fragment = new ViewClinicDetailsFragment();
         Bundle args = new Bundle();
@@ -30,10 +41,50 @@ public class ViewClinicDetailsFragment extends Fragment{
     public ViewClinicDetailsFragment() {
     }
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.view__clinic,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        else if( id == R.id.Appointment){
+            Intent intent = new Intent(this.getActivity(), BookingAppt.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_clinic_details, container, false);
+        Bundle bundle = getArguments();
+
+        tvClinicName = (TextView) rootView.findViewById(R.id.tv_Clinic_name);
+        tvClinicAddress = (TextView) rootView.findViewById(R.id.tv_Clinic_Address);
+        tvClinicOH = (TextView) rootView.findViewById(R.id.tv_ClinicOH);
+        tvClinicContactNo = (TextView) rootView.findViewById(R.id.tv_Clinic_Contact);
+
+
+        tvClinicName.setText(bundle.getString("name"));
+        tvClinicAddress.setText(bundle.getString("address"));
+        tvClinicOH.setText(bundle.getString("operatingHours"));
+        tvClinicContactNo.setText(bundle.getString("contactNo"));
+
+
 
         return rootView;
     }

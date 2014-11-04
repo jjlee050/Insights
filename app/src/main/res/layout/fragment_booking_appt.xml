@@ -1,4 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -7,16 +10,14 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.fypj.insightsLocal.ui_logic.BookingAppt$PlaceholderFragment"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clinic Name : 338 Family Clinic"
-            android:textSize="18dp"
-            android:layout_marginBottom="15dp"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Clinic Name : 338 Family Clinic"
+      android:textSize="18dp"
+      android:layout_marginBottom="15dp"/>
 
 
     <TextView
@@ -27,10 +28,11 @@
         android:layout_marginBottom="10dp"/>
 
    <EditText
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
        android:layout_marginBottom="10dp"
-    android:hint="Enter Your Name "/>
+       android:hint="Enter Your Name "
+       android:inputType="text"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,7 +58,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Your Contact No. "
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:inputType="phone"/>
 
 
 
@@ -67,11 +70,23 @@
             android:textSize="18dp"
             android:layout_marginBottom="10dp"/>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="24/09/2014"
-            android:layout_marginBottom="10dp"/>
+         <Button
+        android:id="@+id/btnChangeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Date" />
+
+         <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <DatePicker
+        android:id="@+id/dpResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
         <TextView
@@ -81,11 +96,13 @@
             android:textSize="18dp"
             android:layout_marginBottom="10dp"/>
         <Button
-            android:layout_width="fill_parent"
+            android:id="@+id/btn_time"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="10.00am "
-            android:layout_marginBottom="10dp"/>
+            android:layout_weight="1.0"
+            android:layout_gravity="left"
+            android:fontFamily="sans-serif-light"
+            android:onClick="onClick"/>
 
     </LinearLayout>
-
-
+</ScrollView>

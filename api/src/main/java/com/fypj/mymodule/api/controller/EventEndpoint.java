@@ -5,7 +5,7 @@ package com.fypj.mymodule.api.controller;
  */
 
 import com.fypj.mymodule.api.model.Event;
-import com.fypj.mymodule.api.model.Quote;
+import com.fypj.mymodule.api.util.OfyService;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -15,6 +15,8 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import javax.inject.Named;
 import static com.fypj.mymodule.api.util.OfyService.ofy;
 
 /** An endpoint class we are exposing **/
-@Api(name = "insightsEvent", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
+@Api(name = "insightsEvent",description = "API to view all lifestyle events", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
 public class EventEndpoint {
 
     // Make sure to add this endpoint to your web.xml file if this is a web application.
@@ -47,7 +49,7 @@ public class EventEndpoint {
     @ApiMethod(name = "listEvents")
     public CollectionResponse<Event> listEvents(@Nullable @Named("cursor") String cursorString,
                                                @Nullable @Named("count") Integer count) {
-
+        
         Query<Event> query = ofy().load().type(Event.class);
         if (count != null) query.limit(count);
         if (cursorString != null && cursorString != "") {
@@ -84,15 +86,35 @@ public class EventEndpoint {
     public Event insertEvent(Event event) throws ConflictException {
         //If if is not null, then check if it exists. If yes, throw an Exception
         //that it is already present
-        if (event.getEventID() != null) {
-            if (findRecord(event.getEventID()) != null) {
+        if (event.getEventID() == null) {
+            Query<Event> query = ofy().load().type(Event.class);
+            List<Event> records = new ArrayList<Event>();
+            QueryResultIterator<Event> iterator = query.iterator();
+            while (iterator.hasNext()) {
+                records.add(iterator.next());
+            }
+
+            Event foundRecord = null;
+            for(int i=0;i<records.size();i++){
+                if(records.get(i).getName().equals(event.getName())){
+                    foundRecord = records.get(i);
+                    break;
+                }
+            }
+
+            if (foundRecord != null) {
                 throw new ConflictException("Object already exists");
             }
+            else{
+                //Since our @Id field is a Long, Objectify will generate a unique value for us
+                //when we use put
+                ofy().save().entity(event).now();
+                return event;
+            }
         }
-        //Since our @Id field is a Long, Objectify will generate a unique value for us
-        //when we use put
-        ofy().save().entity(event).now();
-        return event;
+        else {
+            return null;
+        }
     }
 
     /**
