@@ -89,16 +89,13 @@ public class BackgroundService extends Service {
             for(int i=0;i<eventArrList.size();i++){
                 DateFormat df = new SimpleDateFormat("dd MMMM yyyy h:mma");
                 try {
-                    Date dt = df.parse(eventArrList.get(0).getDateAndTime().substring(0, eventArrList.get(0).getDateAndTime().lastIndexOf("to") - 1));
+                    Date dt = df.parse(eventArrList.get(i).getDateAndTime().substring(0, eventArrList.get(i).getDateAndTime().lastIndexOf("to") - 1));
                     Date dnow = new Date();
                     Calendar ca = Calendar.getInstance();
                     Calendar cnow = Calendar.getInstance();
                     ca.setTime(dt);
                     cnow.setTime(dnow);
-                    int differenceInDays = (int) Math.floor((ca.getTimeInMillis()-cnow.getTimeInMillis())/-86400000);
-                    int days = -86400000 * differenceInDays;
-                    if (cnow.getTimeInMillis() - ca.getTimeInMillis() < 0) {
-                        // Moves events into the expanded layout
+                    if((cnow.get(Calendar.DATE) == ca.get(Calendar.DATE)) && (cnow.get(Calendar.MONTH) == ca.get(Calendar.MONTH)) && (cnow.get(Calendar.YEAR) == ca.get(Calendar.YEAR))){
                         inboxStyle.addLine(eventArrList.get(i).getName());
                         hasEvent = true;
                     }
