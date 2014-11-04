@@ -41,7 +41,7 @@ public class BackgroundReceiver extends BroadcastReceiver {
         //int frequency = Integer.parseInt(sharedPref.getString("sync_frequency","1"));
 
         //System.out.println("Frequency: " + frequency);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), min * 10, pendingIntent);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), min * 1, pendingIntent);
 
     }
 }
