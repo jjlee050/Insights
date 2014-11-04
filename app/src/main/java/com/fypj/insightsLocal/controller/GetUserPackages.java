@@ -1,7 +1,10 @@
 package com.fypj.insightsLocal.controller;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,17 +30,14 @@ import java.util.List;
  */
 public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
     private static InsightsUserPackages myApiService = null;
-    private LoginActivity context;
+    private Activity context;
     private List<UserPackages> userPackagesArrList = new ArrayList<UserPackages>();
     private ProgressDialog dialog;
     private String nric;
-    private int status;
 
-
-    public GetUserPackages(Context context, String nric, int status){
-        this.context = (LoginActivity) context;
+    public GetUserPackages(Context context, String nric){
+        this.context = (Activity) context;
         this.nric = nric;
-        this.status = status;
     }
 
     @Override
@@ -78,6 +78,7 @@ public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
             Log.i("Size", String.valueOf(foundUserPackages.size()));
             if(recordExists){
                 final UserPackagesSQLController controller = new UserPackagesSQLController(context);
+                controller.deleteAllUserPackages();
                 for(int i=0;i<foundUserPackages.size();i++) {
                     UserPackages userPackages = controller.getUserPackages(nric, foundUserPackages.get(i).getPackagesID());
                     if(userPackages.getPackagesID() == 0){
@@ -87,7 +88,7 @@ public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
             }
         }
 
-        new GetUserSubsidies(context,nric,status,dialog).execute();
+        new GetUserSubsidies(context,nric,dialog).execute();
     }
 
     private void errorOnExecuting(final String message){
@@ -95,7 +96,16 @@ public class GetUserPackages extends AsyncTask<Void, Void, List<UserPackages>> {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
                 dialog.dismiss();
-                context.errorOnExecuting(message);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Error verifying user ");
+                builder.setMessage(message);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
             }
         });
     }

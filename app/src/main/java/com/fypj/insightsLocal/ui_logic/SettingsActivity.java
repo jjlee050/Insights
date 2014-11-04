@@ -2,6 +2,8 @@ package com.fypj.insightsLocal.ui_logic;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -13,28 +15,20 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.service.BackgroundReceiver;
 
 import java.util.List;
 
-/**
- * A {@link PreferenceActivity} that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
- * <p>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
- */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends ActionBarActivity {
     /**
      * Determines whether to always show the simplified settings UI, where
      * settings are presented in a single list. When false, settings are shown
@@ -44,11 +38,17 @@ public class SettingsActivity extends PreferenceActivity {
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
     private static Context context;
 
+    public static final String BROADCAST = "com.fypj.insightsLocal.android.action.broadcast";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
         context = this;
+        // Display the fragment as the main content.
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new GeneralPreferenceFragment())
+                .commit();
     }
 
     /**
@@ -58,7 +58,7 @@ public class SettingsActivity extends PreferenceActivity {
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // Show the Up button in the action bar.
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -85,50 +85,7 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        setupSimplePreferencesScreen();
-    }
 
-    /**
-     * Shows the simplified settings UI if the device configuration if the
-     * device configuration dictates that a simplified, single-pane UI should be
-     * shown.
-     */
-    private void setupSimplePreferencesScreen() {
-        if (!isSimplePreferences(this)) {
-            return;
-        }
-
-        // In the simplified UI, fragments are not used at all and we instead
-        // use the older PreferenceActivity APIs.
-
-        // Add 'general' preferences.
-        addPreferencesFromResource(R.xml.pref_general);
-
-        // Add 'notifications' preferences, and a corresponding header.
-        PreferenceCategory fakeHeader = new PreferenceCategory(this);
-        fakeHeader.setTitle(R.string.pref_header_notifications);
-        getPreferenceScreen().addPreference(fakeHeader);
-        addPreferencesFromResource(R.xml.pref_notification);
-
-        // Add 'data and sync' preferences, and a corresponding header.
-        fakeHeader = new PreferenceCategory(this);
-        fakeHeader.setTitle(R.string.pref_header_data_sync);
-        getPreferenceScreen().addPreference(fakeHeader);
-        addPreferencesFromResource(R.xml.pref_data_sync);
-
-        // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
-        // their values. When their values change, their summaries are updated
-        // to reflect the new value, per the Android Design guidelines.
-        bindPreferenceSummaryToValue(findPreference("example_text"));
-        bindPreferenceSummaryToValue(findPreference("preferred_language"));
-        bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-        bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean onIsMultiPane() {
-        return isXLargeTablet(this) && !isSimplePreferences(this);
     }
 
     /**
@@ -153,15 +110,6 @@ public class SettingsActivity extends PreferenceActivity {
                 || !isXLargeTablet(context);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
-        if (!isSimplePreferences(this)) {
-            loadHeadersFromResource(R.xml.pref_headers, target);
-        }
-    }
-
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -176,6 +124,19 @@ public class SettingsActivity extends PreferenceActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("preferred_language", stringValue);
                 editor.commit();
+            }
+            if(preference.getKey().equals("sync_frequency")){
+                SharedPreferences sharedPref = context.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("sync_frequency", stringValue);
+                System.out.println("Sync Frequency: " + stringValue);
+                editor.commit();
+
+                BackgroundReceiver br = new BackgroundReceiver();
+                IntentFilter intentFilter = new IntentFilter(BROADCAST);
+                context.registerReceiver(br , intentFilter);
+                Intent intent = new Intent(BROADCAST);
+                context.sendBroadcast(intent);
             }
 
             if (preference instanceof ListPreference) {
@@ -222,28 +183,6 @@ public class SettingsActivity extends PreferenceActivity {
     };
 
     /**
-     * Binds a preference's summary to its value. More specifically, when the
-     * preference's value is changed, its summary (line of text below the
-     * preference title) is updated to reflect the value. The summary is also
-     * immediately updated upon calling this method. The exact display format is
-     * dependent on the type of preference.
-     *
-     * @see #sBindPreferenceSummaryToValueListener
-     */
-    private void bindPreferenceSummaryToValue(Preference preference) {
-        // Set the listener to watch for value changes.
-        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-        System.out.println(preference.getKey());
-
-        SharedPreferences sharedPref = SettingsActivity.this.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
-
-        // Trigger the listener immediately with the preference's
-        // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                sharedPref.getString(preference.getKey(), ""));
-    }
-
-    /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
@@ -254,53 +193,18 @@ public class SettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            SettingsActivity activity = new SettingsActivity();
-            activity.bindPreferenceSummaryToValue(findPreference("example_text"));
-            activity.bindPreferenceSummaryToValue(findPreference("preferred_language"));
+            bindValue(findPreference("preferred_language"));
+            bindValue(findPreference("sync_frequency"));
+
+        }
+
+        public void bindValue(Preference preference){
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
+            preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    sharedPref.getString(preference.getKey(), ""));
         }
     }
 
-    /**
-     * This fragment shows notification preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class NotificationPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_notification);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            SettingsActivity activity = new SettingsActivity();
-            activity.bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-        }
-    }
-
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_data_sync);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            SettingsActivity activity = new SettingsActivity();
-            activity.bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-    }
 }

@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,9 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import android.widget.Spinner;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetUser;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.service.BackgroundReceiver;
 import com.fypj.insightsLocal.service.BackgroundService;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
@@ -29,15 +33,16 @@ import com.fypj.mymodule.api.insightsUser.model.User;
 /**
  * Created by jess on 20-Oct-14.
  */
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity implements Settings {
     private EditText etNric, etPassword;
-    public static final String BROADCAST = "com.fypj.insightsLocal.android.action.broadcast";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getActionBar().hide();
+
+        getSupportActionBar().hide();
+
         getData();
         etNric = (EditText) findViewById(R.id.et_nric);
         etPassword = (EditText) findViewById(R.id.et_password);

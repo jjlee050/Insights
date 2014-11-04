@@ -27,7 +27,8 @@ import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
 import com.fypj.mymodule.api.insightsUser.model.User;
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
-public class ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
+public class
+        ProfileActivity extends ActionBarActivity implements ActionBar.TabListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -77,8 +78,8 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         mJazzy.setAdapter(mSectionsPagerAdapter);
 
 
-        actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Medical History").setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_about).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_action_collection).setTabListener(this));
     }
 
 
@@ -127,7 +128,7 @@ public class ProfileActivity extends ActionBarActivity implements ActionBar.TabL
         if(!nric.equals("")){
             UserSQLController controller = new UserSQLController(this);
             User user = controller.getUser(nric);
-            getActionBar().setTitle(user.getName());
+            getSupportActionBar().setTitle(user.getName());
             this.user = user;
         }
     }

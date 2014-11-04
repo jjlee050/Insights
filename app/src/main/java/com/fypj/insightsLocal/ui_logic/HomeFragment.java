@@ -74,7 +74,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-        getActivity().getActionBar().setTitle("Home");
         return rootView;
     }
 

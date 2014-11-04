@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fypj.insightsLocal.R;
 
+import java.text.RuleBasedCollator;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +39,11 @@ public class HomeListAdapter extends ArrayAdapter<String> {
         ImageView ivClinicImg = (ImageView) rowView.findViewById(R.id.iv_clinic_img);
 
         if(position == 0){
-            ivClinicImg.setImageResource(R.drawable.pioneer_generations_pic);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,60,0,0);
+            params.addRule(RelativeLayout.RIGHT_OF,ivClinicImg.getId());
+            tvTitle.setLayoutParams(params);
+            ivClinicImg.setImageResource(R.drawable.pioneer_generation_pic);
         }
         else if(position == 1){
             ivClinicImg.setImageResource(R.drawable.lifestyle_events);

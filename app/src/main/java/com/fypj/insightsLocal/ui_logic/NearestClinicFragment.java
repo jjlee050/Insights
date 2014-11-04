@@ -76,7 +76,6 @@ public class NearestClinicFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nearest_clinc, container, false);
 
-        getActivity().getActionBar().setTitle("CHAS Clinics");
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
 
        /*final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();

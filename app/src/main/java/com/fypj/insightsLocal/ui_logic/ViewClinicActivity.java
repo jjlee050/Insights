@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.ar.activity.Demo;
 import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.util.ViewClinicDetailsAdapter;
 

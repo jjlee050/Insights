@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +37,7 @@ import java.util.Date;
  * Created by jess on 19-Sep-14.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ViewAllLatestEventsActivity extends Activity {
+public class ViewAllLatestEventsActivity extends ActionBarActivity {
     private final String ARG_SECTION_NUMBER = "section_num--ber";
     private SwipeRefreshLayout swipeView;
     private ListView lvLatestEvents;
@@ -46,7 +48,8 @@ public class ViewAllLatestEventsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_latest_events);
-        this.getActionBar().setTitle("Lifestyle Events");
+        this.getSupportActionBar().setTitle("Lifestyle Events");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         lvLatestEvents = (ListView) findViewById(R.id.lv_latest_events);
         swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
