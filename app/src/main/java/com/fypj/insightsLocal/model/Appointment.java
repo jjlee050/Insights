@@ -10,22 +10,20 @@ import com.fypj.insightsLocal.model.Clinic;
 public class Appointment {
 
     private Long appointmentID;
-    private String nric;
-    private String name;
+    private Long clinicID;
     private String date;
     private String time;
-    private String clinicname;
+    private String nric;
 
     public Appointment() {
     }
 
-    public Appointment(Long appointmentID, String nric, String name , String date, String time, String clinicname) {
+    public Appointment(Long appointmentID, Long clinicID, String date, String time, String nric) {
         this.appointmentID = appointmentID;
-        this.nric = nric;
-        this.name = name;
+        this.clinicID = clinicID;
         this.date = date;
         this.time = time;
-        this.clinicname = clinicname;
+        this.nric = nric;
     }
 
     public Long getAppointmentID() {
@@ -36,13 +34,13 @@ public class Appointment {
         this.appointmentID = appointmentID;
     }
 
-    public String getNric() { return nric;}
+    public Long getClinicID() {
+        return clinicID;
+    }
 
-    public void setNric(String nric) {this.nric = nric;}
-
-    public String name(){return name ;}
-
-    public void setName(String name){this.name = name;}
+    public void setClinicID(Long clinicID) {
+        this.clinicID = clinicID;
+    }
 
     public String getDate() {
         return date;
@@ -60,11 +58,11 @@ public class Appointment {
         this.time = time;
     }
 
-    public String getClinic() {
-        return clinicname;
+    public String getNric() {
+        return nric;
     }
 
-    public void setClinic(String clinicname) {
-        this.clinicname = clinicname;
+    public void setNric(String nric) {
+        this.nric = nric;
     }
 }

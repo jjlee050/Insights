@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.fypj.insightsLocal.controller.GetMedicalHistory;
+import com.fypj.insightsLocal.controller.GetUser;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.PackagesSQLController;
@@ -35,6 +36,7 @@ public class BackgroundService extends Service {
             obj.fetchXML();
             GetMedicalHistory getMedicalHistory = new GetMedicalHistory(this);
             getMedicalHistory.execute();
+
         }
         insertPackages();
         notifyUser();

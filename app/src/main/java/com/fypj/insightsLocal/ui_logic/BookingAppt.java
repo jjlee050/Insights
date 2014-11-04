@@ -51,7 +51,9 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
     private Calendar cal;
     private TextView clinicname;
 
-
+    private EditText name;
+    private EditText NRIC;
+    private EditText ContactNo;
 
 
     private int year;
@@ -69,7 +71,9 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
 
     private Button pickTime;
-    private Appointment appointment;
+    private Appointment appointment = new Appointment();
+    private Long clinicID;
+    private String address;
 
 
     @Override
@@ -89,9 +93,12 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         savedInstanceState = getIntent().getExtras();
         if(savedInstanceState != null) {
             String name = savedInstanceState.getString("name");
-            Long id = savedInstanceState.getLong("clinicID");
+            clinicID = savedInstanceState.getLong("clinicID");
+            address = savedInstanceState.getString("Address");
 
             clinicname.setText("Clinic Name : " + name);
+
+
         }
 
 
@@ -146,12 +153,18 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
             return true;
         } else if (id == R.id.Submit) {
 
+            appointment.setClinicID(clinicID);
+            appointment.setNric(NRIC.getText().toString());
+            appointment.setDate(ib.getText().toString());
+            appointment.setTime(pickTime.getText().toString());
+            appointment.set("ClinicName", clinicname.getText().toString());
+            appointment.set("Address",address);
+
 
             CreateAppointment createAppointment = new CreateAppointment(this , appointment);
             createAppointment.execute();
 
 
-            Toast.makeText(this ,"Booking of Appointment Successfully", Toast.LENGTH_LONG ).show();
 
 
           /*  AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
@@ -194,9 +207,12 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
         public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
-        ib.setText(selectedDay + " / " + (selectedMonth + 1)+ " / " + selectedYear);
-        }
-    };
+
+        String date = (selectedDay+"/"+(selectedMonth + 1)+"/"+selectedYear);
+        ib.setText(date);
+
+}
+};
 
     private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                 // the callback received when the user "sets" the TimePickerDialog in the dialog
@@ -247,6 +263,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         String aTime = new StringBuilder().append(hours).append(':').append(minutes).append(" ").append(timeSet).toString();
 
         pickTime.setText(aTime);
+
     }
 
     public void getData(){
@@ -257,13 +274,17 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
             User user = controller.getUser(nric);
 
 
-            EditText name = (EditText) findViewById(R.id.name);
-            EditText NRIC = (EditText) findViewById(R.id.nric);
-            EditText ContactNo = (EditText) findViewById(R.id.ContactNo);
+             name = (EditText) findViewById(R.id.name);
+             NRIC = (EditText) findViewById(R.id.nric);
+             ContactNo = (EditText) findViewById(R.id.ContactNo);
 
             name.setText(user.getName());
             NRIC.setText(user.getNric());
+
             ContactNo.setText(user.getContactNo());
+
+
+
 
 
         }

@@ -104,6 +104,9 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
             Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
             intent.putExtra("name", clinic.getName());
             intent.putExtra("clinicID" , clinic.getClinicID());
+            intent.putExtra("Address" , clinic.getAddress());
+
+
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

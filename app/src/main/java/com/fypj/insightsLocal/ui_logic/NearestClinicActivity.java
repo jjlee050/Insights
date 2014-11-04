@@ -135,7 +135,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
 
                     ClinicSQLController controller = new ClinicSQLController(NearestClinicActivity.this);
 
-                    int choice = getActionBar().getSelectedNavigationIndex();
+                    int choice = getSupportActionBar().getSelectedNavigationIndex();
                     if(choice == 0) {
 
                         searchResultsArrList = controller.searchClinic(query,"Medical");
