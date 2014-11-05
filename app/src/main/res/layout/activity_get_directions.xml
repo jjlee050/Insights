@@ -6,13 +6,24 @@
 
     <LinearLayout
         android:id="@+id/layout1"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin"
+        android:padding="@dimen/activity_vertical_margin"
         >
 
         <TextView
-            android:id="@+id/tv_address_to_address"
+            android:id="@+id/tv_address_from"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_address_to"
+            android:textSize="24dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -21,7 +32,7 @@
     <TextView
         android:id="@+id/tv_directions"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:padding="@dimen/activity_horizontal_margin"
+        android:padding="@dimen/activity_vertical_margin"
         android:layout_below="@+id/layout1"
         android:textSize="24dp"
         android:layout_width="wrap_content"
@@ -35,7 +46,7 @@
         android:layout_height="wrap_content"
         android:dividerHeight="@dimen/activity_vertical_margin"
         android:divider="@android:color/transparent"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         />

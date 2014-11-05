@@ -147,14 +147,13 @@ public class ViewClinicLocationFragment extends Fragment{
         List<Address> addressList = geocoding(clinic.getAddress());
 
         LatLng startLatLng = null;
-        LatLng latLng = null;
         if (addressList != null) {
             for (int i = 0; i < addressList.size(); i++) {
                 destLatLng = new LatLng(addressList.get(i).getLatitude(), addressList.get(i).getLongitude());
             }
-            if (latLng != null) {
-                Marker marker = map.addMarker(new MarkerOptions().title(clinic.getAddress()).position(latLng));
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+            if (destLatLng != null) {
+                Marker marker = map.addMarker(new MarkerOptions().title(clinic.getAddress()).position(destLatLng));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(destLatLng, 16));
                 marker.showInfoWindow();
             } else {
                 showSingapore(map);
@@ -171,10 +170,10 @@ public class ViewClinicLocationFragment extends Fragment{
                 LatLng foundLatLng = null;
                 if (checkAddressList != null) {
                     for (int j = 0; j < checkAddressList.size(); j++) {
-                        latLng = new LatLng(addressList.get(j).getLatitude(), addressList.get(j).getLongitude());
+                        destLatLng = new LatLng(addressList.get(j).getLatitude(), addressList.get(j).getLongitude());
                     }
-                    if (latLng != null) {
-                        Marker marker = map.addMarker(new MarkerOptions().title(clinic.getAddress()).position(latLng));
+                    if (destLatLng != null) {
+                        Marker marker = map.addMarker(new MarkerOptions().title(clinic.getAddress()).position(destLatLng));
                     }
                 }
             }

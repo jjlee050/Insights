@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetDirectionsActivity extends ActionBarActivity implements RoutingListener {
-    private TextView tvAddress;
+    private TextView tvAddressFrom;
+    private TextView tvAddressTo;
     private ListView lvDirections;
 
     private LatLng startLatLng;
@@ -51,7 +52,8 @@ public class GetDirectionsActivity extends ActionBarActivity implements RoutingL
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tvAddress = (TextView) findViewById(R.id.tv_address_to_address);
+        tvAddressFrom = (TextView) findViewById(R.id.tv_address_from);
+        tvAddressTo = (TextView) findViewById(R.id.tv_address_to);
         lvDirections = (ListView) findViewById(R.id.lv_directions);
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -83,7 +85,8 @@ public class GetDirectionsActivity extends ActionBarActivity implements RoutingL
             for(int i=0;i<addressList.get(0).getMaxAddressLineIndex();i++) {
                 addressText += addressList.get(0).getAddressLine(i);
             }
-            tvAddress.setText(addressText + "\n to \n"+ address);
+            tvAddressFrom.setText("From: " + addressText);
+            tvAddressTo.setText("To: " + address);
         }
 
         Routing routing = new Routing(Routing.TravelMode.TRANSIT);
