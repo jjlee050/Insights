@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/iv_img"
-        android:layout_width="170dp"
-        android:layout_height="125dp"
+        android:layout_width="155dp"
+        android:layout_height="110dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         />

@@ -35,24 +35,23 @@ import java.util.List;
  */
 public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Settings {
   private static InsightsClinics myApiService = null;
-    private Activity context;
+    private Context context;
     private ListView lvNearestDental;
     private SwipeRefreshLayout swipeView;
     final ArrayList<Clinic> DentalArrList = new ArrayList<Clinic>();
     private ProgressDialog dialog;
 
 
-    public GetDental(Context context, ListView lvNearestDental, SwipeRefreshLayout swipeView){
+    /*public GetDental(Context context, ListView lvNearestDental, SwipeRefreshLayout swipeView){
         this.context = (Activity) context;
         this.lvNearestDental = lvNearestDental;
         this.swipeView = swipeView;
+    }*/
+    public GetDental(Context context){
+        this.context = (Context) context;
     }
 
-    @Override
-    protected void onPreExecute() {
-        dialog = ProgressDialog.show(context,
-                "Retrieving Clinics", "Please wait...", true);
-    }
+
 
     @Override
     protected List<Clinic> doInBackground(Void... voids) {
@@ -75,7 +74,7 @@ public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Se
                     DentalArrList.add(e);
                 }
 
-                DentalAdapter adapter = new DentalAdapter(context, android.R.id.text1,DentalArrList);
+                /*DentalAdapter adapter = new DentalAdapter(context, android.R.id.text1,DentalArrList);
                 lvNearestDental.setAdapter(adapter);
 
                 lvNearestDental.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,26 +92,30 @@ public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Se
 
 
                     }
-                });
+                });*/
 
                 ClinicSQLController controller = new ClinicSQLController(context);
                 if (controller.getAllClinic().size() > 0) {
                     controller.deleteAllClinic("Dental");
                 }
+
+
                 for (int i = 0; i < DentalArrList.size(); i++) {
+                    Clinic clinic = controller.getClinic(DentalArrList.get(i).getClinicID());
+                    if(clinic.getClinicID().equals(Long.parseLong("0"))) {
+                        controller.insertClinic(DentalArrList.get(i));
+                    }
                     controller.insertClinic(DentalArrList.get(i));
                 }
             }
 
             }
 
-        dialog.dismiss();
-        swipeView.setRefreshing(false);
     }
 
     private void errorOnExecuting(){
         this.cancel(true);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        /*new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
                 dialog.dismiss();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -128,6 +131,6 @@ public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Se
                 builder.create().show();
             }
         });
-        swipeView.setRefreshing(false);
+        swipeView.setRefreshing(false);*/
     }
 }

@@ -8,12 +8,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -41,8 +44,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.io.IOException;
 
-public class ViewClinicActivity extends ActionBarActivity implements ActionBar.TabListener, LocationListener{
+
+public class ViewClinicActivity extends ActionBarActivity implements ActionBar.TabListener ,LocationListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -104,7 +109,6 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
         Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new ViewClinicDetailsAdapter(ViewClinicActivity.this,getSupportFragmentManager(),clinic);
@@ -121,10 +125,31 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
             }
         });
 
+
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_info_outline_white_24dp).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_place_white_24dp).setTabListener(this));
 
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        else if( id == R.id.Appointment){
+            Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
+            intent.putExtra("clinicID", clinic.getClinicID());
+            intent.putExtra("name", clinic.getName());
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());
@@ -140,6 +165,42 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
     }
 
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm, Clinic clinic) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+         Fragment fragment = null;
+            switch (position) {
+                case 0:
+                    fragment = new ViewClinicDetailsFragment();
+                    break;
+               case 1:
+                    fragment = new ViewClinicLocationFragment();
+                    break;
+            }
+            return fragment;
+
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 2;
+        }
+
+
+    }
     @Override
     public void onLocationChanged(Location location) {
 
@@ -172,4 +233,6 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
         }
         return addressList;
     }
+
+
 }

@@ -12,16 +12,20 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.controller.GetClinic;
+import com.fypj.insightsLocal.controller.GetDental;
 import com.fypj.insightsLocal.controller.GetEvent;
 import com.fypj.insightsLocal.controller.GetMedicalHistory;
 import com.fypj.insightsLocal.controller.GetUserPackages;
 import com.fypj.insightsLocal.controller.GetUserSubsidies;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.sqlite_controller.EventSQLController;
 import com.fypj.insightsLocal.sqlite_controller.PackagesSQLController;
 import com.fypj.insightsLocal.sqlite_controller.SubsidiesSQLController;
 import com.fypj.insightsLocal.ui_logic.ViewAllLatestEventsActivity;
 import com.fypj.insightsLocal.util.HandleXML;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.fypj.mymodule.api.insightsPackages.model.Packages;
 import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
@@ -47,6 +51,7 @@ public class BackgroundService extends Service {
         Log.v("Connection Checker", "Connection Checker started");
         insertPackages();
 
+
         SharedPreferences sharedPref = getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
         String nric = sharedPref.getString("nric", "");
 
@@ -59,6 +64,10 @@ public class BackgroundService extends Service {
 
             GetMedicalHistory getMedicalHistory = new GetMedicalHistory(this);
             getMedicalHistory.execute();
+            GetClinic getClinic = new GetClinic(this);
+            getClinic.execute();
+            GetDental getDental = new GetDental(this);
+            getDental.execute();
             GetEvent getEvent = new GetEvent(this);
             getEvent.execute();
 

@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.ui_logic;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,10 +14,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetClinic;
+import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
+import com.fypj.insightsLocal.util.ClinicAdapter;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
+
+import java.util.ArrayList;
 
 public class NearestClinicFragment extends Fragment {
     private final String ARG_SECTION_NUMBER = "section_number";
@@ -78,28 +85,6 @@ public class NearestClinicFragment extends Fragment {
 
         final ListView lvNearestClinic = (ListView) rootView.findViewById(R.id.lv_nearest_clinic);
 
-       /*final ArrayList<Clinic> ClinicArrList = new ArrayList<Clinic>();
-        ClinicArrList.add(new Clinic(1,"338 Family Clinic","Mon - Thurs: \n8.30am - 12.30pm,\n2.00pm- 4.30pm,\n7.00pm - 9.00pm\nFri-Sun: 8.30am - 12.30pm\n(Closed on Public Holidays)"));
-        ClinicArrList.add(new Clinic(2, "Accord Medical Clinic", "Mon - Fri: 8.30am - 10.00pm \n\nSat, Sun & PH :\n9.00am - 12.30pm,\n7.00pm - 10.00pm"));
-        ClinicArrList.add(new Clinic(3, "Ang Mo Kio Family Medicine Clinic Pte Ltd", "Mon - Fri:\n8.30am - 3pm,\n6.00pm - 10.00pm\n\nSat: 9.00am - 10.00pm\nSun: 2.00pm - 9.00pm\n(Closed on Public Holidays)"));
-
-
-        ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
-        lvNearestClinic.setAdapter(adapter);
-
-        lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(NearestClinicFragment.this.getActivity(),ViewClinicActivity.class);
-                intent.putExtra("ClinicID", position);
-                intent.putExtra("ClinicName",ClinicArrList.get(position).getName());
-                intent.putExtra("ClinicOH ",ClinicArrList.get(position).getOperatingHours());
-
-                startActivity(intent);
-            }
-        });*/
-
-
         swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 
         swipeView.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
@@ -149,7 +134,27 @@ public class NearestClinicFragment extends Fragment {
 
 
         private void getAllClinic(ListView lvNearestClinic){
-            new GetClinic(NearestClinicFragment.this.getActivity(),lvNearestClinic,swipeView).execute();
+            ClinicSQLController clinicSQLController = new ClinicSQLController(this.getActivity());
+
+            final ArrayList<Clinic> ClinicArrList = clinicSQLController.getAllCategoryClinic("Medical");
+
+            ClinicAdapter adapter = new ClinicAdapter(this.getActivity(), android.R.id.text1, ClinicArrList);
+            lvNearestClinic.setAdapter(adapter);
+
+            lvNearestClinic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    Intent intent = new Intent(NearestClinicFragment.this.getActivity(), ViewClinicActivity.class);
+                    intent.putExtra("clinicID", ClinicArrList.get(position).getClinicID());
+                    intent.putExtra("name", ClinicArrList.get(position).getName());
+                    intent.putExtra("address", ClinicArrList.get(position).getAddress());
+                    intent.putExtra("operatingHours", ClinicArrList.get(position).getOperatingHours());
+                    intent.putExtra("contactNo", ClinicArrList.get(position).getContactNo());
+                    intent.putExtra("category", ClinicArrList.get(position).getCategory());
+                    startActivity(intent);
+                }
+            });
+
 
         }
 

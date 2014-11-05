@@ -24,6 +24,7 @@ public class CreateEvent extends AsyncTask<Void, Void, Boolean> {
         this.event = event;
     }
 
+
     @Override
     protected Boolean doInBackground(Void... voids) {
         if(myApiService == null) {  // Only do this once

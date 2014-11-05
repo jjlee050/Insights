@@ -1,5 +1,6 @@
 package com.fypj.insightsLocal.options;
 
+import com.fypj.mymodule.api.insightsAppointment.InsightsAppointment;
 import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
 import com.fypj.mymodule.api.insightsMedicalHistory.InsightsMedicalHistory;
@@ -18,7 +19,7 @@ import java.io.IOException;
 /**
  * Created by L33525 on 14/10/2014.
  */
-public class AppConstants implements Settings{
+public class AppConstants implements Settings {
 
     /**
      * Class instance of the JSON factory.
@@ -32,24 +33,25 @@ public class AppConstants implements Settings{
     private static InsightsClinics insightsClinicsAPI;
 
     private static final String url = REMOTE_API_URL;
+
     /**
      * Retrieve insights event api service handle to access the API.
      */
     public static InsightsEvent getInsightsEventAPI() {
         // Use a builder to help formulate the API request.
-        InsightsEvent.Builder builder = new InsightsEvent.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
-            .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-            @Override
-            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                    abstractGoogleClientRequest.setDisableGZipContent(true);
-            }
-        });
+        InsightsEvent.Builder builder = new InsightsEvent.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    @Override
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        abstractGoogleClientRequest.setDisableGZipContent(true);
+                    }
+                });
         return builder.build();
     }
 
     public static InsightsClinics getInsightsClinicsAPI() {
 
-        InsightsClinics.Builder builder = new InsightsClinics.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+        InsightsClinics.Builder builder = new InsightsClinics.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -62,7 +64,7 @@ public class AppConstants implements Settings{
 
     public static InsightsUser getInsightsUserAPI() {
 
-        InsightsUser.Builder builder = new InsightsUser.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+        InsightsUser.Builder builder = new InsightsUser.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -75,7 +77,7 @@ public class AppConstants implements Settings{
 
     public static InsightsMedicalHistory getInsightsMedicalHistoriesAPI() {
 
-        InsightsMedicalHistory.Builder builder = new InsightsMedicalHistory.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+        InsightsMedicalHistory.Builder builder = new InsightsMedicalHistory.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -88,7 +90,7 @@ public class AppConstants implements Settings{
 
     public static InsightsUserPackages getInsightUserPackagesAPI() {
 
-        InsightsUserPackages.Builder builder = new InsightsUserPackages.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+        InsightsUserPackages.Builder builder = new InsightsUserPackages.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -101,7 +103,7 @@ public class AppConstants implements Settings{
 
     public static InsightsUserSubsidies getInsightsUserSubsidiesAPI() {
 
-        InsightsUserSubsidies.Builder builder = new InsightsUserSubsidies.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+        InsightsUserSubsidies.Builder builder = new InsightsUserSubsidies.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -111,4 +113,17 @@ public class AppConstants implements Settings{
         return builder.build();
 
     }
+
+    public static InsightsAppointment getInsightsAppointmentAPI() {
+
+        InsightsAppointment.Builder builder = new InsightsAppointment.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    @Override
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        abstractGoogleClientRequest.setDisableGZipContent(true);
+                    }
+                });
+        return builder.build();
+    }
 }
+

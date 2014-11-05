@@ -70,23 +70,24 @@
             android:textSize="18dp"
             android:layout_marginBottom="10dp"/>
 
-         <Button
-        android:id="@+id/btnChangeDate"
+
+         <EditText
+        android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Date" />
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="5dp"
+        android:editable="false" />
 
-         <TextView
-        android:id="@+id/tvDate"
+        <ImageButton
+        android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <DatePicker
-        android:id="@+id/dpResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toRightOf="@+id/editText"
+        android:contentDescription="@string/selectdate"
+        android:cropToPadding="true"
+        android:src="@drawable/calendar" />
 
 
         <TextView
@@ -95,14 +96,7 @@
             android:text="Time :"
             android:textSize="18dp"
             android:layout_marginBottom="10dp"/>
-        <Button
-            android:id="@+id/btn_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:layout_gravity="left"
-            android:fontFamily="sans-serif-light"
-            android:onClick="onClick"/>
+
 
     </LinearLayout>
 </ScrollView>
