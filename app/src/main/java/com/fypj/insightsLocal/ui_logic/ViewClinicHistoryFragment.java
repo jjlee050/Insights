@@ -27,7 +27,7 @@ public class ViewClinicHistoryFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    /**
+    /**h
      * Returns a new instance of this fragment for the given section
      * number.
      */

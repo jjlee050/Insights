@@ -62,7 +62,7 @@ public class ClinicSQLController {
     public Clinic getClinic (Long clinicID){
         Clinic clinic = new Clinic();
         conn.open();
-        Cursor cursor = conn.getDB().query(conn.getClinicTable(),null,"category = ?", new String[]{ String.valueOf(clinicID) }, null, null, null, null);
+        Cursor cursor = conn.getDB().query(conn.getClinicTable(),null,"clinicID = ?", new String[]{ String.valueOf(clinicID) }, null, null, null, null);
         if(cursor.moveToFirst()){
             clinic.setClinicID(cursor.getLong(cursor.getColumnIndex("clinicID")));
             clinic.setName(cursor.getString(cursor.getColumnIndex("name")));

@@ -170,7 +170,8 @@ public class ViewEventDetailsFragment extends Fragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        System.out.println("Language: " + language);
+        System.out.println("TTS-Language: " + ttsLanguage);
         switch (item.getItemId()) {
             case R.id.share:
                 if(CheckNetworkConnection.isNetworkConnectionAvailable(this.getActivity())) {
@@ -316,10 +317,10 @@ public class ViewEventDetailsFragment extends Fragment implements
 
         SharedPreferences sharedPref= this.getActivity().getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
         String nric = sharedPref.getString("nric", "");
-        String language = sharedPref.getString("preferred_language", "");
+        language = sharedPref.getString("preferred_language", "");
         if(!nric.equals("")){
-            System.out.println("Language: " + language);
             if(language.equals("zh-CN")){
+                language = "zh-CN";
                 ttsLanguage = Locale.CHINESE;
             }
             else{

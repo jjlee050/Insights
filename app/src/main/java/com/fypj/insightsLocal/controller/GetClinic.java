@@ -88,7 +88,7 @@ public class GetClinic extends AsyncTask<Void, Void, List<Clinic>> implements Se
                 if(clinic.getClinicID().equals(Long.parseLong("0"))) {
                     controller.insertClinic(ClinicArrList.get(i));
                 }
-                controller.insertClinic(ClinicArrList.get(i));
+
             }
          //   // swipeView.setRefreshing(false);
         }

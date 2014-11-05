@@ -105,7 +105,7 @@ public class GetDental extends AsyncTask<Void, Void, List<Clinic>> implements Se
                     if(clinic.getClinicID().equals(Long.parseLong("0"))) {
                         controller.insertClinic(DentalArrList.get(i));
                     }
-                    controller.insertClinic(DentalArrList.get(i));
+
                 }
             }
 

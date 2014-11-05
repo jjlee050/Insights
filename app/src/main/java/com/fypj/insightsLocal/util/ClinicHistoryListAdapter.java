@@ -45,6 +45,8 @@ public class ClinicHistoryListAdapter extends ArrayAdapter<MedicalHistory> {
         tvService.setText(clinicHistoryArrayList.get(position).getService());
         tvAmt.setText(formatter.format(clinicHistoryArrayList.get(position).getAmt()));
 
-        return rowView;
+         return rowView;
+
+
     }
 }

@@ -120,11 +120,11 @@ public class Demo extends AugmentedReality {
                 Resources res = getResources();
                 if(categoryStringList.get(i).equals("Medical")) {
                     Bitmap medic = BitmapFactory.decodeResource(res, R.drawable.medic);
-                    marker = new IconMarker(nameStringList.get(i) + "\n" + operatingHoursStringList.get(i), latLng.latitude, latLng.longitude, localData.getMarkers().get(0).getHeight(), localData.getMarkers().get(0).getColor(),medic);
+                    marker = new IconMarker(nameStringList.get(i), latLng.latitude, latLng.longitude, localData.getMarkers().get(0).getHeight(), localData.getMarkers().get(0).getColor(),medic);
                 }
                 else{
                     Bitmap dental = BitmapFactory.decodeResource(res, R.drawable.dental);
-                    marker = new IconMarker(nameStringList.get(i) + "\n" + operatingHoursStringList.get(i), latLng.latitude, latLng.longitude, localData.getMarkers().get(0).getHeight(), localData.getMarkers().get(0).getColor(),dental);
+                    marker = new IconMarker(nameStringList.get(i), latLng.latitude, latLng.longitude, localData.getMarkers().get(0).getHeight(), localData.getMarkers().get(0).getColor(),dental);
                 }
 
                 markerList.add(marker);
@@ -204,7 +204,7 @@ public class Demo extends AugmentedReality {
         ArrayList<Clinic> clinicArrList = controller.getAllClinic();
         Clinic clinic = null;
         for(int i=0;i<clinicArrList.size();i++){
-            String markerName = clinicArrList.get(i).getName() + "\n" + clinicArrList.get(i).getOperatingHours();
+            String markerName = clinicArrList.get(i).getName();
             System.out.println(markerName.equals(marker.getName()));
             if(markerName.equals(marker.getName())){
                 clinic = clinicArrList.get(i);

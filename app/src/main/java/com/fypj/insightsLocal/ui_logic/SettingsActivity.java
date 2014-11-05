@@ -124,6 +124,7 @@ public class SettingsActivity extends ActionBarActivity {
                 SharedPreferences sharedPref = context.getSharedPreferences("insightsPreferences", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("preferred_language", stringValue);
+                System.out.println(stringValue);
                 editor.commit();
             }
 
