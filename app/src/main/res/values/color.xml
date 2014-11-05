@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="actionBarBackgroundColor">#e51c23</color>
+    <color name="actionBarBackgroundColor">#F44336</color>
     <color name="navigationalDrawerBackgroundColor">#c41411</color>
     <color name="white">#FFFFFF</color>
     <color name="greenDarkColor">#669900</color>
