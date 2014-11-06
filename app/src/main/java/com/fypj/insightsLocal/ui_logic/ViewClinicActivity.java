@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.ar.ui.Marker;
@@ -31,6 +32,7 @@ import com.fypj.insightsLocal.util.ViewClinicDetailsAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 import org.json.JSONObject;
 
@@ -62,7 +64,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    ViewPager mViewPager;
+    JazzyViewPager mJazzy;
     private Clinic clinic;
 
     @Override
@@ -109,22 +111,22 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
         Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new ViewClinicDetailsAdapter(ViewClinicActivity.this,getSupportFragmentManager(),clinic);
-
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mJazzy = (JazzyViewPager) findViewById(R.id.pager);
+        mJazzy.setTransitionEffect(JazzyViewPager.TransitionEffect.Accordion);
+        mJazzy.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
             }
         });
 
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new ViewClinicDetailsAdapter(ViewClinicActivity.this,getSupportFragmentManager(),clinic,mJazzy);
+
+        mJazzy.setAdapter(mSectionsPagerAdapter);
 
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_info_outline_white_24dp).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ic_place_white_24dp).setTabListener(this));
@@ -136,7 +138,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        mViewPager.setCurrentItem(tab.getPosition());
+        mJazzy.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -155,9 +157,10 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm, Clinic clinic) {
+        private JazzyViewPager mJazzy;
+        public SectionsPagerAdapter(FragmentManager fm, Clinic clinic, JazzyViewPager mJazzy) {
             super(fm);
+            this.mJazzy = mJazzy;
         }
 
         @Override

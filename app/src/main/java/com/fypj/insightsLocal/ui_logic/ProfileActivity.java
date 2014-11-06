@@ -65,6 +65,7 @@ public class
         mJazzy.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                System.out.println("Pager Position: " + position);
                 actionBar.setSelectedNavigationItem(position);
             }
         });
@@ -111,6 +112,7 @@ public class
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
+        System.out.println("Tab Position: " + tab.getPosition());
         mJazzy.setCurrentItem(tab.getPosition());
     }
 

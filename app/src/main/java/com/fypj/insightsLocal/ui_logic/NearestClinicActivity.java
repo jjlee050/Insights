@@ -17,6 +17,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -46,7 +47,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
     /**
      * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
-    ViewPager mViewPager;
+    JazzyViewPager mJazzy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,15 +56,12 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
         savedInstanceState = getIntent().getExtras();
-// Create the adapter that will return a fragment for each of the three
-// primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mJazzy = (JazzyViewPager) findViewById(R.id.pager);
 
+        mJazzy.setTransitionEffect(JazzyViewPager.TransitionEffect.Accordion);
         actionBar.setTitle("CHAS Clinics");
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mJazzy.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if(position == 0){
@@ -75,6 +73,11 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
                 actionBar.setSelectedNavigationItem(position);
             }
         });
+
+// Create the adapter that will return a fragment for each of the three
+// primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),mJazzy);
+        mJazzy.setAdapter(mSectionsPagerAdapter);
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_medic).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setIcon(R.drawable.white_tooth).setTabListener(this));
         if(savedInstanceState != null){
@@ -209,7 +212,7 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        mViewPager.setCurrentItem(tab.getPosition());
+        mJazzy.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -228,9 +231,10 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private JazzyViewPager mJazzy;
+        public SectionsPagerAdapter(FragmentManager fm, JazzyViewPager mJazzy) {
             super(fm);
+            this.mJazzy = mJazzy;
         }
 
         @Override
@@ -249,6 +253,15 @@ public class NearestClinicActivity extends ActionBarActivity implements ActionBa
             return fragment;
             //return NearestClinicFragment.newInstance(position + 1);
         }
+
+
+        @Override
+        public Object instantiateItem(ViewGroup container, final int position) {
+            Object obj = super.instantiateItem(container, position);
+            mJazzy.setObjectForPosition(obj, position);
+            return obj;
+        }
+
 
         @Override
         public int getCount() {

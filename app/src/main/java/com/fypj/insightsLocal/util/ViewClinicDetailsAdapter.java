@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.ui_logic.ViewClinicDetailsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewClinicLocationFragment;
+import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 
 /**
@@ -19,13 +20,13 @@ import com.fypj.insightsLocal.ui_logic.ViewClinicLocationFragment;
 public class ViewClinicDetailsAdapter extends FragmentPagerAdapter {
     private Context context;
     private Clinic clinic;
+    private JazzyViewPager mJazzy;
 
-
-    public ViewClinicDetailsAdapter(Context context, FragmentManager fm, Clinic clinic) {
+    public ViewClinicDetailsAdapter(Context context, FragmentManager fm, Clinic clinic, JazzyViewPager mJazzy) {
         super(fm);
         this.context = context;
         this.clinic = clinic;
-
+        this.mJazzy = mJazzy;
     }
 
     @Override
@@ -65,6 +66,14 @@ public class ViewClinicDetailsAdapter extends FragmentPagerAdapter {
         }
         return fragment;
     }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, final int position) {
+        Object obj = super.instantiateItem(container, position);
+        mJazzy.setObjectForPosition(obj, position);
+        return obj;
+    }
+
     @Override
     public int getCount() {
         // Show 2 total pages.

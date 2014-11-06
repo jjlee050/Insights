@@ -69,4 +69,6 @@ public class ClinicAdapter extends ArrayAdapter<Clinic> {
         tvClinicOH.setText(ClinicArrList.get(position).getOperatingHours());
         return rowView;
     }
+
+
 }

@@ -52,6 +52,7 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         Object obj = super.instantiateItem(container, position);
+        System.out.println("Item Position: " + position);
         mJazzy.setObjectForPosition(obj, position);
         return obj;
     }
