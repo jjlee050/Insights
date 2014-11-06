@@ -106,7 +106,7 @@ public class LoginActivity extends ActionBarActivity implements Settings {
                                 }
                             }
                             else{
-                                errorOnExecuting("There is no such user record.");
+                                errorOnExecuting("Password incorrect to the user record.");
                             }
                         }
                         else{
