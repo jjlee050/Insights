@@ -15,8 +15,8 @@ import com.fypj.insightsLocal.sqlite_controller.UserMedicalHistoriesSQLControlle
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.insightsLocal.ui_logic.LoginActivity;
 import com.fypj.insightsLocal.util.ClinicHistoryListAdapter;
-import com.fypj.mymodule.api.insightsMedicalHistory.InsightsMedicalHistory;
-import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
+import com.fypj.mymodule.api.myMedicalHistory.MyMedicalHistory;
+import com.fypj.mymodule.api.myMedicalHistory.model.MedicalHistory;
 import com.fypj.mymodule.api.insightsUser.InsightsUser;
 import com.fypj.mymodule.api.insightsUser.model.User;
 
@@ -29,7 +29,7 @@ import java.util.List;
  * Created by L33525 on 23/10/2014.
  */
 public class GetMedicalHistory extends AsyncTask<Void,Void,List<MedicalHistory>> {
-    private static InsightsMedicalHistory myApiService = null;
+    private static MyMedicalHistory myApiService = null;
     private Context context;
     private ArrayList<MedicalHistory> userMedicalHistoriesArrList = new ArrayList<MedicalHistory>();
 

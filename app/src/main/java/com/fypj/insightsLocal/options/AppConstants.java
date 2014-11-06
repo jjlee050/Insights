@@ -3,10 +3,11 @@ package com.fypj.insightsLocal.options;
 import com.fypj.mymodule.api.insightsAppointment.InsightsAppointment;
 import com.fypj.mymodule.api.insightsClinics.InsightsClinics;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
-import com.fypj.mymodule.api.insightsMedicalHistory.InsightsMedicalHistory;
+import com.fypj.mymodule.api.myMedicalHistory.MyMedicalHistory;
 import com.fypj.mymodule.api.insightsUser.InsightsUser;
 import com.fypj.mymodule.api.insightsUserPackages.InsightsUserPackages;
 import com.fypj.mymodule.api.insightsUserSubsidies.InsightsUserSubsidies;
+import com.fypj.mymodule.api.myMedicalHistory.MyMedicalHistory;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -75,9 +76,9 @@ public class AppConstants implements Settings {
 
     }
 
-    public static InsightsMedicalHistory getInsightsMedicalHistoriesAPI() {
+    public static MyMedicalHistory getInsightsMedicalHistoriesAPI() {
 
-        InsightsMedicalHistory.Builder builder = new InsightsMedicalHistory.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+        MyMedicalHistory.Builder builder = new MyMedicalHistory.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                 .setRootUrl(url).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {

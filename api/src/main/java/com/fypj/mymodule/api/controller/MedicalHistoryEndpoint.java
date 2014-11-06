@@ -24,7 +24,7 @@ import static com.fypj.mymodule.api.util.OfyService.ofy;
 /**
  * Created by L33525 on 7/10/2014.
  */
-@Api(name = "insightsMedicalHistory",description = "API to view all medical history", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
+@Api(name = "myMedicalHistory",description = "API to view all medical history", version = "v1", namespace = @ApiNamespace(ownerDomain = "api.mymodule.fypj.com", ownerName = "api.mymodule.fypj.com", packagePath=""))
 public class MedicalHistoryEndpoint {
 
     // Make sure to add this endpoint to your web.xml file if this is a web application.
