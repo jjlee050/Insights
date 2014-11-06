@@ -11,6 +11,13 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         />
 
+    <item android:id="@+id/crowd_sourcing"
+        android:title="Crowd Sourcing"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_public_white_24dp"
+        />
+
     <item android:id="@+id/arView"
         android:title="@string/arView"
         android:orderInCategory="100"
