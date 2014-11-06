@@ -41,13 +41,13 @@ public class DirectionsListAdapter extends ArrayAdapter<Segment> {
         TextView tvDuration = (TextView) rowView.findViewById(R.id.tv_duration);
         ImageView ivMode= (ImageView) rowView.findViewById(R.id.iv_mode);
         if(segmentArrayList.get(position).getMode().equals("WALKING")){
-            ivMode.setImageResource(R.drawable.walk_mode);
+            ivMode.setImageResource(R.drawable.ic_directions_walk_black_36dp);
         }
         else if(segmentArrayList.get(position).getMode().equals("TRANSIT")){
-            ivMode.setImageResource(R.drawable.transit_mode);
+            ivMode.setImageResource(R.drawable.ic_directions_transit_black_36dp);
         }
         else if(segmentArrayList.get(position).getMode().equals("DRIVING")){
-            ivMode.setImageResource(R.drawable.driving);
+            ivMode.setImageResource(R.drawable.ic_directions_car_black_36dp);
         }
         double length = segmentArrayList.get(position).getLength() / 1000.00000;
         DecimalFormat formatter = new DecimalFormat("0.00 mi left");

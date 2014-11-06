@@ -132,23 +132,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if( id == R.id.Appointment){
-            Intent intent = new Intent(ViewClinicActivity.this, BookingAppt.class);
-            intent.putExtra("clinicID", clinic.getClinicID());
-            intent.putExtra("name", clinic.getName());
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {

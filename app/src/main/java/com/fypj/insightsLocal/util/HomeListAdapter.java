@@ -49,7 +49,7 @@ public class HomeListAdapter extends ArrayAdapter<String> {
             ivClinicImg.setImageResource(R.drawable.lifestyle_events);
         }
         else if(position == 2){
-            ivClinicImg.setImageResource(R.drawable.chas_clinics_locator);
+            ivClinicImg.setImageResource(R.drawable.map);
         }
 
         System.out.println("Position: " + position);
