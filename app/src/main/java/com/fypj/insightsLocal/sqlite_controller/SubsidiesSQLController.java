@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.fypj.mymodule.api.insightsEvent.model.Event;
-import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
 import com.fypj.mymodule.api.insightsSubsidies.model.Subsidies;
 import com.fypj.mymodule.api.insightsUser.model.User;
 

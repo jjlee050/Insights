@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
 import com.fypj.mymodule.api.insightsUserPackages.model.UserPackages;
 
 import java.util.ArrayList;

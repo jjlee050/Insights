@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.fypj.mymodule.api.insightsEvent.model.Event;
-import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
+import com.fypj.mymodule.api.myMedicalHistory.model.MedicalHistory;
 
 import java.util.ArrayList;
 

@@ -11,7 +11,7 @@ import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.ui_logic.ViewClinicHistoryFragment;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
-import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
+import com.fypj.mymodule.api.myMedicalHistory.model.MedicalHistory;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

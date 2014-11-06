@@ -15,7 +15,7 @@ import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.sqlite_controller.UserMedicalHistoriesSQLController;
 import com.fypj.insightsLocal.util.ClinicHistoryListAdapter;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
-import com.fypj.mymodule.api.insightsMedicalHistory.model.MedicalHistory;
+import com.fypj.mymodule.api.myMedicalHistory.model.MedicalHistory;
 
 import java.util.ArrayList;
 
