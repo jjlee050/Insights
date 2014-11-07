@@ -165,7 +165,6 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
             appointment.set("ClinicName", clinicname.getText().toString());
             appointment.set("Address",address);
 
-
             CreateAppointment createAppointment = new CreateAppointment(this , appointment);
             createAppointment.execute();
 
