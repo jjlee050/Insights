@@ -68,11 +68,11 @@ public class BackgroundService extends Service {
             getClinic.execute();
             GetDental getDental = new GetDental(this);
             getDental.execute();
-            GetEvent getEvent = new GetEvent(this);
-            getEvent.execute();
+            /*GetEvent getEvent = new GetEvent(this);
+            getEvent.execute();*/
 
-            /*HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
-            obj.fetchXML();*/
+            HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
+            obj.fetchXML();
         }
         notifyUser();
         return super.onStartCommand(intent, flags, startId);
@@ -192,7 +192,7 @@ public class BackgroundService extends Service {
         package1SubsidiesAmtArrList.add("$90 per visit,\ncapped at $360 \nper year");
         package1SubsidiesAmtArrList.add("$135 per visit,\ncapped at $540 \nper year");
         package1SubsidiesAmtArrList.add("$21 to $266.50\nper procedure\n(dependent on \nprocedure)");
-        package1SubsidiesAmtArrList.add("Screening tests: Free \nwith HPB’s invitation \nletter; and \nDoctor’s consultation");
+        package1SubsidiesAmtArrList.add("Screening test: Free with HPB’s invitation letter; and\nDoctor’s consultation: $18.50 per visit\n(up to 2 times per year)");
 
         ArrayList<String> package2SubsidiesNameArrList = new ArrayList<String>();
         package2SubsidiesNameArrList.add("Common illnesses:\n(e.g. cough and cold)");

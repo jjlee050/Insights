@@ -89,11 +89,16 @@ public class SubsidiesFragment extends Fragment {
         for (int x = 0; x < subsidiesArrList.size(); x++) {
             TextView tvLeft = new TextView(this.getActivity());
             TextView tvRight = new TextView(this.getActivity());
+            tvLeft.setTextSize(20);
+            tvLeft.setWidth(340);
+            tvRight.setTextSize(20);
+            tvRight.setWidth(670);
             tvLeft.setText(subsidiesArrList.get(x).getName());
             tvRight.setText(subsidiesArrList.get(x).getAmt());
             TableRow tr = new TableRow(this.getActivity());
             tr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
+
             tr.addView(tvLeft);
             tr.addView(tvRight);
             tvLeft.setPadding(16,16,16,16);

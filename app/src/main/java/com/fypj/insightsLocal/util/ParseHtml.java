@@ -28,7 +28,7 @@ public class ParseHtml extends AsyncTask<Void, Void, String> {
     private String title,link,description;
     private Event event = new Event();
     private ArrayList<String> valueArrList = new ArrayList<String>();
-    private String[] keywords = {"Walk","Lifestyle","Run"};
+    private String[] keywords = {"Walk","Lifestyle","Run","Wellness"};
 
 
 
