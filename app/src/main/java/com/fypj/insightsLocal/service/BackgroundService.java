@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.fypj.insightsLocal.R;
+import com.fypj.insightsLocal.controller.GetAppointment;
 import com.fypj.insightsLocal.controller.GetClinic;
 import com.fypj.insightsLocal.controller.GetDental;
 import com.fypj.insightsLocal.controller.GetEvent;
@@ -68,8 +69,8 @@ public class BackgroundService extends Service {
             getClinic.execute();
             GetDental getDental = new GetDental(this);
             getDental.execute();
-            /*GetEvent getEvent = new GetEvent(this);
-            getEvent.execute();*/
+            GetAppointment getAppointment = new GetAppointment(this);
+            getAppointment.execute();
 
             HandleXML obj = new HandleXML("http://www.pa.gov.sg/index.php?option=com_events&view=events&rss=1&Itemid=170", this);
             obj.fetchXML();

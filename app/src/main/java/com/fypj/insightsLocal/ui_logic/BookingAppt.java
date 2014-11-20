@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.os.Bundle;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.CreateAppointment;
+import com.fypj.insightsLocal.sqlite_controller.AppointmentSQLController;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.mymodule.api.insightsAppointment.model.Appointment;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
@@ -41,6 +42,7 @@ import android.view.View.OnClickListener;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -76,6 +78,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
     private Clinic clinic = new Clinic();
     private Long clinicID;
     private String address;
+    private int position;
 
 
     @Override
@@ -163,28 +166,48 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
             appointment.setDate(ib.getText().toString());
             appointment.setTime(pickTime.getText().toString());
             appointment.set("ClinicName", clinicname.getText().toString());
-            appointment.set("Address",address);
-
-            CreateAppointment createAppointment = new CreateAppointment(this , appointment);
-            createAppointment.execute();
+            appointment.set("Address", address);
 
 
+            AppointmentSQLController controller = new AppointmentSQLController(this);
+            ArrayList<Appointment> AppointmentArrList = controller.getAppointmentByClinic(clinicID);
 
+            boolean isValid = true;
 
-          /*  AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
-            builder1.setMessage("Booking of Appointment Successful ");
-            builder1.setCancelable(true);
-            builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    Intent intent = new Intent(BookingAppt.this, NearestClinicActivity.class);
-                    startActivity(intent);
-                    dialog.cancel();
+            for (int i = 0; i < AppointmentArrList.size(); i++) {
+
+                if (AppointmentArrList.get(position).getNric().equals(appointment.getNric())&& AppointmentArrList.get(position).getDate().equals(appointment.getDate())&& AppointmentArrList.get(position).getTime().equals(appointment.getTime()))
+                {
+
+                    isValid = false;
+
+                    break;
+
                 }
-            });
 
-            AlertDialog alert11 = builder1.create();
-            alert11.show();*/
 
+            }
+            System.out.println(isValid);
+
+
+            if(isValid) {
+                CreateAppointment createAppointment = new CreateAppointment(this, appointment);
+                createAppointment.execute();
+            }
+            else{
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
+                builder1.setMessage("Booking Appointment Failed. Please select another date and time. ");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+
+                    }
+                });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
 
         }
         return super.onOptionsItemSelected(item);

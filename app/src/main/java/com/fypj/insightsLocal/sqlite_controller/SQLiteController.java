@@ -68,7 +68,7 @@ public class SQLiteController {
                     + "(userSubsidiesID LONG PRIMARY KEY, nric TEXT, subsidiesID INTEGER, balance REAL)");
             db.execSQL("CREATE TABLE "
                     + database_appointment
-                    + "(appointmentID INTEGER PRIMARY KEY, nric TEXT, name TEXT , contactNo Text, Date Text , Time Text)");
+                    + "(appointmentID LONG PRIMARY KEY, clinicID LONG, nric TEXT , Date Text , Time Text)");
            /* db.execSQL("CREATE TABLE "
                     + database_fb_comments
                     + "(fbPostID TEXT PRIMARY KEY, name TEXT, comment TEXT, time DATETIME)");

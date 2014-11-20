@@ -14,6 +14,7 @@ import android.provider.CalendarContract;
 import android.widget.Toast;
 
 import com.fypj.insightsLocal.options.AppConstants;
+import com.fypj.insightsLocal.sqlite_controller.AppointmentSQLController;
 import com.fypj.insightsLocal.ui_logic.MainPageActivity;
 import com.fypj.insightsLocal.ui_logic.NearestClinicActivity;
 import com.fypj.mymodule.api.insightsAppointment.InsightsAppointment;
@@ -105,6 +106,9 @@ public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
         calIntent.putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
 
         context.startActivity(calIntent);*/
+
+
+
 
         try {
             final ContentValues event = new ContentValues();
