@@ -24,6 +24,7 @@ public class AppointmentSQLController {
 
     public void insertAppointment(Appointment appointment){
         conn.open();
+        System.out.println(appointment.getTime());
         ContentValues cv = new ContentValues();
         cv.put("appointmentID", appointment.getAppointmentID());
         cv.put("clinicID", appointment.getClinicID());
