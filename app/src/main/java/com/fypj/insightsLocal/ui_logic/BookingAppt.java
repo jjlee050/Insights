@@ -42,6 +42,8 @@ import android.view.View.OnClickListener;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -64,7 +66,8 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
     private int day;
     private int hours;
     private int minutes;
-
+    private String Currentdate;
+    private String CurrentTime;
 
 
     static final int DATE_DIALOG_ID = 0;
@@ -109,7 +112,8 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
         }
 
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
         month = cal.get(Calendar.MONTH);
@@ -117,6 +121,11 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
         hours = cal.get(Calendar.HOUR_OF_DAY);
         minutes = cal.get(Calendar.MINUTE);
+        Currentdate = dateFormat.format(cal.getTime());
+        CurrentTime = timeFormat.format(cal.getTime());
+
+        System.out.println("The Time :" + CurrentTime);
+
 
        getData();
 
@@ -172,46 +181,46 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
             AppointmentSQLController controller = new AppointmentSQLController(this);
             ArrayList<Appointment> AppointmentArrList = controller.getAppointmentByClinic(clinicID);
 
-            boolean isValid = true;
+           boolean isValid = true;
 
             for (int i = 0; i < AppointmentArrList.size(); i++) {
-            System.out.println(AppointmentArrList.get(position).getTime());
-                if (appointment.getNric().equals(AppointmentArrList.get(position).getNric())&& appointment.getDate().equals(AppointmentArrList.get(position).getDate())&& appointment.getTime().equals(AppointmentArrList.get(position).getTime()))
-                {
+                System.out.println(AppointmentArrList.get(position).getTime());
+
+                if (appointment.getNric().equals(AppointmentArrList.get(position).getNric()) && appointment.getDate().equals(AppointmentArrList.get(position).getDate()) && appointment.getTime().equals(AppointmentArrList.get(position).getTime())) {
 
                     isValid = false;
+                    System.out.println(isValid);
 
                     break;
 
                 }
+            }
 
+                if (isValid == true) {
+                    CreateAppointment createAppointment = new CreateAppointment(this, appointment);
+                    createAppointment.execute();
+                }
+
+                else {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
+                    builder1.setMessage("Booking Appointment Failed. Please select another date and time. ");
+                    builder1.setCancelable(true);
+                    builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            dialog.cancel();
+
+                        }
+                    });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
 
 
             }
-            System.out.println(isValid);
 
 
 
-            if(isValid) {
-                CreateAppointment createAppointment = new CreateAppointment(this, appointment);
-                createAppointment.execute();
-            }
-            else{
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(BookingAppt.this);
-                builder1.setMessage("Booking Appointment Failed. Please select another date and time. ");
-                builder1.setCancelable(true);
-                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        dialog.cancel();
-
-                    }
-                });
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -237,7 +246,28 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
 
         String date = (selectedDay+"/"+(selectedMonth + 1)+"/"+selectedYear);
-        ib.setText(date);
+            if (date.compareTo(Currentdate)> 0) {
+                ib.setText(date);
+            }
+            else if (date.compareTo(Currentdate) == 0)
+            {
+                ib.setText(date);
+            }
+            else {
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(BookingAppt.this);
+                builder2.setMessage("Sorry , Please select another date!");
+                builder2.setCancelable(true);
+                builder2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+
+                    }
+                });
+                AlertDialog alert10 = builder2.create();
+                alert10.show();
+            }
+
 
 }
 };
@@ -290,7 +320,27 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         // Append in a StringBuilder
         String aTime = new StringBuilder().append(hours).append(':').append(minutes).append(" ").append(timeSet).toString();
 
-        pickTime.setText(aTime);
+
+
+        if (aTime.compareTo(CurrentTime)>0){
+
+            pickTime.setText(aTime);
+        }
+
+        else {
+            AlertDialog.Builder builder3 = new AlertDialog.Builder(BookingAppt.this);
+            builder3.setMessage("Sorry , Please book 20 minutes earlier upon your appointment!");
+            builder3.setCancelable(true);
+            builder3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    dialog.cancel();
+
+                }
+            });
+            AlertDialog alert9 = builder3.create();
+            alert9.show();
+        }
 
     }
 
