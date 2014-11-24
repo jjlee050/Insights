@@ -28,7 +28,7 @@ import com.fypj.insightsLocal.google_directions.Route;
 import com.fypj.insightsLocal.google_directions.Routing;
 import com.fypj.insightsLocal.google_directions.RoutingListener;
 import com.fypj.insightsLocal.google_directions.Segment;
-import com.fypj.insightsLocal.model.Event;
+
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;

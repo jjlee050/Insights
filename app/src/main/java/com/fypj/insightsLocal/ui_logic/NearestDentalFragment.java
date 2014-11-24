@@ -21,7 +21,7 @@ import android.widget.ListView;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.controller.GetClinic;
 import com.fypj.insightsLocal.controller.GetDental;
-import com.fypj.insightsLocal.model.Clinic;
+
 import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.util.DentalAdapter;
 

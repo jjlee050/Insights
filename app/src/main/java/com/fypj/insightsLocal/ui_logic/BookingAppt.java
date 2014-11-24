@@ -183,10 +183,10 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
            boolean isValid = true;
 
-            for (int i = 0; i < AppointmentArrList.size(); i++) {
-                System.out.println(AppointmentArrList.get(position).getTime());
-
-                if (appointment.getNric().equals(AppointmentArrList.get(position).getNric()) && appointment.getDate().equals(AppointmentArrList.get(position).getDate()) && appointment.getTime().equals(AppointmentArrList.get(position).getTime())) {
+            for (int i = 0;i<AppointmentArrList.size();i++) {
+                //System.out.println("Client side: " + AppointmentArrList.get(position).getTime());
+                //controller.getAppointment()
+                if (AppointmentArrList.get(i).getNric().equals(appointment.getNric()) && AppointmentArrList.get(i).getDate().equals(appointment.getDate()) && AppointmentArrList.get(i).getTime().equals(appointment.getTime())) {
 
                     isValid = false;
                     System.out.println(isValid);
@@ -197,6 +197,10 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
             }
 
                 if (isValid == true) {
+                    Appointment newAppoint = appointment;
+                    newAppoint.setAppointmentID(Long.parseLong(String.valueOf(AppointmentArrList.size() + 1)));
+                    controller.insertAppointment(newAppoint);
+                    newAppoint.setAppointmentID(null);
                     CreateAppointment createAppointment = new CreateAppointment(this, appointment);
                     createAppointment.execute();
                 }

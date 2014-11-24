@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.UserSQLController;
 import com.fypj.mymodule.api.insightsUser.model.User;

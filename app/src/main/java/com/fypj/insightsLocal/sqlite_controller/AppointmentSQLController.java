@@ -24,7 +24,6 @@ public class AppointmentSQLController {
 
     public void insertAppointment(Appointment appointment){
         conn.open();
-        System.out.println(appointment.getTime());
         ContentValues cv = new ContentValues();
         cv.put("appointmentID", appointment.getAppointmentID());
         cv.put("clinicID", appointment.getClinicID());
@@ -32,6 +31,7 @@ public class AppointmentSQLController {
         cv.put("Time", appointment.getTime());
         cv.put("nric", appointment.getNric());
 
+        System.out.println("Appointment Inserted");
 
         conn.getDB().insert(conn.getAppointmentTable(), null, cv);
         conn.close();
@@ -86,6 +86,7 @@ public class AppointmentSQLController {
                 appointment.setClinicID(cursor.getLong(cursor.getColumnIndex("clinicID")));
                 appointment.setDate(cursor.getString(cursor.getColumnIndex("Date")));
                 appointment.setTime(cursor.getString(cursor.getColumnIndex("Time")));
+                System.out.println("Database Time: " + appointment.getTime());
                 appointment.setNric(cursor.getString(cursor.getColumnIndex("nric")));
                 AppointmentArrList.add(appointment);
             }while(cursor.moveToNext());

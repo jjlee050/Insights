@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.fypj.insightsLocal.model.Dental;
+
 import com.fypj.insightsLocal.options.AppConstants;
 import com.fypj.insightsLocal.options.Settings;
 import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;

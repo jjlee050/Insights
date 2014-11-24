@@ -7,9 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.ui_logic.ViewClinicDetailsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewClinicLocationFragment;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 

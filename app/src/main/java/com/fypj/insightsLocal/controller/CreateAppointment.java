@@ -23,6 +23,7 @@ import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -31,7 +32,7 @@ import java.util.TimeZone;
 /**
  * Created by L33525 on 14/10/2014.
  */
-public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
+public class CreateAppointment extends AsyncTask<Void, Void, Appointment> {
     private static InsightsAppointment myApiService = null;
     private Activity context;
     private Appointment appointment;
@@ -54,7 +55,7 @@ public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
+    protected Appointment doInBackground(Void... voids) {
         if(myApiService == null) {  // Only do this once
             myApiService = AppConstants.getInsightsAppointmentAPI();
         }
@@ -67,19 +68,19 @@ public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
 
 
 
-                return true;
+                return appointment;
             }
             else{
-                return false;
+                return null;
             }
         } catch (Exception e) {
             errorOnExecuting();
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    protected void onPostExecute(Boolean result){
+    protected void onPostExecute(Appointment result){
         dialog.dismiss();
 
         /*Intent calIntent = new Intent (Intent.ACTION_INSERT);
@@ -106,9 +107,6 @@ public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
         calIntent.putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
 
         context.startActivity(calIntent);*/
-
-
-
 
         try {
             final ContentValues event = new ContentValues();

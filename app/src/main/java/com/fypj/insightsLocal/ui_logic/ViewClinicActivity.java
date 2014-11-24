@@ -26,9 +26,9 @@ import com.fypj.insightsLocal.ar.ui.Marker;
 import com.fypj.insightsLocal.google_directions.Route;
 import com.fypj.insightsLocal.google_directions.Routing;
 import com.fypj.insightsLocal.google_directions.RoutingListener;
-import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.util.ViewClinicDetailsAdapter;
+import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -65,7 +65,7 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
      * The {@link ViewPager} that will host the section contents.
      */
     JazzyViewPager mJazzy;
-    private Clinic clinic;
+    private Clinic clinic = new Clinic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,12 @@ public class ViewClinicActivity extends ActionBarActivity implements ActionBar.T
             String category = savedInstanceState.getString("category");
 
             actionBar.setTitle(name);
-            clinic = new Clinic(id,name,address,operatingHours,contactNo,category);
+            clinic.setClinicID(id);
+            clinic.setName(name);
+            clinic.setAddress(address);
+            clinic.setOperatingHours(operatingHours);
+            clinic.setContactNo(contactNo);
+            clinic.setCategory(category);
 
         }
 

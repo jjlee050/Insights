@@ -9,10 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.ui_logic.ViewEventDetailsFragment;
 import com.fypj.insightsLocal.ui_logic.ViewEventLocationFragment;
+import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 /**

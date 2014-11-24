@@ -19,10 +19,6 @@ public class Event {
     private String contactNo;
     private String location;
 
-    public Event(){
-
-    }
-
     public Event(Long eventID, String name, String dateAndTime, String guestOfHonour, String desc, String organizer, String contactNo, String location) {
         this.eventID = eventID;
         this.name = name;

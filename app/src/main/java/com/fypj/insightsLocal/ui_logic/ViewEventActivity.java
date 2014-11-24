@@ -15,9 +15,9 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import com.fypj.insightsLocal.R;
-import com.fypj.insightsLocal.model.Event;
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.util.ViewEventPagerAdapter;
+import com.fypj.mymodule.api.insightsEvent.model.Event;
 import com.jfeinstein.jazzyviewpager.JazzyViewPager;
 
 
@@ -37,7 +37,7 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    private Event event;
+    private Event event = new Event();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +59,14 @@ public class ViewEventActivity extends ActionBarActivity implements ActionBar.Ta
             String location = savedInstanceState.getString("location");
 
             actionBar.setTitle(name);
-            event = new Event(id,name,dateAndTime,guestOfHonour,desc,organizer,contactNo,location);
+            event.setEventID(id);
+            event.setName(name);
+            event.setDateAndTime(dateAndTime);
+            event.setGuestOfHonour(guestOfHonour);
+            event.setDesc(desc);
+            event.setOrganizer(organizer);
+            event.setContactNo(contactNo);
+            event.setLocation(location);
         }
 
         // Set up the ViewPager with the sections adapter.
