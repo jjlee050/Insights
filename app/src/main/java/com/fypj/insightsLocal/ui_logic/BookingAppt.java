@@ -324,7 +324,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
 
         // Append in a StringBuilder
         String aTime = new StringBuilder().append(hours).append(':').append(minutes).append(" ").append(timeSet).toString();
-
+        pickTime.setText(aTime);
       /* if (aTime.compareTo(CurrentTime)>0){
 
         pickTime.setText(aTime);
