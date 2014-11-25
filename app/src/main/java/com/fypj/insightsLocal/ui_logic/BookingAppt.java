@@ -46,6 +46,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class BookingAppt extends ActionBarActivity implements OnClickListener {
@@ -113,7 +114,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
         cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
         month = cal.get(Calendar.MONTH);
@@ -124,7 +125,7 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         Currentdate = dateFormat.format(cal.getTime());
         CurrentTime = timeFormat.format(cal.getTime());
 
-        System.out.println("The Time :" + CurrentTime);
+
 
 
        getData();
@@ -320,27 +321,25 @@ public class BookingAppt extends ActionBarActivity implements OnClickListener {
         // Append in a StringBuilder
         String aTime = new StringBuilder().append(hours).append(':').append(minutes).append(" ").append(timeSet).toString();
 
+      /* if (aTime.compareTo(CurrentTime)>0){
 
+        pickTime.setText(aTime);
+    }
 
-        if (aTime.compareTo(CurrentTime)>0){
+    else {
+        AlertDialog.Builder builder3 = new AlertDialog.Builder(BookingAppt.this);
+        builder3.setMessage("Sorry , Please book 20 minutes earlier upon your appointment!");
+        builder3.setCancelable(true);
+        builder3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
 
-            pickTime.setText(aTime);
-        }
+                dialog.cancel();
 
-        else {
-            AlertDialog.Builder builder3 = new AlertDialog.Builder(BookingAppt.this);
-            builder3.setMessage("Sorry , Please book 20 minutes earlier upon your appointment!");
-            builder3.setCancelable(true);
-            builder3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-
-                    dialog.cancel();
-
-                }
-            });
-            AlertDialog alert9 = builder3.create();
-            alert9.show();
-        }
+            }
+        });
+        AlertDialog alert9 = builder3.create();
+        alert9.show();
+    }*/
 
     }
 

@@ -21,8 +21,12 @@ import com.fypj.mymodule.api.insightsAppointment.InsightsAppointment;
 import com.fypj.mymodule.api.insightsAppointment.model.Appointment;
 import com.fypj.mymodule.api.insightsClinics.model.Clinic;
 import com.fypj.mymodule.api.insightsEvent.InsightsEvent;
+import com.google.api.client.util.DateTime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -125,10 +129,12 @@ public class CreateAppointment extends AsyncTask<Void, Void, Boolean> {
 
 
             GregorianCalendar calDate = new GregorianCalendar(year, month, day);
-            event.put(CalendarContract.Events.DTSTART, calDate.getTimeInMillis());
+
+            event.put(CalendarContract.Events.DTSTART,calDate.getTimeInMillis());
             event.put(CalendarContract.Events.DTEND, calDate.getTimeInMillis());
             event.put(CalendarContract.Events.ALL_DAY, 0);
             event.put(CalendarContract.Events.HAS_ALARM, 1);
+
 
             String timeZone = TimeZone.getDefault().getID();
             event.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone);
