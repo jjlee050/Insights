@@ -25,7 +25,7 @@ import android.widget.TextView;
 //import com.fypj.insightsLocal.model.Clinic;
 import com.fypj.insightsLocal.R;
 import com.fypj.insightsLocal.ar.activity.Demo;
-import com.fypj.insightsLocal.model.Dental;
+
 import com.fypj.insightsLocal.options.CheckNetworkConnection;
 import com.fypj.insightsLocal.sqlite_controller.ClinicSQLController;
 import com.fypj.insightsLocal.util.ClinicAdapter;
